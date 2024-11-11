@@ -103,7 +103,7 @@
             </div>
             <div class="languages">
                 <a v-for="language in languages" :alt="language.name" :href="'https://dev1lroot.com/'+language.code.split('-')[0]+'/'">
-                    <i :style="'background-image: url(assets/flags/'+language.code.split('-')[1].toLowerCase()+'.svg);'"></i>
+                    <i :style="'background-image: url(/assets/flags/'+language.code.split('-')[1].toLowerCase()+'.svg);'"></i>
                     <span>{{language.name}}</span>
                 </a>
             </div>            
@@ -122,10 +122,10 @@
         <section class="page" :style="{ filter: (dialogs.length > 0) ? 'blur(10px)' : 'unset'}">
             <div class="header">
                 <h1>David von Eichendorf</h1>
-                <a href="/en/" @click="openDialog('languages')">English<i style="background-image: url('assets/flags/gb.svg');"></i></a>
+                <a href="/en/" @click="openDialog('languages')">English<i style="background-image: url('/assets/flags/gb.svg');"></i></a>
             </div>
             <div class="profile">
-                <img class="photo" src="me.png">
+                <img class="photo" src="/me.png">
                 <div class="about">
                     ABDL 🌈 | Gay 🏳️‍🌈 | Software Developer ⚙️ | Refugee 🇫🇷 | Founder of <a href="http://adultbaby.ru">adultbaby.ru</a> | creator of SIZO-SIM | Standing with Ukraine 🇺🇦
                 </div>
