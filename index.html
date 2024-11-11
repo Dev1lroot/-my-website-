@@ -111,7 +111,7 @@
         <div class="blocker" v-if="dialogs.length > 0"></div>
         <section class="menu" :style="{ filter: (dialogs.length > 0) ? 'blur(10px)' : 'unset'}">
             <nav>
-                <a><i class="fa-solid fa-download"></i><span>Download CV</span></a>
+                <a href="/downloads/cv.pdf" download=""><i class="fa-solid fa-download"></i><span>Download CV</span></a>
                 <a @click="page = ''"><i class="fa-solid fa-house"></i><span>Main</span></a>
                 <a @click="page = 'activity'"><i class="fa-solid fa-person-running"></i><span>Activity</span></a>
                 <a @click="page = 'bio'"><i class="fa-solid fa-book-skull"></i><span>Bio</span></a>

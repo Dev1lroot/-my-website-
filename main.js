@@ -20,8 +20,12 @@ var app = Vue.createApp({
                     keywords: ["Unreal Engine 5","Games"],
                     slideshow: new slideshow([
                         "https://www.youtube.com/embed/KZ41UXnwYY0?si=SO33L76Jy8-dCqup",
-                        "https://cloud.dev1lroot.com/sizo_simulator/screenshots/01.png",
-                        "https://cloud.dev1lroot.com/sizo_simulator/screenshots/02.jpg",
+                        "/uploads/sizo_simulator/screenshots/01.png",
+                        "/uploads/sizo_simulator/screenshots/02.jpg",
+                        "/uploads/sizo_simulator/screenshots/03.jpg",
+                        "/uploads/sizo_simulator/screenshots/04.jpg",
+                        "/uploads/sizo_simulator/screenshots/05.jpg",
+                        "/uploads/sizo_simulator/screenshots/06.jpg",
                     ])
                 },
                 {
