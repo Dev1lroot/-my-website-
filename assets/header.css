@@ -1,0 +1,27 @@
+.header{
+    display: flex;
+    margin-bottom: 24px;
+    align-items: center;
+}
+.header h1{
+    flex-grow: 1;
+    font-size: 32px;
+}
+.header a{
+    cursor: pointer;
+    padding: 0px 10px;
+    height: 48px;
+    align-items: center;
+    display: flex;
+    border-radius: 24px;
+    background-color: #FFFFFF10;
+    font-size: 20px;
+    color: #FFF;
+    gap: 10px;
+}
+.header i{
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: block;
+}

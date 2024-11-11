@@ -1,0 +1,51 @@
+.menu{
+    width: var(--menu-width);
+    min-width: 48px;
+}
+.menu nav{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    width: 100%;
+}
+.menu nav a{
+    cursor: pointer;
+    display: flex;
+    padding: 0px 10px;
+    line-height: 48px;
+    height: 48px;
+    border-radius: 24px;
+    font-size: 24px;
+    transition: all .3s;
+    gap: 10px;
+    align-items: center;
+}
+.menu nav a:hover{
+    background-color: #FFFFFF10;
+    transition: all .0s;
+}
+.menu nav a i{
+    width: 32px;
+    background-position: center;
+    text-align: center;
+}
+.menu nav a:first-child{
+    margin-bottom: 16px;
+    background-color: var(--color-brand);
+}
+@media only screen and (max-width: 1024px) {
+    .menu nav a span{
+        display: none;
+    }
+    .menu{
+        width: 48px;
+    }
+    .menu nav a i{
+        width: auto;
+    }
+    .menu nav a{
+        padding: 0px;
+        width: 48px;
+        justify-content: center;
+    }
+}

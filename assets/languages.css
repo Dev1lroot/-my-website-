@@ -1,0 +1,79 @@
+.languages{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    box-sizing: border-box;
+    width: 600px;
+}
+.languages a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFFFF10;
+    border-radius: 16;
+    aspect-ratio: 1/1;
+    font-size: 24px;
+    color: #FFF;
+    transition: all .3s;
+    padding: 10px;
+    border-radius: 10px;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}
+.languages a:hover{
+    background-color: #FFFFFF24;
+    box-shadow: 0px 0px 5px #FFFFFF10;
+    transition: all .3s;
+}
+.languages a span{
+    line-height: 32px;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+.languages i{
+    width: 100%;
+    aspect-ratio: 1/1;
+    height: auto;
+    border-radius: 8px;
+    filter: saturate(0.1);
+    transition: filter .3s;
+}
+.languages a:hover i{
+    filter: saturate(1);
+}
+@media only screen and (max-width: 768px) {
+    .languages{
+        width: 560px;
+    }
+    .languages a{
+        font-size: 20px;
+        padding: 8px;
+    }
+}
+@media only screen and (max-width: 640px) {
+    .languages{
+        width: 100%;
+    }
+    .languages a{
+        padding: 0px;
+    }
+}
+@media only screen and (max-width: 540px) {
+    .languages a{
+        font-size: 16px;
+    }
+}
+@media only screen and (max-width: 480px) {
+    .languages a{
+        font-size: 12px;
+    }
+    .languages a span{
+        line-height: 24px;
+    }
+}
+@media only screen and (max-width: 400px) {
+    .languages a span{
+        display: none;
+    }
+}

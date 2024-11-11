@@ -1,0 +1,38 @@
+.socials{
+    display: grid;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 10px;
+}
+.socials a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFFFF10;
+    border-radius: var(--border-radius);
+    aspect-ratio: 1/1;
+    font-size: 40px;
+    color: #FFF;
+    transition: all .3s;
+}
+.socials a:hover{
+    background-color: #FFFFFF24;
+    box-shadow: 0px 0px 5px #FFFFFF10;
+    transition: all .3s;
+}
+@media only screen and (max-width: 768px) {
+    .socials{
+        grid-template-columns: repeat(7, 1fr);
+    }
+}
+@media only screen and (max-width: 600px) {
+    .socials{
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+@media only screen and (max-width: 400px) {
+    .socials{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

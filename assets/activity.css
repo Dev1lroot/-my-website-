@@ -1,0 +1,6 @@
+.activity > *{
+    display: block;
+    padding: var(--border-radius);
+    border-radius: var(--border-radius);
+    background-color: #FFFFFF10;
+}

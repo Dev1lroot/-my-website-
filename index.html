@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta http-equiv="Content-Language" content="en-US">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="David von Eichendorf - Software Developer, Refugee">
+    <meta name="keywords" content="David, David von Eichendorf, Eichendorf, David Eichendorf, Software Developer, Refugee, Activist">
+    <meta name="author" content="David von Eichendorf">
+    <meta name="robots" content="index, follow">
+    
+    <meta property="og:title" content="David von Eichendorf">
+    <meta property="og:description" content="David von Eichendorf - Software Developer, Refugee">
+    <meta property="og:image" content="https://dev1lroot.com/assets/opengraph/placeholder.png">
+    <meta property="og:url" content="https://dev1lroot.com/en/">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Заголовок для Twitter">
+    <meta name="twitter:description" content="Описание для Twitter">
+    <meta name="twitter:image" content="URL_к_изображению_для_Twitter">
+
+    <title>David Von Eichendorf | Software Developer</title>
+    
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.6.0-web/css/all.min.css">
+    
+    <link rel="alternate" hreflang="en" href="https://dev1lroot.com/en/"/>
+    <link rel="alternate" hreflang="es" href="https://dev1lroot.com/es/"/>
+    <link rel="alternate" hreflang="de" href="https://dev1lroot.com/de/"/>
+    <link rel="alternate" hreflang="no" href="https://dev1lroot.com/no/"/>
+    <link rel="alternate" hreflang="fr" href="https://dev1lroot.com/fr/"/>
+    <link rel="alternate" hreflang="ru" href="https://dev1lroot.com/ru/"/>
+    <link rel="alternate" hreflang="ua" href="https://dev1lroot.com/ua/"/>
+    <link rel="alternate" hreflang="jp" href="https://dev1lroot.com/jp/"/>
+    <link rel="alternate" hreflang="cn" href="https://dev1lroot.com/cn/"/>
+
+    <script type="text/javascript" src="vue.global.js"></script>
+    <script type="text/javascript" src="classes/Slideshow.js"></script>
+
+    <script type="text/javascript" src="main.js" defer></script>
+    <script type="text/javascript" src="background.js" defer></script>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+    <main>
+        <dialog v-if="dialogs.includes('project_preview')" style="max-width: 900px;">
+            <div class="header">
+                <h2>{{projects[project.id].title}}</h2>
+                <button class="close" @click="closeDialog('project_preview')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="slideshow" v-if="projects[project.id].hasOwnProperty('slideshow') && projects[project.id].slideshow.slides.length > 0">
+                <div v-if="projects[project.id].slideshow.slides.length > 1" class="slideshow__dots">
+                    <a v-for="dot,id in projects[project.id].slideshow.slides" @click="projects[project.id].slideshow.position = id" :class="(id == projects[project.id].slideshow.position) ? 'active' : ''"></a>
+                </div>
+                <div class="slideshow__frames">
+                    <a v-if="projects[project.id].slideshow.slides.length > 1" class="slideshow__next" @click="projects[project.id].slideshow.next()"><i class="fas fa-chevron-circle-right"></i></a>
+                    <a v-if="projects[project.id].slideshow.slides.length > 1" class="slideshow__prev" @click="projects[project.id].slideshow.prev()"><i class="fas fa-chevron-circle-left"></i></a>
+                    <div>
+                        <iframe v-if="projects[project.id].slideshow.current().type == 'youtube'" width="100%" height="auto" style="aspect-ratio: 16/9; width: 100%; height: auto" 
+                            :src="projects[project.id].slideshow.current().data" 
+                            title="YouTube video player" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                        <img :src="projects[project.id].slideshow.current().data" width="100%" height="auto" v-else>
+                    </div>
+                </div>
+            </div>
+            <div class="description">
+                {{ projects[project.id].description }}
+            </div>
+            <div v-if="projects[project.id].hasOwnProperty('link')">
+                <a :href="projects[project.id].link">Visit Project Page</a>
+            </div>
+        </dialog>
+        <dialog v-if="dialogs.includes('message_sent')">
+            <div class="header">
+                <h2>Message Sent</h2>
+                <button class="close" @click="closeDialog('languages')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="send-me-message-rc">
+
+            </div>
+        </dialog>
+        <dialog v-if="dialogs.includes('confirm_message')">
+            <div class="header">
+                <h2>Confirm Submission</h2>
+                <button class="close" @click="closeDialog('languages')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="send-me-message-rc">
+
+            </div>
+        </dialog>
+        <dialog v-if="dialogs.includes('languages')">
+            <div class="header">
+                <h2>Select Language</h2>
+                <button class="close" @click="closeDialog('languages')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="languages">
+                <a v-for="language in languages" :alt="language.name" :href="'https://dev1lroot.com/'+language.code.split('-')[0]+'/'">
+                    <i :style="'background-image: url(assets/flags/'+language.code.split('-')[1].toLowerCase()+'.svg);'"></i>
+                    <span>{{language.name}}</span>
+                </a>
+            </div>            
+        </dialog>
+        <div class="blocker" v-if="dialogs.length > 0"></div>
+        <section class="menu" :style="{ filter: (dialogs.length > 0) ? 'blur(10px)' : 'unset'}">
+            <nav>
+                <a><i class="fa-solid fa-download"></i><span>Download CV</span></a>
+                <a @click="page = ''"><i class="fa-solid fa-house"></i><span>Main</span></a>
+                <a @click="page = 'activity'"><i class="fa-solid fa-person-running"></i><span>Activity</span></a>
+                <a @click="page = 'bio'"><i class="fa-solid fa-book-skull"></i><span>Bio</span></a>
+                <a @click="page = 'projects'"><i class="fa-solid fa-code-branch"></i><span>Projects</span></a>
+                <a @click="page = 'contact_me'"><i class="fa-solid fa-envelope"></i><span>Contact Me</span></a>
+            </nav>
+        </section>
+        <section class="page" :style="{ filter: (dialogs.length > 0) ? 'blur(10px)' : 'unset'}">
+            <div class="header">
+                <h1>David von Eichendorf</h1>
+                <a href="/en/" @click="openDialog('languages')">English<i style="background-image: url('assets/flags/gb.svg');"></i></a>
+            </div>
+            <div class="profile">
+                <img class="photo" src="me.png">
+                <div class="about">
+                    ABDL 🌈 | Gay 🏳️‍🌈 | Software Developer ⚙️ | Refugee 🇫🇷 | Founder of <a href="http://adultbaby.ru">adultbaby.ru</a> | creator of SIZO-SIM | Standing with Ukraine 🇺🇦
+                </div>
+            </div>
+            <div class="socials">
+                <a href="https://x.com/DavyBoyAB"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://www.instagram.com/davyboyab/"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://ko-fi.com/davideichendorf"><i class="fa-solid fa-mug-hot"></i></a>
+                <a href="https://ngl.link/davyboyab"><i class="fa-solid fa-question"></i></a>
+                <a href="https://www.linkedin.com/in/david-eichendorf-79aa7a25a/"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://github.com/dev1lroot"><i class="fa-brands fa-github"></i></a>
+                <a href="https://soundcloud.com/dev1lroot"><i class="fa-brands fa-soundcloud"></i></a>
+                <a href="https://www.youtube.com/channel/UCwqy0PbQfsVXCpuC-f6ROoQ"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://sketchfab.com/dev1lroot"><i class="fa-solid fa-cube"></i></a>
+                <a href="https://www.deviantart.com/dev1lroot"><i class="fa-brands fa-deviantart"></i></a>
+                <a href="https://t.me/dev1lroot"><i class="fa-brands fa-telegram"></i></a>
+                <a href="https://steamcommunity.com/id/dev1lroot/"><i class="fa-brands fa-steam"></i></a>
+            </div>
+            <div class="content">
+                <div class="activity" v-if="page == 'activity'">
+                    <div class="block" @click="updateDavy()">
+                        Playtime: {{ convertTimeToStr(my.life.spent) }}
+                        <div class="progress">
+                            <div :style="{width: my.life.percent + '%'}"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feed" v-if="page == 'bio'">
+
+                </div>
+                <div class="feed" v-if="page == ''">
+                    <article>
+                        Example post 1
+                    </article>
+                    <article>
+                        Example post 2
+                    </article>
+                </div>
+                <div class="feed" v-if="page == 'projects'">
+                    <article v-for="project,id in projects" @click="viewProject(id)">
+                        <h3>{{project.title}}</h3>
+                        <p>{{project.description}}</p>
+                        <div class="keywords">
+                            <a v-for="keyword in project.keywords" :href="'https://google.com/?q='+keyword">{{keyword}}</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="contact-form" v-if="page == 'contact_me'">
+                    <input v-model="contact.form.subject" type="text" placeholder="Subject">
+                    <input v-model="contact.form.email" type="text" placeholder="Email address">
+                    <textarea v-model="contact.form.message" placeholder="Your starts message here.."></textarea>
+                    <button @click="initSending()">Send</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <canvas id="background" class="background"></canvas>
+</body>
+</html>

@@ -1,0 +1,10 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    border: 0px;
+    background-color: transparent;
+    list-style-type: none;
+    text-decoration: none;
+    font-family: sans-serif;
+}

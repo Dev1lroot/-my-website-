@@ -1,0 +1,8 @@
+.background{
+    width: 100vw;
+    min-height: 100vh;
+    position: fixed;
+    z-index: -1;
+    filter: blur(100px);
+    opacity: 0.3;
+}

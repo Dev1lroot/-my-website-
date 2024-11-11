@@ -1,0 +1,23 @@
+.feed{
+    display: grid;
+    grid: 1 1fr;
+    gap: 10px;
+}
+.feed article{
+    background-color: #FFFFFF10;
+    padding: var(--border-radius);
+    border-radius: var(--border-radius);
+}
+.feed article .keywords{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.feed article .keywords a{
+    display: block;
+    background-color: #FFFFFF10;
+    color: #FFF;
+    line-height: 32px;
+    padding: 0px 12px;
+    border-radius: 16px;
+}
