@@ -18,6 +18,7 @@
     font-size: 24px;
     transition: all .3s;
     gap: 10px;
+    color: #FFF !important;
     align-items: center;
 }
 .menu nav a:hover{
