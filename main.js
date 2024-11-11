@@ -9,6 +9,9 @@ var app = Vue.createApp({
                     text: "",
                 }
             },
+            window: {
+                innerWidth: 0,
+            },
             project: {
                 id: 0,
                 slide: 0,
@@ -194,12 +197,18 @@ var app = Vue.createApp({
         openDialog: function(name)
         {
             this.dialogs.push(name);
+        },
+        adaptivity: function()
+        {
+            this.window.innerWidth = window.innerWidth;
         }
     },
     mounted() {
         setInterval(() => {
             this.updateDavy();
         }, 1000);
+        window.addEventListener('resize', this.adaptivity());
+        this.adaptivity();
     }
 });
 app.mount("main");

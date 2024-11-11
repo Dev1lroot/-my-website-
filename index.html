@@ -17,12 +17,12 @@
     <meta property="og:image" content="https://dev1lroot.com/assets/opengraph/placeholder.png">
     <meta property="og:url" content="https://dev1lroot.com/en/">
     
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Заголовок для Twitter">
-    <meta name="twitter:description" content="Описание для Twitter">
-    <meta name="twitter:image" content="URL_к_изображению_для_Twitter">
+    <meta name="twitter:card" content="https://dev1lroot.com/assets/opengraph/placeholder.png">
+    <meta name="twitter:title" content="David von Eichendorf">
+    <meta name="twitter:description" content="David von Eichendorf - Software Developer, Refugee">
+    <meta name="twitter:image" content="https://dev1lroot.com/assets/opengraph/placeholder.png">
 
-    <title>David Von Eichendorf | Software Developer</title>
+    <title>David von Eichendorf | Software Developer</title>
     
     <link rel="stylesheet" href="/assets/main.css">
     <link rel="stylesheet" href="/assets/fontawesome-free-6.6.0-web/css/all.min.css">
@@ -121,8 +121,9 @@
         </section>
         <section class="page" :style="{ filter: (dialogs.length > 0) ? 'blur(10px)' : 'unset'}">
             <div class="header">
-                <h1>David von Eichendorf</h1>
-                <a href="/en/" @click="openDialog('languages')">English<i style="background-image: url('/assets/flags/gb.svg');"></i></a>
+                <h1 v-if="window.innerWidth > 768">David von Eichendorf</h1>
+                <h1 v-else="">David</h1>
+                <a @click="openDialog('languages')">English<i style="background-image: url('/assets/flags/gb.svg');"></i></a>
             </div>
             <div class="profile">
                 <img class="photo" src="/me.png">
