@@ -6,17 +6,22 @@
   },
   "name": "client",
   "version": "1.0.0",
-  "description": "MonopolyWS Client",
-  "main": "client.js",
+  "description": "Симулятор СВО",
+  "main": "source.js",
   "directories": {
     "lib": "lib"
   },
   "scripts": {
-    "test": "node client.js"
+    "build": "webpack"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "vite": "^5.2.8"
+    "css-loader": "^7.1.2",
+    "html-webpack-plugin": "^5.6.3",
+    "style-loader": "^4.0.0",
+    "vite": "^5.2.8",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4"
   }
 }
