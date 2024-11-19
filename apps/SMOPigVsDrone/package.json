@@ -2,7 +2,8 @@
   "dependencies": {
     "@seregpie/three.text-sprite": "^3.2.0",
     "three": "^0.163.0",
-    "three-text2d": "^0.6.0"
+    "three-text2d": "^0.6.0",
+    "vue": "^3.5.13"
   },
   "name": "client",
   "version": "1.0.0",
@@ -12,7 +13,8 @@
     "lib": "lib"
   },
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "devel": "vite"
   },
   "author": "",
   "license": "ISC",
@@ -20,7 +22,7 @@
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.3",
     "style-loader": "^4.0.0",
-    "vite": "^5.2.8",
+    "vite": "^5.4.11",
     "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4"
   }

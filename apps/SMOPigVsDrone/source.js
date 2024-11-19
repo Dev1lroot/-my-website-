@@ -2,6 +2,12 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import LootTable from './libraries/LootTable.js';
+
+const sounds = {
+    jump: new Audio('./assets/sounds/jump.wav'),
+    pickup: new Audio('./assets/sounds/pickup.wav'),
+}
+
 const loader = new GLTFLoader();
 var models = {
     player: {
@@ -10,6 +16,21 @@ var models = {
         
     }
 };
+
+function getDistance2D(object1, object2) {
+    // Calculate the distance between two points in 3D space using the Euclidean distance formula
+    var dx = object2.position.x - object1.position.x;
+    var dz = object2.position.z - object1.position.z;
+    
+    // Square each component and sum them up
+    var distanceSquared = dx * dx + dz * dz;
+    
+    // Take the square root of the sum to get the distance
+    var distance = Math.sqrt(distanceSquared);
+    
+    return distance;
+}
+
 function getDistance(object1, object2) {
     // Calculate the distance between two points in 3D space using the Euclidean distance formula
     var dx = object2.position.x - object1.position.x;
@@ -28,6 +49,15 @@ function getDistance(object1, object2) {
 for(let playerModel of ["mine","pig","laundry","drone","rotor","spruce","fridge","toilet"])
 {
     loader.load(`./assets/models/${playerModel}.glb`, function ( gltf ) {
+        gltf.scene.traverse( function( child ) { 
+            if ( child.isMesh )
+            {
+                child.castShadow = true;
+                //child.receiveShadow = true;
+            }
+        } );
+        gltf.scene.castShadow = true;
+        gltf.scene.receiveShadow = true;
         models.player[playerModel] = gltf.scene;
     }, undefined, function ( error ){
         console.error( error );
@@ -35,9 +65,11 @@ for(let playerModel of ["mine","pig","laundry","drone","rotor","spruce","fridge"
 }
 // Создаем сцену и камеру
 const scene = new THREE.Scene();
+
 // Создаем камеру
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
 camera.position.set(-260,275,306);
+
 // Создаем свет
 var light = new THREE.DirectionalLight(0xFFFFFF, 5);
 light.position.set(0,300,0).normalize();
@@ -45,18 +77,42 @@ var lightTarget = new THREE.Object3D();
 lightTarget.position.set(0, 0, 0);
 lightTarget.protected = true;
 light.target = lightTarget;
+light.castShadow = true;
+light.shadow.camera.visible = true;
+light.shadow.mapSize.width = 1024
+light.shadow.mapSize.height = 1024
+light.shadow.camera.near = 0.5
+light.shadow.camera.far = 300
+light.shadow.radius = 8;
+//light.intensity = 2;
+
+light.shadow.camera.top = 400;
+light.shadow.camera.right = 400;
+light.shadow.camera.left = -200;
+light.shadow.camera.bottom = -200;
+
 scene.add( light );
+
+const helper = new THREE.CameraHelper(light.shadow.camera)
+scene.add(helper)
+
 // Создаем базовое освещение
-var alight = new THREE.AmbientLight( 0xFFFFFF, 0.7 );
+var alight = new THREE.AmbientLight( 0xFFFFFF, 0.5 );
 alight.protected = true;
+alight.castShadow = true;
 scene.add( alight );
+
 // Создаем рендерер
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setClearColor(0xE1E1E1);
 renderer.domElement.id = "game";
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
+
 // Создаем управление
 const controls = new OrbitControls(camera, renderer.domElement);
+
 // Создание игрока
 var player = "";
 var drone  = "";
@@ -85,6 +141,7 @@ document.addEventListener('keydown', function(event)
     }
     if (event.key == ' ' || event.key == 'space')
     {
+        sounds.jump.play();
         if(params.space == 0) params.space = 60;
     }
     console.log(event.key);
@@ -100,7 +157,7 @@ function animate()
         if(scene.children[i].hasOwnProperty("isBlocker") && scene.children[i].isBlocker)
         {
             // Затем если впереди есть припятствие
-            if(32 > getDistance(scene.children[i],player))
+            if(32 > getDistance2D(scene.children[i],player))
             {
                 // Блокируем движение
                 params.blocked = true;
@@ -133,6 +190,7 @@ function animate()
                             mine.scale.set(7,7,7);
                             mine.isProp   = true;
                             mine.isHazard = true;
+                            mine.receiveShadow = true;
                             mine.position.set(
                                 scene.children[i].position.x,
                                 scene.children[i].position.y,
@@ -148,6 +206,8 @@ function animate()
                             mine.isRotating = true;
                             mine.isBouncing = true;
                             mine.isBounty   = true;
+                            mine.receiveShadow = true;
+                            mine.castShadow = true;
                             mine.position.set(
                                 scene.children[i].position.x,
                                 scene.children[i].position.y,
@@ -161,6 +221,8 @@ function animate()
                             mine.scale.set(12,12,12);
                             mine.isProp     = true;
                             mine.isBlocker  = true;
+                            mine.receiveShadow = true;
+                            mine.castShadow = true;
                             mine.position.set(
                                 scene.children[i].position.x,
                                 scene.children[i].position.y,
@@ -203,6 +265,7 @@ function animate()
             if(24 > getDistance(scene.children[i],player))
             {
                 scene.remove(scene.children[i]);
+                sounds.pickup.play();
                 params.score += 1;
                 continue;
             }
@@ -224,13 +287,16 @@ function animate()
     if(tiles == 0)
     {
         let geometry = new THREE.PlaneGeometry(34,34);
-        let material = new THREE.MeshStandardMaterial({ color: 0x008800 });
+        geometry.receiveShadow = true;
+        geometry.castShadow = true;
+        let darken = new THREE.MeshStandardMaterial({ color: 0x008800 });
+        let lighten = new THREE.MeshStandardMaterial({ color: 0x009900 });
         for(let y = 0; y < 3; y++)
         {
             for(let x = 0; x < 16; x++)
             {
                 console.log("Рендерим тайлы");
-                let tile = new THREE.Mesh(geometry, material);
+                let tile = new THREE.Mesh(geometry, (x % 2 ^ y % 2) ? darken : lighten);
                 tile.isTile = true;
                 tile.rotation.x = -90 * (Math.PI / 180);
                 tile.position.set(
@@ -238,6 +304,8 @@ function animate()
                     0, 
                     (y*32 - initial.y)
                 );
+                tile.receiveShadow = true;
+                tile.castShadow = true;
                 scene.add(tile);
             }
         }
@@ -251,6 +319,11 @@ function animate()
             // Если игрок не создан то создаем
             player = models.player.pig.clone();
             player.scale.set(10,10,10);
+            player.receiveShadow = true;
+            player.castShadow = true;
+
+            light.target = player;
+
             scene.add(player);
         }
         else
@@ -295,7 +368,11 @@ function animate()
             drone.isDrone = true;
             drone.scale.set(7,7,7);
             drone.position.set(-70,30,0);
+            drone.receiveShadow = true;
+            drone.castShadow = true;
             let base = models.player.drone.clone();
+            base.receiveShadow = true;
+            base.castShadow = true;
             let rotor1 = models.player.rotor.clone();
             let rotor2 = models.player.rotor.clone();
             let rotor3 = models.player.rotor.clone();
@@ -312,12 +389,17 @@ function animate()
             rotor2.position.z += 1.8;
             rotor3.position.z -= 1.8;
             rotor4.position.z -= 1.8;
+            base.castShadow = true;
+            base.receiveShadow = true;
             drone.add(base);
             drone.add(rotor1);
             drone.add(rotor2);
             drone.add(rotor3);
             drone.add(rotor4);
             scene.add(drone);
+
+            light.castShadow = true;
+            light.position.set(drone.position.x, drone.position.y, drone.position.z);
             
             console.log("Дрон поставлен");
         }
@@ -386,6 +468,7 @@ function animate()
             }
         }
     }
+    light.position.set(player.position.x, player.position.y + 200, player.position.z + 0);
     controls.update(); // Update orbit controls
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.render(scene, camera);
@@ -398,3 +481,7 @@ function onWindowResize()
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 window.addEventListener('resize', onWindowResize);
+
+setInterval(()=>{
+    ui.score = params.score;
+},100)

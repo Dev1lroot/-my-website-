@@ -1,0 +1,19 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+.ui{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 10px;
+}
+.block{
+    padding: 10px;
+    background-color: #00000020;
+    border-radius: 10px;
+    width: max-content;
+}
