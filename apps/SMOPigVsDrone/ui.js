@@ -4,6 +4,6 @@ var ui = new Vue({
         score: 0
     },
     methods: {
-
+        
     }
 });

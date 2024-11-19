@@ -73,7 +73,6 @@ camera.position.set(-260,275,306);
 // Создаем свет
 var light = new THREE.DirectionalLight(0xFFFFFF, 5);
 light.position.set(0,300,0).normalize();
-light.target = lightTarget;
 light.castShadow = true;
 light.shadow.camera.visible = true;
 light.shadow.mapSize.width = 1024
@@ -264,6 +263,7 @@ function animate()
                 scene.remove(scene.children[i]);
                 sounds.pickup.play();
                 params.score += 1;
+                ui.score += 1;
                 continue;
             }
         }
@@ -478,7 +478,3 @@ function onWindowResize()
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 window.addEventListener('resize', onWindowResize);
-
-setInterval(()=>{
-    ui.score = params.score;
-},100)
