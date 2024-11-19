@@ -73,9 +73,6 @@ camera.position.set(-260,275,306);
 // Создаем свет
 var light = new THREE.DirectionalLight(0xFFFFFF, 5);
 light.position.set(0,300,0).normalize();
-var lightTarget = new THREE.Object3D();
-lightTarget.position.set(0, 0, 0);
-lightTarget.protected = true;
 light.target = lightTarget;
 light.castShadow = true;
 light.shadow.camera.visible = true;
@@ -91,10 +88,10 @@ light.shadow.camera.right = 400;
 light.shadow.camera.left = -200;
 light.shadow.camera.bottom = -200;
 
-scene.add( light );
+scene.add(light);
 
-const helper = new THREE.CameraHelper(light.shadow.camera)
-scene.add(helper)
+// const helper = new THREE.CameraHelper(light.shadow.camera)
+// scene.add(helper)
 
 // Создаем базовое освещение
 var alight = new THREE.AmbientLight( 0xFFFFFF, 0.5 );
