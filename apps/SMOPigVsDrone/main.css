@@ -1,6 +1,7 @@
 *{
     margin: 0px;
     padding: 0px;
+    font-family: sans-serif;
 }
 .ui{
     position: absolute;
@@ -16,4 +17,43 @@
     background-color: #00000020;
     border-radius: 10px;
     width: max-content;
+}
+.bottom-interface{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 128px;
+}
+@keyframes pulse {
+    0% {
+      transform: scale(1);
+      outline: 4px solid #FFF;
+    }
+    50% {
+      transform: scale(1.2);
+      outline: 4px solid #ff5d1d;
+    }
+    100% {
+      transform: scale(1);
+      outline: 4px solid #FFF;
+    }
+}
+.bottom-interface a{
+    display: flex;
+    font-weight: bold;
+    font-size: 21px;
+    justify-content: center;
+    align-items: center;
+    height: 64px;
+    text-align: center;
+    min-width: 30vw;
+    width: 300px;
+    background-color: #FFF;
+    border-radius: 24px;
+    color: #000 !important;
+    animation: pulse 2s infinite;
 }

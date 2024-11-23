@@ -46,7 +46,7 @@ function getDistance(object1, object2) {
     return distance;
 }
 // Загружаем модели игроков
-for(let playerModel of ["mine","pig","laundry","drone","rotor","spruce","fridge","toilet"])
+for(let playerModel of ["mine","pig","laundry","drone","rotor","spruce","fridge","toilet","yozh"])
 {
     loader.load(`./assets/models/${playerModel}.glb`, function ( gltf ) {
         gltf.scene.traverse( function( child ) { 
@@ -100,7 +100,7 @@ scene.add( alight );
 
 // Создаем рендерер
 const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setClearColor(0xE1E1E1);
+renderer.setClearColor(0x00FFFF);
 renderer.domElement.id = "game";
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -112,9 +112,15 @@ const controls = new OrbitControls(camera, renderer.domElement);
 // Создание игрока
 var player = "";
 var drone  = "";
-let initial = {y: 0, x: 256}
+let initial = {y: 0, x: 400}
 var player_pos = {
     y: 1
+}
+var game = {
+    speed: 2,
+    end: -415,
+    tilesize: 34,
+    tiles: 24
 }
 var params = {
     health: 0,
@@ -129,11 +135,11 @@ document.addEventListener('keydown', function(event)
 {
     if (event.key == 'A' || event.key == 'a')
     {
-        if(player_pos.y > 0) player_pos.y -= 1;
+        if(player_pos.y > 1) player_pos.y -= 1;
     }
     if (event.key == 'D' || event.key == 'd')
     {
-        if(2 > player_pos.y) player_pos.y += 1;
+        if(3 > player_pos.y) player_pos.y += 1;
     }
     if (event.key == ' ' || event.key == 'space')
     {
@@ -153,7 +159,7 @@ function animate()
         if(scene.children[i].hasOwnProperty("isBlocker") && scene.children[i].isBlocker)
         {
             // Затем если впереди есть припятствие
-            if(32 > getDistance2D(scene.children[i],player))
+            if(31 > getDistance2D(scene.children[i],player))
             {
                 // Блокируем движение
                 params.blocked = true;
@@ -162,30 +168,36 @@ function animate()
     }
     for(let i in scene.children)
     {
+        // Движимое
+        if(scene.children[i].hasOwnProperty("isMoving") && scene.children[i].isMoving)
+        {
+            if(!params.blocked) scene.children[i].position.x -= game.speed;
+        }
+        
         // Проходимся по тайлам
         if(scene.children[i].hasOwnProperty("isTile") && scene.children[i].isTile)
         {
             tiles += 1;
-            // Двигаем тайл вперед
-            if(!params.blocked) scene.children[i].position.x -= 1;
-            if(scene.children[i].position.x < -257)
+
+            if(scene.children[i].position.x < game.end)
             {
                 // Перемещаем тайл в начало карты
                 scene.children[i].position.x = initial.x;
-                // Создаем проп или не создаем проп
+
+                // Проверяем загрузились ли модели
                 if(models.player.hasOwnProperty("mine"))
                 {
-                    if(Math.round(Math.random() * 10) == 5)
+                    // Если это пограничный тайл то там рисуем блокеры
+                    if(scene.children[i].hasOwnProperty("isBorder") && scene.children[i].isBorder)
                     {
-                        const t = new LootTable(["mine","laundry","spruce","toilet","fridge"])
+                        const t = new LootTable(["mine","spruce","yozh"])
                         const item = t.randomItem();
-                        
-                        if(item == "mine")
+                        if(item == "yozh")
                         {
-                            let mine = models.player.mine.clone();
-                            mine.scale.set(7,7,7);
-                            mine.isProp   = true;
-                            mine.isHazard = true;
+                            let mine = models.player.yozh.clone();
+                            mine.scale.set(80,80,80);
+                            mine.isProp        = true;
+                            mine.isMoving      = true;
                             mine.receiveShadow = true;
                             mine.position.set(
                                 scene.children[i].position.x,
@@ -194,16 +206,13 @@ function animate()
                             );
                             scene.add(mine);
                         }
-                        if(["toilet","fridge","laundry"].includes(item))
+                        if(item == "mine")
                         {
-                            let mine = models.player[item].clone();
+                            let mine = models.player.mine.clone();
                             mine.scale.set(7,7,7);
-                            mine.isProp     = true;
-                            mine.isRotating = true;
-                            mine.isBouncing = true;
-                            mine.isBounty   = true;
+                            mine.isProp        = true;
+                            mine.isMoving      = true;
                             mine.receiveShadow = true;
-                            mine.castShadow = true;
                             mine.position.set(
                                 scene.children[i].position.x,
                                 scene.children[i].position.y,
@@ -216,7 +225,7 @@ function animate()
                             let mine = models.player.spruce.clone();
                             mine.scale.set(12,12,12);
                             mine.isProp     = true;
-                            mine.isBlocker  = true;
+                            mine.isMoving   = true;
                             mine.receiveShadow = true;
                             mine.castShadow = true;
                             mine.position.set(
@@ -225,6 +234,65 @@ function animate()
                                 scene.children[i].position.z
                             );
                             scene.add(mine);
+                        }
+                    }
+                    else
+                    {
+                        // Если это обычный тайл то там рисуем разные объекты с шансом
+                        if(Math.round(Math.random() * 10) == 5)
+                        {
+                            const t = new LootTable(["mine","laundry","spruce","toilet","fridge"])
+                            const item = t.randomItem();
+                            
+                            if(item == "mine")
+                            {
+                                let mine = models.player.mine.clone();
+                                mine.scale.set(7,7,7);
+                                mine.isProp        = true;
+                                mine.isHazard      = true;
+                                mine.isMoving      = true;
+                                mine.receiveShadow = true;
+                                mine.position.set(
+                                    scene.children[i].position.x,
+                                    scene.children[i].position.y,
+                                    scene.children[i].position.z
+                                );
+                                scene.add(mine);
+                            }
+                            if(["toilet","fridge","laundry"].includes(item))
+                            {
+                                let mine = models.player[item].clone();
+                                mine.scale.set(7,7,7);
+                                mine.isProp     = true;
+                                mine.isRotating = true;
+                                mine.isBouncing = true;
+                                mine.isMoving   = true;
+                                mine.isBounty   = true;
+                                mine.receiveShadow = true;
+                                mine.castShadow = true;
+                                mine.position.set(
+                                    scene.children[i].position.x,
+                                    scene.children[i].position.y,
+                                    scene.children[i].position.z
+                                );
+                                scene.add(mine);
+                            }
+                            if(item == "spruce")
+                            {
+                                let mine = models.player.spruce.clone();
+                                mine.scale.set(12,12,12);
+                                mine.isProp     = true;
+                                mine.isBlocker  = true;
+                                mine.isMoving   = true;
+                                mine.receiveShadow = true;
+                                mine.castShadow = true;
+                                mine.position.set(
+                                    scene.children[i].position.x,
+                                    scene.children[i].position.y,
+                                    scene.children[i].position.z
+                                );
+                                scene.add(mine);
+                            }
                         }
                     }
                 }
@@ -246,12 +314,10 @@ function animate()
         // Проходимся по пропам
         if(scene.children[i].hasOwnProperty("isProp") && scene.children[i].isProp)
         {
-            // Двигаем проп вперед
-            if(!params.blocked) scene.children[i].position.x -= 1;
-            if(scene.children[i].position.x < -257)
+            // Удаляем проп если он далеко
+            if(scene.children[i].position.x < game.end)
             {
                 scene.remove(scene.children[i]);
-                continue;
             }
         }
         // Проходимся по подбераемым вещам
@@ -264,7 +330,6 @@ function animate()
                 sounds.pickup.play();
                 params.score += 1;
                 ui.score += 1;
-                continue;
             }
         }
         // Проходимся по обьектам угрозы
@@ -276,7 +341,6 @@ function animate()
                 alert("Игра окончена, произошла бавовна");
                 scene.remove(scene.children[i]);
                 params.health -= 1;
-                continue;
             }
         }
     }
@@ -288,18 +352,20 @@ function animate()
         geometry.castShadow = true;
         let darken = new THREE.MeshStandardMaterial({ color: 0x008800 });
         let lighten = new THREE.MeshStandardMaterial({ color: 0x009900 });
-        for(let y = 0; y < 3; y++)
+        for(let y = 0; y < 5; y++)
         {
-            for(let x = 0; x < 16; x++)
+            for(let x = 0; x < game.tiles; x++)
             {
                 console.log("Рендерим тайлы");
                 let tile = new THREE.Mesh(geometry, (x % 2 ^ y % 2) ? darken : lighten);
                 tile.isTile = true;
+                tile.isMoving = true;
+                if(y == 0 || y == 4) tile.isBorder = true;
                 tile.rotation.x = -90 * (Math.PI / 180);
                 tile.position.set(
-                    x*32 - initial.x, 
+                    x*game.tilesize - initial.x, 
                     0, 
-                    (y*32 - initial.y)
+                    (y*game.tilesize - initial.y)
                 );
                 tile.receiveShadow = true;
                 tile.castShadow = true;
@@ -307,7 +373,6 @@ function animate()
             }
         }
     }
-    requestAnimationFrame(animate);
     if(models.player.hasOwnProperty("pig"))
     {
         // Создаем игрока
@@ -325,12 +390,12 @@ function animate()
         }
         else
         {
-            const destination = 32 * player_pos.y;
+            const destination = game.tilesize * player_pos.y;
             // Если игрок создан то двигаем его в зависимости от кнопок
             if(player.position.z != destination);
             {
-                if(player.position.z > destination) player.position.z -= 1;
-                if(destination > player.position.z) player.position.z += 1;
+                if(player.position.z > destination) player.position.z -= 4;
+                if(destination > player.position.z) player.position.z += 4;
             }
             // Анимация шагания свиньи
             player.rotation.z = 0;
@@ -403,7 +468,7 @@ function animate()
         else
         {
             // Расстояние по горизонтали влево/вправо от дрона, доводка
-            const destination = 32 * player_pos.y;
+            const destination = game.tilesize * player_pos.y;
             
             // Если игрок создан то двигаем их
             if(drone.position.z != destination);
@@ -439,14 +504,14 @@ function animate()
             // Обрабатываем прыжок
             if(params.space > player.position.y)
             {
-                player.position.y += 2;
+                player.position.y += 4;
             }
             else
             {
                 if(params.space > 0)
                 {
-                    params.space -= 1;
-                    player.position.y -= 1;
+                    params.space -= 2;
+                    player.position.y -= 2;
                 }
             }
             // Если дрон настиг свинью
@@ -465,10 +530,11 @@ function animate()
             }
         }
     }
-    light.position.set(player.position.x, player.position.y + 200, player.position.z + 0);
+    if(typeof player !== "string") light.position.set(player.position.x, player.position.y + 200, player.position.z + 0);
     controls.update(); // Update orbit controls
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.render(scene, camera);
+    setTimeout(() => animate(),1000/144);
 }
 animate();
 function onWindowResize()
