@@ -9,6 +9,13 @@ var app = Vue.createApp({
                     text: "",
                 }
             },
+            navigation: [
+                { active: true, path: "",           icon: "fa-solid fa-house",          displayName: "Main" },
+                { active: true, path: "activity",   icon: "fa-solid fa-person-running", displayName: "Activity" },
+                { active: true, path: "bio",        icon: "fa-solid fa-book-skull",     displayName: "Bio" },
+                { active: true, path: "projects",   icon: "fa-solid fa-code-branch",    displayName: "Projects" },
+                { active: true, path: "contact_me", icon: "fa-solid fa-envelope",       displayName: "Contact Me" }
+            ],
             window: {
                 innerWidth: 0,
             },

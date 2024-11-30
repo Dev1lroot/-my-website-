@@ -30,6 +30,14 @@
     background-position: center;
     text-align: center;
 }
+.menu nav a.active{
+    background: #FFFFFF20;
+    transition: all .0s;
+}
+.menu nav a.active:hover{
+    background-color: #FFFFFF25;
+    transition: all .0s;
+}
 .menu nav a:first-child{
     margin-bottom: 16px;
     background-color: var(--color-brand);

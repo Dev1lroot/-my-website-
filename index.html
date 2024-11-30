@@ -112,11 +112,7 @@
         <section class="menu" :style="{ filter: (dialogs.length > 0) ? 'blur(10px)' : 'unset'}">
             <nav>
                 <a href="/downloads/cv.pdf" download=""><i class="fa-solid fa-download"></i><span>Download CV</span></a>
-                <a @click="page = ''"><i class="fa-solid fa-house"></i><span>Main</span></a>
-                <a @click="page = 'activity'"><i class="fa-solid fa-person-running"></i><span>Activity</span></a>
-                <a @click="page = 'bio'"><i class="fa-solid fa-book-skull"></i><span>Bio</span></a>
-                <a @click="page = 'projects'"><i class="fa-solid fa-code-branch"></i><span>Projects</span></a>
-                <a @click="page = 'contact_me'"><i class="fa-solid fa-envelope"></i><span>Contact Me</span></a>
+                <a v-for="menuItem in navigation" :class="(page == menuItem.path) ? 'active' : ''" @click="page = menuItem.path"><i :class="menuItem.icon"></i><span>{{menuItem.displayName}}</span></a>
             </nav>
         </section>
         <section class="page" :style="{ filter: (dialogs.length > 0) ? 'blur(10px)' : 'unset'}">
