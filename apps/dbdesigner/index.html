@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Free Database Designer</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="vue.js"></script>
+	<script type="text/javascript" src="sortable.min.js"></script>
+	<script type="text/javascript" src="vuedraggable.umd.min.js"></script>
+</head>
+<body>
+	<canvas id="relations"></canvas>
+	<div class="workspace" id="workspace" @mouseup="unbindTable" @mousemove="moveTable">
+		<div class="navigation">
+			<li>Project
+				<ul>
+					<button v-on:click="saveProject()">(S)ave Project</button>
+					<button v-on:click="openProject()">(O)pen Project</button>
+				</ul>
+			</li>
+			<li>Export
+				<ul>
+					<button v-on:click="exportSQL()">InnoDB (SQL)</button>
+					<button v-on:click="exportModel()">Laravel (Model)</button>
+					<button v-on:click="exportModel()">DJango (Model)</button>
+				</ul>
+			</li>
+			<button v-on:click="createTable()">+</button>
+		</div>
+		<div class="table" v-for="table,i in tables" :style="'left:'+table.window.x+'px;top:'+table.window.y+'px;z-index:'+table.window.z">
+			<div class="head" @mousedown="bindTable($event,i)">
+				{{table.name}}
+				<button class="create_field" v-on:click="createField(table)">+</button>
+				<button class="delete_table" v-on:click="deleteTable(i)">x</button>
+			</div>
+			<draggable v-model="table.data" class="body" :options="{handle:'.relation'}">
+				<div class="field" v-for="field,f in table.data">
+					<button 
+					v-if="point.t1 == -1 & isPrimary(i,f) == true" 
+					class="relation primary" 
+					v-on:click="createRelation(i,f)"></button>
+					<button 
+					v-if="point.t1 == -1 & isEndpoint(i,f) == false & isPrimary(i,f) == false" 
+					class="relation" 
+					v-on:click="createRelation(i,f)"></button>
+					<button 
+					v-if="point.t1 == -1 & isEndpoint(i,f) == true" 
+					class="relation endpoint"
+					v-on:click="deleteEndpoint(i,f)">
+						<div class="tip">Unlink</div>
+					</button>
+					<button 
+					v-if="point.t1 != -1 & point.t1 != i & targetCheckup(i,f).status" 
+					class="relation target" 
+					v-on:click="createRelation(i,f)">
+						<div class="tip">Connect</div>
+					</button>
+					<button 
+					v-if="point.t1 != -1 & point.t1 != i & !targetCheckup(i,f).status" 
+					class="relation" >
+						<div class="tip">{{targetCheckup(i,f).report}}</div>
+					</button>
+					<button v-if="point.t1 != -1 & point.t1 == i & point.f1 == f" v-on:click="undoRelation()" class="relation source">
+						<div class="tip">Undo</div>
+					</button>
+					<button v-if="point.t1 != -1 & point.t1 == i & point.f1 != f" class="relation disabled" v-on:click="swap(i,f)">
+						<div class="tip">Swap fields</div>
+					</button>
+					<input v-model="field.name" :tabindex="((i+1)*100000)+(f+1)">
+					<select v-model="field.type" :tabindex="((i+1)*100000)+((f+1)*100)">
+						<option v-for="t in types" :value="t">{{t}}</option>
+					</select>
+					<input type="number" min="1" step="1" v-model="field.size" :tabindex="((i+1)*100000)+((f+1)*1000)" @change="handleSize(i,f)">
+					<button v-on:click="deleteField(i,f)">x</button>
+				</div>
+			</draggable>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var designer = new Vue({
+			el: "#workspace",
+			data: {
+				point: {t1:-1,f1:-1,t2:-1,f2:-1},
+				types:  ["int","bigint","varchar","text"],
+				window: -1,
+				offset: [0,0],
+				tables: [],
+				prefabs: [
+					{name:"id",type:"int",size:11},
+					{name:"name",type:"varchar",size:24},
+					{name:"created_at",type:"int",size:11},
+					{name:"updated_at",type:"int",size:11}
+				],
+				relations: []
+			},
+			methods: {
+				insertTable: function(name,data)
+				{
+					var cx = parseInt(window.innerWidth/2) 
+					var cy = parseInt(window.innerHeight/2)
+					this.tables.push({name:name,window:{x:cx,y:cy,z:0},data:data});
+				},
+				createField: function(table)
+				{
+					var field = {name:"generic",type:"varchar",size:32}
+					if(this.prefabs.length > table.data.length)
+					{
+						field = this.prefabs[table.data.length];
+					}
+					// Быстрый способ передать объект а не ссылку на объект
+					table.data.push(this.createInstance(field));
+				},
+				insertField: function(table,field)
+				{
+					table.data.push(field);
+				},
+				createTable: function()
+				{	
+					var name = prompt("table name:")
+					if(name.length > 0)
+					{
+						this.insertTable(name,[this.createInstance(this.prefabs[0])]);
+					}
+				},
+				selectRelations: function(table,field)
+				{
+					var sources = [];
+					var targets = [];
+					for(var c in this.relations)
+					{
+						if(this.relations[c].t1 == table && this.relations[c].f1 == field)
+						{
+							// Собираем места где это поле использовалось как источник
+							sources.push(c);
+						}
+						if(this.relations[c].t2 == table && this.relations[c].f2 == field)
+						{
+							// Собираем места где это поле было выбрано как эндпоинт (макс 1)
+							targets.push(c);
+						}
+					}
+					return {sources: sources, targets: targets}
+				},
+				isEndpoint: function(table,field)
+				{
+					if(this.selectRelations(table,field).targets.length > 0)
+					{
+						return true;
+					}
+					return false;
+				},
+				isPrimary: function(table,field)
+				{
+					if(this.selectRelations(table,field).sources.length > 0)
+					{
+						return true;
+					}
+					return false;
+				},
+				targetCheckup: function(t,f)
+				{
+					var field_validation = this.sameFields(this.point.t1,this.point.f1,t,f);
+
+					if(!field_validation.status)
+					{
+						return field_validation;
+					}
+
+					if(this.isEndpoint(t,f))
+					{
+						return {status:false, report: "Endpoint alredy taken"}
+					}
+
+					if(this.isPrimary(t,f))
+					{
+						return {status:false, report: "Cannot apply to primary key"}
+					}
+
+					return {status:true}
+				},
+				deleteEndpoint: function(table,field)
+				{
+					if(this.selectRelations(table,field).targets.length > 0)
+					{
+						var rel_pos = this.selectRelations(table,field).targets[0];
+						this.relations.splice(rel_pos, 1);
+					}
+				},
+				deleteRelations: function(table,field)
+				{
+					for(var rel of this.selectRelations(table,field).targets)
+					{
+						this.relations.splice(rel, 1);
+					}
+					for(var rel of this.selectRelations(table,field).sources)
+					{
+						this.relations.splice(rel, 1);
+					}
+				},
+				handleSize: function(table,field)
+				{
+					var f = this.tables[table].data[field];
+					f.size = parseInt(f.size);
+					if(f.type == "int" && f.size > 11)
+					{
+						f.type = "bigint";
+					}
+					if(f.type == "bigint" && 12 > f.size)
+					{
+						f.type = "int";
+					}
+					if(f.type == "varchar" && f.size > 255)
+					{
+						f.type = "text";
+					}
+					if(f.type == "text" && 256 > f.size)
+					{
+						f.type = "varchar";
+					}
+					//this.tables[table].data[field].type = f.type;
+				},
+				deleteTable: function(table_id)
+				{
+					for(f in this.tables[table_id].data)
+					{
+						this.deleteRelations(table_id,f);
+					}
+					this.tables.splice(table_id,1);
+				},
+				swapRelations(table,field_1,field_2)
+				{
+					var a = this.selectRelations(table,field_1);
+					var b = this.selectRelations(table,field_2);
+
+					for(var o of a.sources)
+					{
+						this.relations[o].f1 = field_2;
+					}
+					for(var o of a.targets)
+					{
+						this.relations[o].f2 = field_2;
+					}
+					for(var o of b.sources)
+					{
+						this.relations[o].f1 = field_1;
+					}
+					for(var o of b.targets)
+					{
+						this.relations[o].f2 = field_1;
+					}
+				},
+				swap(table,f2)
+				{
+					var f1 = this.point.f1;
+					this.swapFields(table,f1,f2);
+					this.swapRelations(table,f1,f2);
+					this.point = {t1:-1,f1:-1,t2:-1,f2:-1};
+				},
+				createInstance(object)
+				{
+					return JSON.parse(JSON.stringify(object));
+				},
+				swapFields(table,field_1,field_2)
+				{
+					var a = this.createInstance(this.tables[table].data[field_1]);
+					var b = this.createInstance(this.tables[table].data[field_2]);
+					this.tables[table].data[field_1] = b;
+					this.tables[table].data[field_2] = a;
+				},
+				deleteField: function(table_id,field_id)
+				{
+					this.deleteRelations(table_id,field_id);
+
+					// Двигаем реляции под строкой вверх
+					for(f in this.tables[table_id].data)
+					{
+						if(f > field_id)
+						{
+							var rels = this.selectRelations(table_id,f);
+
+							for(r of rels.sources)
+							{
+								this.relations[r].f1 = parseInt(this.relations[r].f1) - 1;
+							}
+
+							for(r of rels.targets)
+							{
+								this.relations[r].f2 = parseInt(this.relations[r].f2) - 1;
+							}
+
+							console.log(rels)
+						}
+					}
+
+					this.tables[table_id].data.splice(field_id, 1);
+				},
+				save(data, filename, type) {
+				    var file = new Blob([data], {type: type});
+				    if (window.navigator.msSaveOrOpenBlob) // IE10+
+				        window.navigator.msSaveOrOpenBlob(file, filename);
+				    else {
+				        var a = document.createElement("a"),
+				                url = URL.createObjectURL(file);
+				        a.href = url;
+				        a.download = filename;
+				        document.body.appendChild(a);
+				        a.click();
+				        setTimeout(function() {
+				            document.body.removeChild(a);
+				            window.URL.revokeObjectURL(url);  
+				        }, 0); 
+				    }
+				},
+				open: function(func) {
+					readFile = function(e)
+					{
+						var file = e.target.files[0];
+						if (!file)
+						{
+							return;
+						}
+						var reader = new FileReader();
+						reader.onload = function(e)
+						{
+							var contents = e.target.result;
+							fileInput.func(contents)
+							document.body.removeChild(fileInput)
+						}
+						reader.readAsText(file)
+					}
+					fileInput = document.createElement("input")
+					fileInput.type='file'
+					fileInput.style.display='none'
+					fileInput.onchange=readFile
+					fileInput.func=func
+					document.body.appendChild(fileInput)
+
+					var eventMouse = document.createEvent("MouseEvents")
+					eventMouse.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+					fileInput.dispatchEvent(eventMouse)
+				},
+				saveProject()
+				{
+					this.save(JSON.stringify({tables:this.tables,relations:this.relations}),"unnamed-project.json","text/plain");
+				},
+				exportSQL()
+				{
+					var query = "";
+					for(table in this.tables)
+					{
+						var fields = [];
+						for(field in this.tables[table].data)
+						{
+							var f = this.tables[table].data[field];
+
+							// Добавляем поле в таблицу
+							fields.push(`${f.name} ${f.type}(${f.size})${(field == 0 && f.name == "id") ? ' NOT NULL AUTO_INCREMENT' : ''}`);
+
+							// Если первое поле это ID то делаем его праймэри
+							if(field == 0 && f.name == "id" && f.type == "int")
+							{
+								fields.push(`PRIMARY KEY (${f.name})`);
+							}
+
+							// Добавляем реляции в таблицу
+							if(this.selectRelations(table,field).targets.length > 0)
+							{
+								var rel = this.selectRelations(table,field).targets[0];
+								var src_table = this.tables[this.relations[rel].t1].name;
+								var src_field = this.tables[this.relations[rel].t1].data[this.relations[rel].f1].name;
+								fields.push(`FOREIGN KEY (${f.name}) REFERENCES ${src_table}(${src_field})`);
+							}
+						}
+						var	t = this.tables[table];
+						var o = fields.join(",\n\t");
+						query += `CREATE TABLE ${t.name}(\n\t${o}\n) ENGINE=INNODB;\n`;
+					}
+					this.save(query,"project.sql","text/plain");
+				},
+				openProject()
+				{
+					var comp = this;
+					this.open(function(file){
+						try
+						{
+							var data = JSON.parse(file);
+							comp.tables = data.tables;
+							comp.relations = data.relations;
+						}
+						catch(e)
+						{
+							alert("Corrupted or damaged project");
+						}
+					});
+				},
+				sameFields(t1,f1,t2,f2)
+				{
+					if(t1 > -1)
+					{
+						if(this.tables[t1].data[f1].type != this.tables[t2].data[f2].type)
+						{
+							return {status: false, report: "type mismatch"}
+						}
+						if(this.tables[t1].data[f1].size != this.tables[t2].data[f2].size)
+						{
+							return {status: false, report: "size mismatch"}
+						}
+						return {status: true}
+					}
+					return {status: false, report: "table A is empty"}
+				},
+				createCascade: function(table)
+				{
+					
+				},
+				undoRelation()
+				{
+					this.point = {t1:-1,f1:-1,t2:-1,f2:-1}
+				},
+				createRelation(t,f)
+				{
+					if(this.point.t1 == -1)
+					{
+						this.point.t1 = t;
+						this.point.f1 = f;
+					}
+					else
+					{
+						this.point.t2 = t;
+						this.point.f2 = f;
+
+						this.relations.push(this.point);
+
+						this.point = {t1:-1,f1:-1,t2:-1,f2:-1};
+					}
+				},
+				bindTable: function(event, w)
+				{
+					this.window    = w;
+					this.offset[0] = event.offsetX;
+					this.offset[1] = event.offsetY;
+					this.reorderTables(w)
+				},
+				unbindTable: function(w)
+				{
+					this.window = -1;
+				},
+				moveTable: function(event)
+				{
+					//console.log(event);
+					if(this.window > -1)
+					{
+						this.tables[this.window].window.x = event.clientX-this.offset[0];
+						this.tables[this.window].window.y = event.clientY-this.offset[1];
+					}
+				},
+				reorderTables(i)
+				{
+					for(t in this.tables)
+					{
+						this.tables[t].window.z = 0;
+					}
+					this.tables[i].window.z = 1;
+				}
+			}
+		})
+		var canvas = document.querySelector('#relations');
+		setInterval(function(){
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			context = canvas.getContext("2d");
+			context.clearRect(0, 0, window.innerWidth, window.innerHeight)
+			context.lineWidth = 2;
+
+
+			// Рисуем реляции кривыми
+			for(r of designer.relations)
+			{
+				var tA = designer.tables[r.t1];
+				var tB = designer.tables[r.t2];
+
+				if(tA.window.z > 0 || tB.window.z > 0)
+				{
+					context.strokeStyle = '#CCC';
+				}
+				else
+				{
+					context.strokeStyle = '#888';
+				}
+
+				var tpAx = tA.window.x;
+				var tpBx = tB.window.x;
+				var tpAy = tA.window.y + (24 * r.f1) + 45;
+				var tpBy = tB.window.y + (24 * r.f2) + 45
+
+			    var dist = 100;
+
+			    if(Math.abs(tpAx - tpBx) <= 100)
+			    {
+			    	// Усиливаем модуль безье чтобы связи на одной параллели не шли внахлёст
+			    	dist += 20*r.f1;
+			    	// если таблицы плюс минус параллельны, рисуем дугу
+			    	context.beginPath();
+			    	context.moveTo(tpAx,tpAy);
+			    	context.bezierCurveTo(tpAx - dist,tpAy,tpBx - dist,tpBy,tpBx,tpBy);
+			    }
+			    else
+			    {
+			    	if(tpAx > tpBx)
+			    	{
+			    		if(tpAx - tpBx > 320)
+			    		{
+			    			// Если связь идет в нахлест таблицы
+			    			tpBx+=320;
+			    		}
+
+			    		// Рисуем зигзаг
+			    		context.beginPath();
+			    		context.moveTo(tpAx,tpAy);
+			    		context.bezierCurveTo(tpAx - dist,tpAy,tpBx + dist,tpBy,tpBx,tpBy);
+			    	}
+			    	else
+			    	{
+			    		if(tpBx - tpAx > 320)
+			    		{
+			    			// Если связь идет в нахлест таблицы
+			    			tpAx+=320;
+			    		}
+
+			    		// Рисуем зигзаг
+			    		context.beginPath();
+			    		context.moveTo(tpAx,tpAy);
+			    		context.bezierCurveTo(tpAx + dist,tpAy,tpBx - dist,tpBy,tpBx,tpBy);
+			    	}
+			    }
+			    context.stroke();
+			}
+			// // Рисуем коннекты реляций
+			// if(designer.point.t1 != -1)
+			// {
+			// 	// Если начато создание реляции, рисуем круг на месте её старта
+			// 	var t = designer.tables[designer.point.t1];
+			// 	var f = t.data[designer.point.f1];
+
+			// 	context.beginPath();
+			// 	context.fillStyle = "#FFF";
+			// 	context.arc(t.window.x + 6,t.window.y + (24 * designer.point.f1) + 45, 10, 0, 2 * Math.PI);
+			// 	context.fill();
+
+			// 	// Рисуем доступные круги на месте куда можно присоединить реляцию учитывая тип.
+			// 	for(rt in designer.tables)
+			// 	{
+			// 		if(rt != designer.point.t1)
+			// 		{
+			// 			for(rf in designer.tables[rt].data)
+			// 			{
+			// 				if(designer.tables[rt].data[rf].type == f.type)
+			// 				{
+			// 					context.beginPath();
+			// 					context.strokeStyle = '#FFF';
+			// 					context.arc(designer.tables[rt].window.x + 6,designer.tables[rt].window.y + (24 * rf) + 45, 10, 0, 2 * Math.PI);
+			// 					context.stroke();
+			// 				}
+			// 			}
+			// 		}
+			// 	}
+			// }
+		}, 30);
+		// Управление с клавиатуры
+		var map = {}; // You could also use an array
+		onkeydown = onkeyup = function(e){
+			e = e || event; // to deal with IE
+			map[e.code] = e.type == 'keyup';
+			if(map.Backquote == true)
+			{
+				if(map.KeyN == true)
+				{
+					designer.createTable();
+					map = {};
+				}
+				if(map.KeyO == true)
+				{
+					designer.openProject();
+					map = {};
+				}
+				if(map.KeyS == true)
+				{
+					designer.saveProject();
+					map = {};
+				}
+				if(map.KeyE == true)
+				{
+					designer.exportSQL();
+					map = {};
+				}
+			}
+		}
+		/*
+			<button v-on:click="saveProject()">(S)ave Project</button>
+			<button v-on:click="openProject()">(O)pen Project</button>
+			<button v-on:click="createTable()">(N)ew Table</button>
+		*/
+	</script>
+</body>
+</html>
