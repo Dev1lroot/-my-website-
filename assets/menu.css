@@ -42,7 +42,7 @@
     margin-bottom: 16px;
     background-color: var(--color-brand);
 }
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1064px) {
     .menu nav a span{
         display: none;
     }

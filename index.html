@@ -146,7 +146,9 @@
                     <div class="block" @click="updateDavy()">
                         Playtime: {{ convertTimeToStr(my.life.spent) }}
                         <div class="progress">
-                            <div :style="{width: my.life.percent + '%'}"></div>
+                            <div v-for="event in my.life.events" 
+                                 :title="event.title" 
+                                 :style="{backgroundColor: event.color, width: (calculatePercentage(event) * (my.life.percent*0.01)) + '%'}"></div>
                         </div>
                     </div>
                 </div>

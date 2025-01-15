@@ -5,8 +5,11 @@
     border-radius: 4px;
     overflow: hidden;
     margin-top: 10px;
+    display: flex;
 }
 .progress > *{
     height: 8px;
     background-color: var(--color-brand);
+    display: inline-block;
+    vertical-align: super;
 }

@@ -133,11 +133,11 @@ var params = {
 }
 document.addEventListener('keydown', function(event)
 {
-    if (event.key == 'A' || event.key == 'a')
+    if (event.key == 'A' || event.key == 'a' || event.key == "ArrowUp")
     {
         if(player_pos.y > 1) player_pos.y -= 1;
     }
-    if (event.key == 'D' || event.key == 'd')
+    if (event.key == 'D' || event.key == 'd' || event.key == "ArrowDown")
     {
         if(3 > player_pos.y) player_pos.y += 1;
     }
@@ -476,12 +476,12 @@ function animate()
                 drone.rotation.x = 0;
                 if(drone.position.z > destination)
                 {
-                    drone.position.z -= 0.5;
+                    drone.position.z -= 0.5 + (0.1*ui.score);
                     drone.rotation.x = 0.1;
                 }
                 if(destination > drone.position.z)
                 {
-                    drone.position.z += 0.5;
+                    drone.position.z += 0.5 + (0.1*ui.score);
                     drone.rotation.x = -0.1;
                 }
             }
@@ -534,6 +534,7 @@ function animate()
     controls.update(); // Update orbit controls
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.render(scene, camera);
+    //game.speed = 2 + (0.1 * ui.score);
     setTimeout(() => animate(),1000/144);
 }
 animate();

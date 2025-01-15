@@ -7,6 +7,56 @@ var app = Vue.createApp({
                     remaining: 0,
                     percent: 0,
                     text: "",
+                    events: [
+                        {
+                            title: "Life in Russia",
+                            color: "rgb(94, 57, 9)",
+                            times: {
+                                from: new Date("1999-04-25T16:00:00+03:00").getTime(),
+                                to:   new Date("2022-05-06T18:00:00+05:00").getTime()
+                            }
+                        },
+                        {
+                            title: "Imprisonment",
+                            color: "#AF0000",
+                            times: {
+                                from: new Date("2022-05-06T18:00:00+05:00").getTime(),
+                                to:   new Date("2022-08-08T15:00:00+05:00").getTime()
+                            }
+                        },
+                        {
+                            title: "Life in Russia",
+                            color: "rgb(94, 57, 9)",
+                            times: {
+                                from: new Date("2022-05-06T18:00:00+05:00").getTime(),
+                                to:   new Date("2022-11-12T22:00:00+03:00").getTime()
+                            }
+                        },
+                        {
+                            title: "Life in Armenia",
+                            color: "#FF7F27",
+                            times: {
+                                from: new Date("2022-11-12T22:00:00+03:00").getTime(),
+                                to:   new Date("2023-02-05T02:00:00+04:00").getTime()
+                            }
+                        },
+                        {
+                            title: "Life in republic of Georgia",
+                            color: "#F8FF1A",
+                            times: {
+                                from: new Date("2023-02-05T02:00:00+04:00").getTime(),
+                                to:   new Date("2024-06-11T15:00:00+04:00").getTime()
+                            }
+                        },
+                        {
+                            title: "Life in France",
+                            color: "#00AF00",
+                            times: {
+                                from: new Date("2024-06-11T15:00:00+04:00").getTime(),
+                                to:   new Date().getTime()
+                            }
+                        }
+                    ]
                 }
             },
             navigation: [
@@ -97,6 +147,21 @@ var app = Vue.createApp({
             setTimeout(()=>{
                 this.initReCaptcha();
             },100);
+        },
+        calculateDuration(event)
+        {
+            return event.times.to - event.times.from;
+        },
+        calculatePercentage(event)
+        {
+            let totalDuration = 0;
+            let eventDuration = this.calculateDuration(event);
+
+            for(let e of this.my.life.events) totalDuration += this.calculateDuration(e);
+
+            if(totalDuration == 0) return 0;
+
+            return (eventDuration / totalDuration) * 100;
         },
         sendMessage: function(token)
         {
