@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Zaebcraft</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+	<div id="main" class="main">
+		<div class="wrapper">
+			<h1>Zaebcraft</h1>
+		</div>
+		<nav>
+			<button v-for="n in navigation" v-on:click="page = n.page" :class="(page == n.page) ? 'selected' : ''">{{n.name}}</button>
+		</nav>
+		<div class="wrapper" v-if="page == 'guide'">
+			<h2>Минералогия</h2>
+			<p>
+				Минералы в игре это особы вид руды, которая требует немалой обработки для извлечения из нее полезных ресурсов
+			</p>
+			<table>
+				<thead>
+					<tr>
+						<td>Блок</td>
+						<td>Название</td>
+						<td>Мод</td>
+						<td>Описание</td>
+						<td style="min-width: 200px;">Генерация</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="m in game.registry.objects" v-if="m.oredictionary.includes('mineral_block')">
+						<td>
+							<img :src="m.getTexture()" width="32px" height="32px" onerror="this.src = 'assets/editor/textures/item/null.png'">
+						</td>
+						<td>{{m.name}}</td>
+						<td>{{m.modid}}</td>
+						<td>
+							{{m.lore}}
+						</td>
+						<td>
+							<div v-if="m.worldgen == false">
+								Нет данных
+							</div>
+							<div v-else>
+								<div>Количество залеж: {{m.worldgen.chunks[0]}} .. {{m.worldgen.chunks[1]}}</div>
+								<div>Размеры залеж: {{m.worldgen.amount[0]}} .. {{m.worldgen.amount[1]}}</div>
+								<div>Высота: {{m.worldgen.height[0]}} .. {{m.worldgen.height[1]}}</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<h3>Ручной Дробитель</h3>
+			<p>
+				Первым делом будет необходимо скрафтить ручной дробитель, как у AE2, а затем можно будет получить первые разнообразные руды, вернее лишь их частички, а так-же пыль породы, которую можно будет обработать на более высшем уровне развития.
+			</p>
+			<minecraft-recipe 
+				v-for="r,index in guide_recipes('crusher_minerals')" 
+				v-if="clock(guide_recipes('crusher_minerals').length) == index+1" 
+				v-bind:recipe="r" 
+				v-bind:grid="grid"
+			></minecraft-recipe>
+			<p>
+				Полученные маленькие частички можно соединять в полноценную пыль, которую уже можно использовать в крафтах.
+			</p>
+			<minecraft-recipe 
+				v-for="r,index in guide_recipes('craftingtable_motes')" 
+				v-if="clock(guide_recipes('craftingtable_motes').length) == index+1" 
+				v-bind:recipe="r" 
+				v-bind:grid="grid"
+			></minecraft-recipe>
+			<p>
+				Затем полученную пыль будет необходимо пережарить в плавильной печи, не все металлы можно сплавлять в обычной печке и не все металлы можно сплавлять впринципе, многие из металлов можно восстановить в металлическую форму только в эндгейме. Например для сплавления многих металлов необходимо найти тетраборат натрия.
+			</p>
+		</div>
+		<div class="wrapper" v-if="page == 'items'">
+			<div class="recipe">
+				<h1>Все предметы</h1>
+				<div class="recipe-form inventory">
+					<div class="cell" v-for="o in game.registry.objects" :style="`width:${grid}px;height:${grid}px;`">
+						<div>
+							<minecraft-item 
+								v-bind:item="o"
+								v-bind:amount="1"
+								v-bind:chance="100"
+							></minecraft-item>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="recipe" v-for="tag in game.registry.tags()">
+				<h1>Предметы по тегу: {{tag}}</h1>
+				<div class="recipe-form inventory">
+					<div class="cell" v-for="o in game.registry.objects" v-if="o.oredictionary.includes(tag)" :style="`width:${grid}px;height:${grid}px;`">
+						<div>
+							<minecraft-item 
+								v-bind:item="o"
+								v-bind:amount="1"
+								v-bind:chance="100"
+							></minecraft-item>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div v-if="page == 'recipes'" v-for="t in game.registry.recipe_types()">
+			<h1>Рецепты категории: {{t}}</h1>
+			<div class="wrapper">
+				<minecraft-recipe 
+					v-for="r in game.registry.recipes"
+					v-if="r.registry_name == t"
+					v-bind:recipe="r" 
+					v-bind:grid="grid"
+				></minecraft-recipe>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="main.js"></script>
+
+	<script type="text/javascript" src="components/minecraft-item-popup.js"></script>
+	<script type="text/javascript" src="components/minecraft-item.js"></script>
+	<script type="text/javascript" src="components/minecraft-recipe-cell.js"></script>
+	<script type="text/javascript" src="components/minecraft-recipe.js"></script>
+
+	<script type="text/javascript" src="classes/common/GameObject.js"></script>
+	<script type="text/javascript" src="classes/common/Item.js"></script>
+	<script type="text/javascript" src="classes/common/Block.js"></script>
+	<script type="text/javascript" src="classes/common/ItemStack.js"></script>
+	<script type="text/javascript" src="classes/common/Recipe.js"></script>
+	<script type="text/javascript" src="classes/common/FurnaceRecipe.js"></script>
+	<script type="text/javascript" src="classes/common/Mod.js"></script>
+	<script type="text/javascript" src="classes/common/Minecraft.js"></script>
+
+	<script type="text/javascript" src="classes/zaebcraft/BlastFurnaceRecipe.js"></script>
+	<script type="text/javascript" src="classes/zaebcraft/ChemicalCentrifugeRecipe.js"></script>
+	<script type="text/javascript" src="classes/zaebcraft/GrindstoneRecipe.js"></script>
+	<script type="text/javascript" src="classes/zaebcraft/InscriberRecipe.js"></script>
+	<script type="text/javascript" src="classes/zaebcraft/Zaebcraft.js"></script>
+
+	<script type="text/javascript" src="content/minecraft/main.js"></script>
+	<script type="text/javascript" src="content/zaebcraft/main.js"></script>
+</body>
+</html>

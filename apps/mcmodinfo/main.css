@@ -1,0 +1,383 @@
+@font-face {
+  font-family: minecraft;
+  src: url(minecraft.ttf);
+}
+@keyframes progress {
+  0%   { right: 100%; }
+  100% { right: 0%; }
+}
+*{
+	image-rendering: pixelated;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: crisp-edges;
+	font-family: minecraft;
+	padding: 0px;
+	margin: 0px;
+}
+body{
+	min-width: 616px;
+	margin: 10px;
+}
+script{
+	display: none !important;
+}
+script *{
+	display: none !important;
+}
+.allitems > .item{
+	display: inline-block;
+}
+.guiframe > p{
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+	margin-top: -10px;
+	margin-bottom: 8px;
+	text-align: center;
+	color: #373737;
+}
+.guiframe button{
+	position: absolute;
+	vertical-align: top;
+	margin-top: -10px;
+	cursor: pointer;
+	background-color: #C6C6C6;
+	border-top: 2px solid #fff;
+	border-left: 2px solid #fff;
+	border-bottom: 2px solid #373737;
+	border-right: 2px solid #373737;
+}
+/* GLOBAL GUI PREDEFINITIONS */
+.guiframe::before{
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	content: " ";
+	border-radius: 6px;
+	border-top: 4px solid #fff;
+	border-left: 4px solid #fff;
+	border-bottom: 4px solid #373737;
+	border-right: 4px solid #373737;
+}
+.guiframe{
+	vertical-align: top;
+	display: inline-block;
+	position: relative;
+	padding: 16px;
+	background-color: #C6C6C6;
+	border: 2px solid #000;
+	border-radius: 8px;
+}
+.output,.slot{
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	background-color: #8B8B8B;
+	border-top: 2px solid #373737;
+	border-left: 2px solid #373737;
+	border-bottom: 2px solid #fff;
+	border-right: 2px solid #fff;
+}
+.output{
+	width: 48px;
+	height: 48px;
+}
+.slot:hover{
+	background-color: #C6C6C6;
+}
+.output:hover::before{
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	width: 32px;
+	height: 32px;
+	background-color: #C6C6C6;
+	display: block;
+	content: " ";
+}
+.item{
+	position: relative;
+	width: 32px;
+	height: 32px;
+}
+.item:hover .tooltip{
+	display: block;
+}
+.tooltip{
+	display: none;
+	white-space: nowrap;
+	z-index: 2;
+	position: fixed;
+	background-color: #170817;
+	border: 2px solid #4600AF;
+	box-shadow: 0px 0px 0px 2px #170817;
+	border-radius: 6px;
+	color: #fff;
+	padding: 4px; 
+	padding-left: 6px;
+}
+.tooltip p{
+	padding: 0px !important;
+	margin: 0px !important;
+	text-align: left;
+}
+.lore{
+	color: #4F51F4;
+}
+.modid{
+	color: #5A5A5A;
+}
+.quantity{
+	position: absolute;
+	bottom: -6px;
+	right: -2px;
+	color: #fff;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+.output .item{
+	position: absolute;
+	top: 8px;
+	left: 8px;
+}
+.fire{
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	border: 2px solid transparent;
+	background-image: url('gui/fire.png');
+}
+.power{
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	border: 2px solid transparent;
+	background-image: url('gui/power.png');
+}
+.cf{
+	position: absolute;
+	width: 252px;
+	height: 108px;
+	border: 2px solid transparent;
+	background-image: url('gui/circuitfabricator.png');
+}
+.arrow{
+	position: absolute;
+	width: 64px;
+	height: 32px;
+	border: 2px solid transparent;
+	background-image: url('gui/arrow.png');
+	background-repeat: no-repeat;
+}
+.arrow::before{
+	z-index: 1;
+	background-image: url('gui/arrow_overlay.png');
+	content: "";
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	animation: progress 5s infinite;
+}
+.cutter{
+	position: absolute;
+	width: 92px;
+	height: 32px;
+	border: 2px solid transparent;
+	background-image: url('gui/cutter.png');
+	background-repeat: no-repeat;
+}
+.cutter::before{
+	z-index: 1;
+	background-image: url('gui/cutter_overlay.png');
+	content: "";
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	animation: progress 5s infinite;
+}
+.crush{
+	position: absolute;
+	width: 64px;
+	height: 32px;
+	border: 2px solid transparent;
+	background-image: url('gui/crush.png');
+	background-repeat: no-repeat;
+}
+.crush::before{
+	z-index: 1;
+	background-image: url('gui/crush_overlay.png');
+	content: "";
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	animation: progress 5s infinite;
+}
+.metalformer{
+	position: absolute;
+	width: 128px;
+	height: 32px;
+	border: 2px solid transparent;
+	background-image: url('gui/metalformer.png');
+	background-repeat: no-repeat;
+}
+.compress{
+	position: absolute;
+	width: 64px;
+	height: 32px;
+	border: 2px solid transparent;
+	background-image: url('gui/compress.png');
+	background-repeat: no-repeat;
+}
+/* BLOCK */
+.block{
+	position: relative;
+	width: 32px;
+	height: 32px;
+}
+.block *{
+	position: absolute;
+	width: 20px;
+	height: 20px;
+}
+.block .front{
+	image-rendering: auto !important;
+	transform: rotateX(24.5deg) rotateY(45deg);
+	top:9px;
+	left: -1px;
+}
+.block .side{
+	image-rendering: auto !important;
+	transform: rotateX(24.5deg) rotateY(-45deg);
+	top:9px;
+	left: 13px;
+}
+.block .top{
+	image-rendering: auto !important;
+	transform: rotateX(65deg) rotateZ(-45deg);
+	left: 6px;
+	top: -3px;
+}
+/* SLOT GRIDING */
+.w1{
+	left: calc(36px * 0);
+}
+.w15{
+	left: calc(36px * 0.5);
+}
+.w2{
+	left: calc(36px * 1);
+}
+.w25{
+	left: calc(36px * 1.5);
+}
+.w3{
+	left: calc(36px * 2);
+}
+.w35{
+	left: calc(36px * 2.5);
+}
+.w4{
+	left: calc(36px * 3);
+}
+.w45{
+	left: calc(36px * 3.5);
+}
+.w5{
+	left: calc(36px * 4);
+}
+.w55{
+	left: calc(36px * 4.5);
+}
+.w6{
+	left: calc(36px * 5);
+}
+.w65{
+	left: calc(36px * 5.5);
+}
+.w7{
+	left: calc(36px * 6);
+}
+.h1{
+	top: calc(36px * 0);
+}
+.h15{
+	top: calc(36px * 0.5);
+}
+.h2{
+	top: calc(36px * 1);
+}
+.h25{
+	top: calc(36px * 1.5);
+}
+.h3{
+	top: calc(36px * 2);
+}
+.h35{
+	top: calc(36px * 2.5);
+}
+.h4{
+	top: calc(36px * 3);
+}
+.h45{
+	top: calc(36px * 3.5);
+}
+.h5{
+	top: calc(36px * 4);
+}
+.h55{
+	top: calc(36px * 4.5);
+}
+.h6{
+	top: calc(36px * 5);
+}
+/* CRAFTING TABLE */
+.craftingtable{
+	position: relative;
+	display: block;
+	width: 256px;
+	height: calc(36px * 3);
+}
+.craftingtable .output{
+	margin-left: -8px;
+	margin-top: -8px;
+}
+/*SPOILER*/
+.spoiler .head .title{
+	border-top: 4px solid #fff;
+	border-left: 4px solid #fff;
+	border-bottom: 4px solid #373737;
+	border-right: 4px solid #373737;
+	outline: 2px solid #000;
+	height: 32px;
+	position: relative;
+}
+.spoiler .head .title strong{
+	line-height: 32px;
+	top:0px;
+	left: 8px;
+	position: absolute;
+	z-index: 1;
+}
+.spoiler .head .title input{
+	cursor: pointer;
+	background: #C6C6C6;
+	border: 0px;
+	line-height: 32px;
+	top:0px;
+	left: 0px;
+	position: absolute;
+	width: 100%;
+	text-align: right;
+	padding-right: 8px;
+}
+.spoiler .content{
+	outline: 2px solid #000;
+	padding: 8px;
+}

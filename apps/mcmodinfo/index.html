@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ZaebCraft Plan (Crafting Presets)</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<script src="https://code.jquery.com/jquery-3.4.1.js"
+			integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+			crossorigin="anonymous"></script>
+	<script type="text/javascript" src="colorize.js"></script>
+	<script type="text/javascript" src="recipes.js"></script>
+	<script type="text/javascript" src="spoiler.js"></script>
+	<script type="text/javascript">
+		var recipes = [];
+		var items = [];
+	</script>
+	<script type="text/javascript" src="registry.js"></script>
+	<script type="text/javascript" src="blocks/minecraft/minecraft_blocks.js"></script>
+	<script type="text/javascript" src="items/minecraft/minecraft_items.js"></script>
+	<script type="text/javascript" src="items/zaebcraft/zaebcraft_dust.js"></script>
+	<script type="text/javascript" src="items/zaebcraft/zaebcraft_silicon.js"></script>
+	<script type="text/javascript" src="items/zaebcraft/zaebcraft_transistors.js"></script>
+	<script type="text/javascript" src="items/zaebcraft/zaebcraft_diodes.js"></script>
+	<script type="text/javascript" src="items/zaebcraft/zaebcraft_digital.js"></script>
+	<script type="text/javascript" src="items/zaebcraft/zaebcraft_circuits.js"></script>
+	<script type="text/javascript" src="items/zaebcraft/zaebcraft_metallurgy.js"></script>
+	<script type="text/javascript" src="items/zaebcraft/zaebcraft_resist.js"></script>
+</head>
+<body>
+	<!-- ЧЕ САМЫЙ УМНЫЙ ДА? -->
+	<script type="text/javascript">
+		SpoilerСomponents = new Spoiler("components","Компоненты");
+		SpoilerSemico = new Spoiler("spoilSemiconductors","Полупроводники");
+			SpoilerSilicon = new Spoiler("spoilSilicon","Кремний");
+			SpoilerDiodes = new Spoiler("SpoilDiodes","Диоды");
+			SpoilerTransistors = new Spoiler("SpoilTransistors","Транзисторы");
+			SpoilerChips = new Spoiler("spoilChips","Микрочипы");
+				SpoilerSimple = new Spoiler("spoilSimple","Примитивные");
+				SpoilerTP1mm = new Spoiler("spoilTp1mm","Техпроцесс 1mm");
+				SpoilerTP5mkm = new Spoiler("spoilTp5mkm","Техпроцесс 5μm");
+				SpoilerTP1mkm = new Spoiler("spoilTp1mkm","Техпроцесс 1μm");
+		SpoilerResist = new Spoiler("spoilResistors","Резисторы");
+		SpoilerCapacitors = new Spoiler("spoilCapacitors","Конденсаторы");
+		SpoilerTransformers = new Spoiler("spoilTransformers","Трансформаторы");
+		SpoilerCircuits = new Spoiler("spoilCircuits","Электросхемы");
+		SpoilerMetallurgi = new Spoiler("spoilMetallurgi","Металлургия");
+			SpoilerAlloys = new Spoiler("spoilAlloys","Сплавы");
+			SpoilerManufactures = new Spoiler("spoilManufactures","Изделия");
+
+		// БЛОКИ
+		BlockSteelCasing = new Block({
+			id: "zaebcraft:steel_casing",
+			front: "steel_casing",
+			display: {
+				name: "Стальной каркас"
+			}});
+		//items.push(BlockSteelCasing);
+		BlockUnplatedCasing = new Block({
+			id: "zaebcraft:casing_unplated",
+			front: "unplated_basic_casing",
+			display: {
+				name: "Стальной корпус"
+			}});
+		//items.push(BlockUnplatedCasing);
+		BlockСasingPlated = new Block({
+			id: "zaebcraft:casing_plated",
+			front: "casing"});
+		//items.push(BlockСasingPlated);
+		// КОНДЕНСАТОРЫ
+		ItemCapacitor = new Item({
+			id: "zaebcraft:capacitor",
+			display: {
+				name: "Конденсатор на 16μF",
+				lore: "Может надутся"}});
+		items.push(ItemCapacitor);
+		BlockThermalCasing = new Block({
+			id: "zaebcraft:thermal_casing",
+			front: "thermal_casing",
+			display: {
+				name: "Корпус термогенератора"
+			}});
+		//items.push(BlockSteelCasing);
+		// КНОПКИ
+		ItemButton = new Item({
+			id: "zaebcraft:button",
+			display: {
+				name: "Кнопка"}});
+		items.push(ItemButton);
+		ItemBigRedButton = new Item({
+			id: "zaebcraft:redbutton",
+			display: {
+				name: "Большая красная кнопка",
+				lore: "Ни в коем случае не трогай эту большую..."}});
+		items.push(ItemBigRedButton);
+		// ОПЕНКОМПУТЕРС
+		ItemCircuitBoard = new Item({
+			id: "opencomputers:printedcircuitboard",
+			display: {
+				name: "Печатная Плата",
+				lore: "@opencomputers"}});
+		// ТЕРМАЛ ФОУНДЕЙШН
+		ItemCopperPlate = new Item({
+			id: "thermalfoundation:plate_copper",
+			display: {
+				name: "Медная Пластина",
+				lore: "@thermalfoundation"}});
+		ItemIronPlate = new Item({
+			id: "thermalfoundation:plate_iron",
+			display: {
+				name: "Железная Пластина",
+				lore: "@thermalfoundation"}});
+		ItemAluminiumPlate = new Item({
+			id: "thermalfoundation:plate_aluminium",
+			display: {
+				name: "Алюминиевая Пластина",
+				lore: "@thermalfoundation"}});
+		ItemSteelNugget = new Item({
+			id: "thermalfoundation:nugget_steel",
+			display: {
+				name: "Стальной Самородок",
+				lore: "@thermalfoundation"}});
+
+		var x = items;
+		$("body").append("<div class='allitems'></div>");
+		for(var i in x){
+			console.log(x[i])
+			if(x[i].item.id != undefined){
+				console.log(x[i].item.id)
+				var temp_i = new Item(x[i]);
+				temp_i.item = x[i].item;
+				$(".allitems").append(temp_i.append());
+			}
+		}
+
+		
+		// РЕЦЕПТЫ
+		// КРЕМНИЙ
+		recipe = new MaceratorRecipe({
+			input: ItemFlint,
+			output: ItemSiliconDust});
+		recipes.push(recipe);
+		SpoilerSilicon.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemSiliconDust,ItemSiliconDust,ItemSiliconDust,
+				ItemSiliconDust,ItemSiliconDust,ItemSiliconDust,
+				ItemSiliconDust,ItemSiliconDust,ItemSiliconDust],
+			output: ItemSiliconBulk});
+		recipes.push(recipe);
+		SpoilerSilicon.append(recipe.parse());
+
+		recipe = new CompressorRecipe({
+			input: ItemSiliconBulk,
+			output: ItemSiliconMonocrystal});
+		recipes.push(recipe);
+		SpoilerSilicon.append(recipe.parse());
+
+		recipe = new CutterRecipe({
+			input: ItemSiliconMonocrystal,
+			output: new ItemStack(ItemSiliconAlloy,8)});
+		recipes.push(recipe);
+		SpoilerSilicon.append(recipe.parse());
+
+		// ПОЛУПРОВОДНИКИ
+
+		recipe = new InductionSmelterRecipe({slot: [
+				ItemSiliconAlloy,ItemAluminiumDust],
+			output: ItemPAlloy});
+		recipes.push(recipe);
+		SpoilerSilicon.append(recipe.parse());
+
+		recipe = new InductionSmelterRecipe({slot: [
+				ItemSiliconAlloy,ItemPhosphoricDust],
+			output: ItemNAlloy});
+		recipes.push(recipe);
+		SpoilerSilicon.append(recipe.parse());
+
+		recipe = new InductionSmelterRecipe({slot: [
+				ItemSiliconDust,ItemAluminiumDust],
+			output: new ItemStack(ItemSemiconductorP,2)});
+		recipes.push(recipe);
+		SpoilerSilicon.append(recipe.parse());
+
+		recipe = new InductionSmelterRecipe({slot: [
+				ItemSiliconDust,ItemPhosphoricDust],
+			output: new ItemStack(ItemSemiconductorN,2)});
+		recipes.push(recipe);
+		SpoilerSilicon.append(recipe.parse());
+
+		recipe = new InductionSmelterRecipe({slot: [
+				ItemPAlloy,ItemNAlloy],
+			output: ItemPNAlloy});
+		recipes.push(recipe);
+		SpoilerSilicon.append(recipe.parse());
+
+		recipe = new InductionSmelterRecipe({slot: [ItemSemiconductorP,ItemSemiconductorN],
+			output: ItemPNJuction});
+		recipes.push(recipe);
+		SpoilerSilicon.append(recipe.parse());
+
+		recipe = new CutterRecipe({
+			input: ItemPAlloy,
+			output: new ItemStack(ItemSemiconductorP,4)});
+		recipes.push(recipe);
+		SpoilerSilicon.append(recipe.parse());
+
+		recipe = new CutterRecipe({
+			input: ItemNAlloy,
+			output: new ItemStack(ItemSemiconductorN,4)});
+		recipes.push(recipe);
+		SpoilerSilicon.append(recipe.parse());
+
+		recipe = new CutterRecipe({
+			input: ItemPNAlloy,
+			output: new ItemStack(ItemPNJuction,4)});
+		recipes.push(recipe);
+		SpoilerSilicon.append(recipe.parse());
+
+		recipe = new CutterRecipe({
+			input: ItemPNJuction,
+			output: new ItemStack(ItemMicroPN,4)});
+		recipes.push(recipe);
+		SpoilerSilicon.append(recipe.parse());
+
+		recipe = new CutterRecipe({
+			input: ItemSemiconductorP,
+			output: new ItemStack(ItemMicroP,4)});
+		recipes.push(recipe);
+		SpoilerSilicon.append(recipe.parse());
+
+		recipe = new CutterRecipe({
+			input: ItemSemiconductorN,
+			output: new ItemStack(ItemMicroN,4)});
+		recipes.push(recipe);
+		SpoilerSilicon.append(recipe.parse());
+
+		recipe = new CircuitFabricatorRecipe({
+			slot: [ItemPNAlloy,
+				ItemLapis,ItemSteelNugget,null,BlockGlass],
+			output: ItemSolarAlloy});
+		recipes.push(recipe);
+		SpoilerSilicon.append(recipe.parse());
+
+		// КРАФТЫ ДИОДОВ
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemTinWire,null,null,
+				null,ItemPNJuction,null,
+				null,null,ItemTinWire],
+			output: ItemDiode});
+		recipes.push(recipe);
+		SpoilerDiodes.append(recipe.parse());
+
+		recipe = new InductionSmelterRecipe({slot: [ItemDiode,BlockGlass],
+			output: ItemZenerDiode});
+		recipes.push(recipe);
+		SpoilerDiodes.append(recipe.parse());
+
+		recipe = new CircuitFabricatorRecipe({slot: [
+				ItemDiode,
+				ItemAluminiumDust,ItemPhosphoricDust,
+				null,
+				ItemSteelNugget
+			],
+			output: ItemTunnelDiode});
+		recipes.push(recipe);
+		SpoilerDiodes.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemTinWire,ItemDiode,ItemTinWire,
+				ItemDiode,null,ItemDiode,
+				ItemTinWire,ItemDiode,ItemTinWire],
+			output: ItemDiodeBridge});
+		recipes.push(recipe);
+		SpoilerDiodes.append(recipe.parse());
+
+		// КРАФТЫ ТРАНЗИСТОРОВ
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemTinWire,ItemSemiconductorN,null,
+				null,ItemSemiconductorP,ItemTinWire,
+				ItemTinWire,ItemSemiconductorN,null],
+			output: ItemNPNTransistor});
+		recipes.push(recipe);
+		SpoilerTransistors.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemTinWire,ItemSemiconductorP,null,
+				null,ItemSemiconductorN,ItemTinWire,
+				ItemTinWire,ItemSemiconductorP,null],
+			output: ItemPNPTransistor});
+		recipes.push(recipe);
+		SpoilerTransistors.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemTinWire,ItemPNJuction,null,
+				null,ItemPNJuction,ItemTinWire,
+				ItemTinWire,ItemPNJuction,null],
+			output: ItemBTransistor});
+		recipes.push(recipe);
+		SpoilerTransistors.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemTinWire,ItemPNPTransistor,ItemTinWire,
+				null,ItemTinWire,null,
+				ItemTinWire,ItemNPNTransistor,ItemTinWire],
+			output: ItemBTransistor});
+		recipes.push(recipe);
+		SpoilerTransistors.append(recipe.parse());
+
+		// КРАФТЫ МИКРОТРАНЗИСТОРОВ
+
+		recipe = new CraftingTableRecipe({slot: [
+				null,ItemSteelNugget,null,
+				ItemMicroN,ItemMicroP,ItemMicroN,
+				ItemSteelNugget,null,ItemSteelNugget],
+			output: ItemNPNMTransistor});
+		recipes.push(recipe);
+		SpoilerTransistors.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				null,ItemSteelNugget,null,
+				ItemMicroP,ItemMicroN,ItemMicroP,
+				ItemSteelNugget,null,ItemSteelNugget],
+			output: ItemPNPMTransistor});
+		recipes.push(recipe);
+		SpoilerTransistors.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				null,ItemSteelNugget,null,
+				ItemMicroPN,ItemMicroPN,ItemMicroPN,
+				ItemSteelNugget,null,ItemSteelNugget],
+			output: ItemBMTransistor});
+		recipes.push(recipe);
+		SpoilerTransistors.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemSteelNugget,ItemPNPMTransistor,ItemSteelNugget,
+				null,ItemSteelNugget,null,
+				ItemSteelNugget,ItemNPNMTransistor,ItemSteelNugget],
+			output: ItemBMTransistor});
+		recipes.push(recipe);
+		SpoilerTransistors.append(recipe.parse());
+
+		// КРАФТЫ МИКРОЧИПОВ
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemBTransistor,ItemTinWire,ItemBTransistor,
+				ItemTinWire,null,ItemTinWire,
+				ItemBTransistor,ItemTinWire,ItemBTransistor],
+			output: ItemDTrigger});
+		recipes.push(recipe);
+		SpoilerSimple.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemBMTransistor,ItemSteelNugget,ItemBMTransistor,
+				ItemSteelNugget,null,ItemSteelNugget,
+				ItemBMTransistor,ItemSteelNugget,ItemBMTransistor],
+			output: ItemMDTrigger});
+		recipes.push(recipe);
+		SpoilerTP1mm.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemDTrigger,ItemBTransistor,ItemDTrigger,
+				ItemBTransistor,null,ItemBTransistor,
+				ItemDTrigger,ItemBTransistor,ItemDTrigger],
+			output: ItemMCMK1});
+		recipes.push(recipe);
+		SpoilerSimple.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemMDTrigger,ItemBMTransistor,ItemMDTrigger,
+				ItemBMTransistor,null,ItemBMTransistor,
+				ItemMDTrigger,ItemBMTransistor,ItemMDTrigger],
+			output: ItemMCMK1});
+		recipes.push(recipe);
+		SpoilerTP1mm.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemMDTrigger,ItemMDTrigger,null,
+				ItemMDTrigger,ItemMDTrigger],
+			output: ItemRegister4});
+		recipes.push(recipe);
+		SpoilerTP1mm.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemRegister4,ItemRegister4],
+			output: ItemRegister8});
+		recipes.push(recipe);
+		SpoilerTP1mm.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemGoldWire,ItemRegister4,ItemGoldWire,
+				ItemRegister4,ItemMCMK1,ItemRegister4,
+				ItemGoldWire,ItemRegister4,ItemGoldWire],
+			output: ItemMCMK2});
+		recipes.push(recipe);
+		SpoilerTP1mm.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemMCMK2,ItemRegister8,ItemMCMK2,
+				ItemRegister8,null,ItemRegister8,
+				ItemMCMK2,ItemRegister8,ItemMCMK2],
+			output: ItemMCMK3});
+		recipes.push(recipe);
+		SpoilerTP1mm.append(recipe.parse());
+
+		// МИКРОАРХИТЕКТУРА
+
+		recipe = new CircuitFabricatorRecipe({
+			slot: [ItemPNAlloy,
+				BlockGlass,ItemLapis],
+			output: new ItemStack(ItemMCPUMK1,4)});
+		recipes.push(recipe);
+		SpoilerTP5mkm.append(recipe.parse());
+
+		// КРАФТЫ ЧИПОВ ПАМЯТИ
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemRegister8,ItemRegister8,ItemRegister8,
+				ItemRegister8,ItemMCMK1,ItemRegister8,
+				ItemRegister8,ItemRegister8,ItemRegister8],
+			output: ItemMEM8B});
+		recipes.push(recipe);
+		SpoilerTP1mm.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemMDTrigger,ItemMEM8B,ItemMDTrigger,
+				ItemMEM8B,ItemMCMK1,ItemMEM8B,
+				ItemMDTrigger,ItemMEM8B,ItemMDTrigger],
+			output: ItemMEM16B});
+		recipes.push(recipe);
+		SpoilerTP1mm.append(recipe.parse());
+
+		// КРАФТЫ РЕЗИСТОРОВ
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemClay,ItemClay,ItemClay,
+				ItemTinWire,ItemTinCoil,ItemTinWire,
+				ItemTinWire,ItemClay,ItemTinWire],
+			output: ItemRY16});
+		recipes.push(recipe);
+		SpoilerResist.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemClay,ItemClay,ItemClay,
+				ItemTinCoil,ItemTinWire,ItemTinCoil,
+				ItemTinWire,ItemClay,ItemTinWire],
+			output: ItemRY32});
+		recipes.push(recipe);
+		SpoilerResist.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemClay,ItemClay,ItemClay,
+				ItemTinWire,ItemIronCoil,ItemTinWire,
+				ItemTinWire,ItemClay,ItemTinWire],
+			output: ItemRY64});
+		recipes.push(recipe);
+		SpoilerResist.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemClay,ItemClay,ItemClay,
+				ItemIronCoil,ItemTinWire,ItemIronCoil,
+				ItemTinWire,ItemClay,ItemTinWire],
+			output: ItemRB128});
+		recipes.push(recipe);
+		SpoilerResist.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemClay,ItemClay,ItemClay,
+				ItemTinWire,ItemGoldenCoil,ItemTinWire,
+				ItemTinWire,ItemClay,ItemTinWire],
+			output: ItemRB256});
+		recipes.push(recipe);
+		SpoilerResist.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemClay,ItemClay,ItemClay,
+				ItemGoldenCoil,ItemTinWire,ItemGoldenCoil,
+				ItemTinWire,ItemClay,ItemTinWire],
+			output: ItemRB512});
+		recipes.push(recipe);
+		SpoilerResist.append(recipe.parse());
+
+		//Крафты Конденсаторов
+
+		recipe = new CraftingTableRecipe({slot: [
+				null,null,null,
+				ItemCopperPlate,ItemPaper,ItemCopperPlate,
+				ItemTinWire,null,ItemTinWire],
+			output: ItemCapacitor});
+		recipes.push(recipe);
+		SpoilerCapacitors.append(recipe.parse());
+
+		//Крафты Трансформаторов
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemE,ItemE,ItemE,
+				ItemE,ItemCopperCoil,ItemE,
+				ItemE,ItemE,ItemE],
+			output: ItemLVTransformer});
+		recipes.push(recipe);
+		SpoilerTransformers.append(recipe.parse());
+
+		//Крафты Электросхем
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemCapacitor,ItemDiodeBridge,ItemCapacitor,
+				null,ItemLVTransformer,null,
+				ItemCapacitor,ItemCircuitBoard,ItemCapacitor],
+			output: ItemPTCMK1});
+		recipes.push(recipe);
+		SpoilerCircuits.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemRY16,ItemPNPTransistor,ItemRY16,
+				ItemZenerDiode,ItemCircuitBoard,ItemZenerDiode,
+				ItemRY16,ItemNPNTransistor,ItemRY16],
+			output: ItemPSCMK1});
+		recipes.push(recipe);
+		SpoilerCircuits.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				null,ItemBigRedButton,null,
+				ItemButton,ItemCircuitBoard,ItemButton,
+				null,ItemButton,null],
+			output: ItemICMK1});
+		recipes.push(recipe);
+		SpoilerCircuits.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemSteelNugget,null,ItemSteelNugget,
+				ItemButton,ItemICMK1,ItemButton,
+				ItemSteelNugget,null,ItemSteelNugget],
+			output: ItemICMK2});
+		recipes.push(recipe);
+		SpoilerCircuits.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				null,null,null,
+				null,ItemMCMK1,null,
+				null,ItemCircuitBoard,null],
+			output: ItemCCMK1});
+		recipes.push(recipe);
+		SpoilerCircuits.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				null,null,null,
+				null,ItemMCMK2,null,
+				null,ItemCircuitBoard,null],
+			output: ItemCCMK2});
+		recipes.push(recipe);
+		SpoilerCircuits.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				null,ItemThermoCC,null,
+				ItemRegister4,ItemCircuitBoard,ItemDTrigger,
+				null,ItemPNPTransistor,null],
+			output: ItemDCMK1});
+		recipes.push(recipe);
+		SpoilerCircuits.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemSteelNugget,ItemTunnelDiode,ItemSteelNugget,
+				null,ItemDCMK1,null,
+				ItemSteelNugget,ItemRegister4,ItemSteelNugget],
+			output: ItemDCMK2});
+		recipes.push(recipe);
+		SpoilerCircuits.append(recipe.parse());
+
+		//Крафты Металлических деталей
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemSteelNugget,null,null,
+				null,ItemSteelNugget],
+			output: ItemSteelScrew});
+		recipes.push(recipe);
+		SpoilerManufactures.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemSteelNugget,null,null,
+				null,ItemSteelNugget,null,
+				null,null,ItemSteelNugget],
+			output: ItemSteelArmature});
+		recipes.push(recipe);
+		SpoilerManufactures.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemSteelNugget,ItemSteelArmature,ItemSteelNugget,
+				ItemSteelArmature,null,ItemSteelArmature,
+				ItemSteelNugget,ItemSteelArmature,ItemSteelNugget],
+			output: BlockSteelCasing});
+		recipes.push(recipe);
+		SpoilerManufactures.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				null,ItemPTCMK1,null,
+				null,BlockSteelCasing,null,
+				null,null,null],
+			output: BlockUnplatedCasing});
+		recipes.push(recipe);
+		SpoilerManufactures.append(recipe.parse());
+
+		// //new
+		// recipe = new ReactorRecipe({slot: [
+		// 		null,ItemPTCMK1,null,
+		// 		null,BlockSteelCasing,null,
+		// 		null,null,null],
+		// 	output: BlockUnplatedCasing});
+		// SpoilerManufactures.append(recipe.parse());
+		// //;
+
+		// СПЛАВЫ
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemCopperDust,ItemCopperDust,ItemCopperDust,
+				ItemCopperDust,ItemCopperDust,ItemManganesiumDust,
+				ItemNickelDust,ItemNickelDust,ItemNickelDust],
+			output: new ItemStack(ItemConstantanDust,9)});
+		recipes.push(recipe);
+		SpoilerAlloys.append(recipe.parse());
+
+		recipe = new InductionSmelterRecipe({slot: [
+				ItemConstantanDust,null],
+			output: ItemConstantanIngot});
+		recipes.push(recipe);
+		SpoilerAlloys.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemNickelDust,ItemNickelDust,ItemNickelDust,
+				ItemNickelDust,ItemNickelDust,ItemNickelDust,
+				ItemAluminiumDust,ItemSiliconDust,ItemManganesiumDust],
+			output: new ItemStack(ItemAlumelDust,9)});
+		recipes.push(recipe);
+		SpoilerAlloys.append(recipe.parse());
+
+		recipe = new InductionSmelterRecipe({slot: [
+				ItemAlumelDust,null],
+			output: ItemAlumelIngot});
+		recipes.push(recipe);
+		SpoilerAlloys.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemNickelDust,ItemNickelDust,ItemNickelDust,
+				ItemCobaltDust,ItemChromiumDust,ItemChromiumDust,
+				ItemCopperDust,ItemSiliconDust,ItemManganesiumDust],
+			output: new ItemStack(ItemChromelDust,9)});
+		recipes.push(recipe);
+		SpoilerAlloys.append(recipe.parse());
+
+		recipe = new InductionSmelterRecipe({slot: [
+				ItemChromelDust,null],
+			output: ItemChromelIngot});
+		recipes.push(recipe);
+		SpoilerAlloys.append(recipe.parse());
+
+		// МАТЕРИАЛЫ
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemSteelScrew,ItemIronPlate,ItemSteelScrew,
+				ItemIronPlate,BlockUnplatedCasing,ItemIronPlate,
+				ItemSteelScrew,ItemIronPlate,ItemSteelScrew],
+			output: BlockСasingPlated});
+		recipes.push(recipe);
+		SpoilerManufactures.append(recipe.parse());
+
+		recipe = new InductionSmelterRecipe({slot: [
+				ItemCopperWire,ItemConstantanWire],
+			output: ItemThermoCC});
+		recipes.push(recipe);
+		SpoilerManufactures.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				ItemThermoCC,ItemThermoCC,ItemThermoCC,
+				ItemThermoCC,ItemThermoCC,ItemThermoCC,
+				ItemThermoCC,ItemThermoCC,ItemThermoCC],
+			output: ItemThermoGridCC});
+		recipes.push(recipe);
+		SpoilerManufactures.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				null,ItemAluminiumPlate,null,
+				null,ItemThermoGridCC,null,
+				null,ItemIronPlate,null],
+			output: ItemThermoelementCC});
+		recipes.push(recipe);
+		SpoilerManufactures.append(recipe.parse());
+
+		recipe = new CraftingTableRecipe({slot: [
+				null,ItemThermoelementCC,null,
+				ItemThermoelementCC,BlockSteelCasing,ItemThermoelementCC,
+				null,ItemThermoelementCC,null],
+			output: BlockThermalCasing});
+		recipes.push(recipe);
+		SpoilerManufactures.append(recipe.parse());
+
+		SpoilerChips.append(SpoilerSimple.parse());
+		SpoilerChips.append(SpoilerTP1mm.parse());
+		SpoilerChips.append(SpoilerTP5mkm.parse());
+		SpoilerChips.append(SpoilerTP1mkm.parse());
+		SpoilerSemico.append(SpoilerSilicon.parse());
+		SpoilerSemico.append(SpoilerDiodes.parse());
+		SpoilerSemico.append(SpoilerTransistors.parse());
+		SpoilerSemico.append(SpoilerChips.parse());
+		SpoilerСomponents.append(SpoilerSemico.parse());
+		SpoilerСomponents.append(SpoilerResist.parse());
+		SpoilerСomponents.append(SpoilerCapacitors.parse());
+		SpoilerСomponents.append(SpoilerTransformers.parse());
+		SpoilerMetallurgi.append(SpoilerAlloys.parse());
+		SpoilerMetallurgi.append(SpoilerManufactures.parse());
+
+
+		$("body").append(SpoilerСomponents.parse());
+		$("body").append(SpoilerCircuits.parse());
+		$("body").append(SpoilerMetallurgi.parse());
+	</script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</body>
+</html>
