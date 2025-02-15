@@ -17,13 +17,14 @@ var app = Vue.createApp({
                     this.diagram = data;
                 }))
             },
-            getProjects: function() {
+            getProjects: function()
+            {
                 fetch("/data/projects.json").then(response => response.json().then(data => {
                     for(let project in data) data[project].slideshow = new slideshow(data[project].slideshow);
                     this.projects = data;
                 }))
             },
-            getCurrentLanguage()
+            getCurrentLanguage: function()
             {
                 for(let lang of this.languages)
                 {

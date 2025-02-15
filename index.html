@@ -129,7 +129,7 @@
                 <h1 v-if="window.innerWidth > 768">David von Eichendorf</h1>
                 <h1 v-else="">David</h1>
                 <a @click="openDialog('languages')">
-                    {{getCurrentLanguage().name}}<i :style="'background-image: url('+getCurrentLanguage().flag+');'"></i>
+                    {{ getCurrentLanguage().name }}<i :style="'background-image: url('+getCurrentLanguage().flag+');'"></i>
                 </a>
             </div>
             <div class="profile">
