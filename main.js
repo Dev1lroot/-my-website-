@@ -27,9 +27,13 @@ var app = Vue.createApp({
             {
                 for(let lang of this.languages)
                 {
-                    if(this.lang.toLowerCase() == lang.code.toLowerCase()) return lang;
+                    if(this.lang.toLowerCase() == lang.code.toLowerCase())
+                    {
+                        lang.flag = '/assets/flags/' + lang.code.split('-')[1].toLowerCase() + '.svg';
+                        return lang;
+                    }
                 }
-                return { name: "Unknown", code: this.lang };
+                return { name: "Unknown", code: this.lang, flag: '/assets/flags/gb.svg' };
             },
             lang: "en-GB",
             locale: {
