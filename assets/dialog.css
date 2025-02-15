@@ -17,9 +17,10 @@ dialog{
         top: var(--border-radius);
         left: var(--border-radius);
         right: var(--border-radius);
-        width: 100%;
+        /* width: 100%; */
         transform: unset;
         min-width: unset;
+        max-width: calc(100vw - var(--border-radius)*2) !important;
     }
 }
 dialog .header{

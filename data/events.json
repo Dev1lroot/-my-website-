@@ -1,0 +1,85 @@
+[
+    {
+        "title": "Place",
+        "entries": [
+            {
+                "title": "Life in Saint-Petersburg, Russia",
+                "color": "rgb(94, 57, 9)",
+                "times": {
+                    "from": 924242400000,
+                    "to": 1624899690000
+                }
+            },
+            {
+                "title": "Life in Tyumen, Russia",
+                "color": "rgb(117, 67, 0)",
+                "times": {
+                    "from": 1624899690000,
+                    "to": 1660310400000
+                }
+            },
+            {
+                "title": "Life in Kursk, Russia",
+                "color": "rgb(117, 67, 0)",
+                "times": {
+                    "from": 1660310400000,
+                    "to": 1668373200000
+                }
+            },
+            {
+                "title": "Life in Armenia",
+                "color": "#FF7020",
+                "times": {
+                    "from": 1668373200000,
+                    "to": 1675562400000
+                }
+            },
+            {
+                "title": "Life in Georgia",
+                "color": "#FF7F27",
+                "times": {
+                    "from": 1675562400000,
+                    "to": 1718103600000
+                }
+            },
+            {
+                "title": "Life in France",
+                "color": "#00AF00",
+                "times": {
+                    "from": 1718103600000,
+                    "to": -1
+                }
+            }
+        ]
+    },
+    {
+        "title": "Education",
+        "entries": [
+            {
+                "title": "School #83",
+                "color": "rgb(177, 0, 118)",
+                "times": {
+                    "from": 1157073000000,
+                    "to": 1180656000000
+                }
+            }
+        ]
+    },
+    {
+        "title": "Employment",
+        "entries": []
+    },
+    {
+        "title": "Extra",
+        "entries": [
+            {
+                "title": "Imprisonment in Tyumen, Russia",
+                "color": "#AF0000",
+                "times": {
+                    "from": 1651850400000,
+                    "to": 1659961200000
+                }
+            }
+        ]
+    }
+]

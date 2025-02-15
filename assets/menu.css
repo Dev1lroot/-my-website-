@@ -1,6 +1,6 @@
 .menu{
     width: var(--menu-width);
-    min-width: 48px;
+    min-width: 210px;
 }
 .menu nav{
     display: grid;
@@ -48,6 +48,7 @@
     }
     .menu{
         width: 48px;
+        min-width: 48px;
     }
     .menu nav a i{
         width: auto;

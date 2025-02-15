@@ -1,6 +1,40 @@
 var app = Vue.createApp({
     data() {
         return {
+            diagram: [],
+            getDiagram: function() {
+                fetch("/data/events.json").then(response => response.json().then(data => {
+                    for(let group in data)
+                    {
+                        for(let entry in data[group].entries)
+                        {
+                            if(data[group].entries[entry].times.to == -1)
+                            {
+                                data[group].entries[entry].times.to = new Date().getTime();
+                            }
+                        }
+                    }
+                    this.diagram = data;
+                }))
+            },
+            getProjects: function() {
+                fetch("/data/projects.json").then(response => response.json().then(data => {
+                    for(let project in data) data[project].slideshow = new slideshow(data[project].slideshow);
+                    this.projects = data;
+                }))
+            },
+            getCurrentLanguage()
+            {
+                for(let lang of this.languages)
+                {
+                    if(this.lang.toLowerCase() == lang.code.toLowerCase()) return lang;
+                }
+                return { name: "Unknown", code: this.lang };
+            },
+            lang: "en-GB",
+            locale: {
+
+            },
             my: {
                 life: {
                     spent: 0,
@@ -9,22 +43,30 @@ var app = Vue.createApp({
                     text: "",
                     events: [
                         {
-                            title: "Life in Russia",
+                            title: "Life in Saint-Petersburg, Russia",
                             color: "rgb(94, 57, 9)",
                             times: {
                                 from: new Date("1999-04-25T16:00:00+03:00").getTime(),
+                                to:   new Date("2021-06-28T18:21:30+03:30").getTime()
+                            }
+                        },
+                        {
+                            title: "Life in Tyumen, Russia",
+                            color: "rgb(117, 67, 0)",
+                            times: {
+                                from: new Date("2021-06-28T18:21:30+03:30").getTime(),
                                 to:   new Date("2022-05-06T18:00:00+05:00").getTime()
                             }
                         },
                         {
-                            title: "Imprisonment",
+                            title: "Imprisonment in Tyumen, Russia",
                             color: "#AF0000",
                             times: {
                                 from: new Date("2022-05-06T18:00:00+05:00").getTime(),
                                 to:   new Date("2022-08-08T15:00:00+05:00").getTime()
                             }
                         },
-                        {
+                        { 
                             title: "Life in Russia",
                             color: "rgb(94, 57, 9)",
                             times: {
@@ -53,7 +95,7 @@ var app = Vue.createApp({
                             color: "#00AF00",
                             times: {
                                 from: new Date("2024-06-11T15:00:00+04:00").getTime(),
-                                to:   new Date().getTime()
+                                to:   0
                             }
                         }
                     ]
@@ -74,43 +116,7 @@ var app = Vue.createApp({
                 slide: 0,
             },
             projects: [
-                {
-                    title: "Russian Detention Simulator",
-                    description: "Russian Prison Simulator, based on my story of imprisonment, with my own prison cell",
-                    keywords: ["Unreal Engine 5","Games"],
-                    slideshow: new slideshow([
-                        "https://www.youtube.com/embed/KZ41UXnwYY0?si=SO33L76Jy8-dCqup",
-                        "/uploads/sizo_simulator/screenshots/01.png",
-                        "/uploads/sizo_simulator/screenshots/02.jpg",
-                        "/uploads/sizo_simulator/screenshots/03.jpg",
-                        "/uploads/sizo_simulator/screenshots/04.jpg",
-                        "/uploads/sizo_simulator/screenshots/05.jpg",
-                        "/uploads/sizo_simulator/screenshots/06.jpg",
-                    ])
-                },
-                {
-                    title: "Commandline Mineswepper Written in Nim Language",
-                    description: "A Mineswepper example written in Nim Language",
-                    keywords: ["Nim"],
-                    slideshow: new slideshow([
-                        "https://github.com/Dev1lroot/NimSwepper/raw/main/screenshot.png",
-                    ]),
-                    link: "https://github.com/Dev1lroot/NimSwepper"
-                },
-                {
-                    title: "ICAO-9303 MRTD Editor Software",
-                    description: "ICAO-9303 Machine Readable Travel Documents designing and development software",
-                    keywords: ["Vue","Javascript","Web"],
-                    slideshow: new slideshow([]),
-                    link: "https://github.com/Dev1lroot/MRTDCAD"
-                },
-                {
-                    title: "RobCo Industries (TM) Termlink Emulator",
-                    description: "Fallout terminal simulator for fans",
-                    keywords: ["Nim"],
-                    slideshow: new slideshow([]),
-                    link: "https://github.com/Dev1lroot/robco"
-                },
+                
             ],
             languages: [
                 { code: "en-GB", name: "English" },
@@ -150,7 +156,82 @@ var app = Vue.createApp({
         },
         calculateDuration(event)
         {
-            return event.times.to - event.times.from;
+            if(event.times.to == 0)
+            {
+                return new Date().getTime() - event.times.from;
+            }
+            else
+            {
+                return event.times.to - event.times.from;
+            }
+        },
+        preProcessEvents()
+        {
+            for(let e in this.my.life.events)
+            {
+                this.my.life.events[e].duration = this.calculateDuration(this.my.life.events[e]);
+                this.my.life.events[e].durationStr = this.convertTimeToStr(this.my.life.events[e].duration);
+            }
+        },
+        preProcessGanthDiagram() {
+            // Get references to the canvas and the target DOM element
+            const canvas = document.getElementById('ganth-diagram');
+        
+            if (canvas)
+            {
+                //container.style.maxWidth = this.pageWidth + "px";
+
+                canvas.width  = 20000; //canvas.getBoundingClientRect().width;
+                canvas.height = this.diagram.length*48; //canvas.getBoundingClientRect().height;
+
+                // Define fixed canvas width and height
+                const canvasWidth = canvas.width; // Fixed width
+                const canvasHeight = canvas.height; // Fixed height
+        
+                let range = { min: Number.MAX_VALUE, max: Number.MIN_VALUE };
+        
+                // Determine the overall min and max time range
+                for (let row of this.diagram) {
+                    for (let entry of row.entries) {
+                        if (range.min > entry.times.from) range.min = entry.times.from;
+                        if (range.max < entry.times.to) range.max = entry.times.to;
+                    }
+                }
+        
+                const ctx = canvas.getContext("2d");
+
+                // Calculate scaling factor for time range to fit within the fixed canvas width
+                const timeRange = range.max - range.min;
+                const scaleX = canvasWidth / timeRange; // Pixels per millisecond
+        
+                // Set row height and spacing
+                const rowHeight = canvas.height / this.diagram.length;
+        
+                // Draw the diagram
+                for (let rowIndex in this.diagram) {
+                    const row = this.diagram[rowIndex];
+                    const rowY = rowIndex * rowHeight; // Y position for each row
+        
+                    // Draw each entry within the current row
+                    for (let entryIndex in row.entries) {
+                        const entry = row.entries[entryIndex];
+        
+                        // Calculate the start position and width of the rectangle (scaled)
+                        const xStart = (entry.times.from - range.min) * scaleX;
+                        const entryWidth = (entry.times.to - entry.times.from) * scaleX;
+        
+                        // Set the fill color for the task
+                        ctx.fillStyle = entry.color;
+        
+                        // Draw the rectangle for the task
+                        ctx.fillRect(xStart, rowY, entryWidth, rowHeight); // Draw the task
+        
+                        // Optionally, draw the task name in the center of the rectangle
+                        ctx.fillStyle = '#FFF';
+                        ctx.fillText(entry.title, xStart + 16, rowY + rowHeight / 2); // Padding for text
+                    }
+                }
+            }
         },
         calculatePercentage(event)
         {
@@ -276,8 +357,12 @@ var app = Vue.createApp({
         }
     },
     mounted() {
+        this.getDiagram();
+        this.getProjects();
         setInterval(() => {
             this.updateDavy();
+            this.preProcessEvents();
+            this.preProcessGanthDiagram();
         }, 1000);
         window.addEventListener('resize', this.adaptivity());
         this.adaptivity();

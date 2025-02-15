@@ -1,6 +1,35 @@
-.activity > *{
+.activity .block{
     display: block;
     padding: var(--border-radius);
     border-radius: var(--border-radius);
     background-color: #FFFFFF10;
+}
+.activity-grid {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Create 4 equal columns */
+    gap: 16px; /* Space between items */
+}
+.activity-grid .block{
+    padding: 8px;
+    font-size: 10px;
+}
+.ganth-diagram{
+    overflow: hidden;
+}
+.ganth-diagram-container{
+    overflow: scroll;
+    padding-bottom: 10px;
+    background-color: #222;
+    margin-top: 24px;
+}
+.button-simple{
+    color: #FFF;
+    background-color: #FFFFFF10;
+    display: block;
+    padding: 10px;
+    border-radius: 8px;
+}
+.button-simple:hover{
+    background-color: #FFFFFF20;
 }

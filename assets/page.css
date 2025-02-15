@@ -19,3 +19,11 @@ main{
 section{
     transition: filter 0.3s;
 }
+.page{
+    max-width: calc(var(--content-width) - 48px - 210px);
+}
+@media only screen and (max-width: 1064px) {
+    .page{
+        max-width: calc(var(--content-width) - 48px - 48px);
+    }
+}

@@ -1,0 +1,40 @@
+[
+    {
+        "title": "Russian Detention Simulator",
+        "description": "Russian Prison Simulator, based on my story of imprisonment, with my own prison cell",
+        "keywords": ["Unreal Engine 5", "Games"],
+        "slideshow": [
+            "https://www.youtube.com/embed/KZ41UXnwYY0?si=SO33L76Jy8-dCqup",
+            "/uploads/sizo_simulator/screenshots/01.png",
+            "/uploads/sizo_simulator/screenshots/02.jpg",
+            "/uploads/sizo_simulator/screenshots/03.png",
+            "/uploads/sizo_simulator/screenshots/04.png",
+            "/uploads/sizo_simulator/screenshots/05.png",
+            "/uploads/sizo_simulator/screenshots/06.png"
+        ]
+    },
+    {
+        "title": "Commandline Minesweeper Written in Nim Language",
+        "description": "A Minesweeper example written in Nim Language",
+        "keywords": ["Nim"],
+        "slideshow": [
+          "https://github.com/Dev1lroot/NimSwepper/raw/main/screenshot.png"
+        ],
+        "link": "https://github.com/Dev1lroot/NimSwepper"
+    },
+    {
+        "title": "ICAO-9303 MRTD Editor Software",
+        "description": "ICAO-9303 Machine Readable Travel Documents designing and development software",
+        "keywords": ["Vue", "Javascript", "Web"],
+        "slideshow": [],
+        "link": "https://github.com/Dev1lroot/MRTDCAD"
+    },
+    {
+        "title": "RobCo Industries (TM) Termlink Emulator",
+        "description": "Fallout terminal simulator for fans",
+        "keywords": ["Nim"],
+        "slideshow": [],
+        "link": "https://github.com/Dev1lroot/robco"
+    }
+]
+  

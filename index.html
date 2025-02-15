@@ -47,6 +47,15 @@
 </head>
 <body>
     <main>
+        <dialog v-if="dialogs.includes('ganth-diagram')" style="max-width: 900px;">
+            <div class="header">
+                <h2>My life's chart</h2>
+                <button class="close" @click="closeDialog('ganth-diagram')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="ganth-diagram-container" id="ganth-diagram-container">
+                <canvas id="ganth-diagram" class="ganth-diagram"></canvas>
+            </div>
+        </dialog>
         <dialog v-if="dialogs.includes('project_preview')" style="max-width: 900px;">
             <div class="header">
                 <h2>{{projects[project.id].title}}</h2>
@@ -75,7 +84,7 @@
                 {{ projects[project.id].description }}
             </div>
             <div v-if="projects[project.id].hasOwnProperty('link')">
-                <a :href="projects[project.id].link">Visit Project Page</a>
+                <a :href="projects[project.id].link" class="button-simple">Visit Project Page</a>
             </div>
         </dialog>
         <dialog v-if="dialogs.includes('message_sent')">
@@ -115,11 +124,13 @@
                 <a v-for="menuItem in navigation" :class="(page == menuItem.path) ? 'active' : ''" @click="page = menuItem.path"><i :class="menuItem.icon"></i><span>{{menuItem.displayName}}</span></a>
             </nav>
         </section>
-        <section class="page" :style="{ filter: (dialogs.length > 0) ? 'blur(10px)' : 'unset'}">
+        <section class="page" id="page-wrapper" :style="{ filter: (dialogs.length > 0) ? 'blur(10px)' : 'unset'}">
             <div class="header">
                 <h1 v-if="window.innerWidth > 768">David von Eichendorf</h1>
                 <h1 v-else="">David</h1>
-                <a @click="openDialog('languages')">English<i style="background-image: url('/assets/flags/gb.svg');"></i></a>
+                <a @click="openDialog('languages')">
+                    {{getCurrentLanguage().name}}<i :style="'background-image: url(/assets/flags/'+getCurrentLanguage().code.split('-')[1].toLowerCase()+'.svg);'"></i>
+                </a>
             </div>
             <div class="profile">
                 <img class="photo" src="/me.png">
@@ -150,6 +161,7 @@
                                  :title="event.title" 
                                  :style="{backgroundColor: event.color, width: (calculatePercentage(event) * (my.life.percent*0.01)) + '%'}"></div>
                         </div>
+                        <button @click="dialogs.push('ganth-diagram')" class="button-simple" style="margin-top: 10px;">Open Ganth Diagram</button>
                     </div>
                 </div>
                 <div class="feed" v-if="page == 'bio'">
@@ -164,7 +176,7 @@
                     </article>
                 </div>
                 <div class="feed" v-if="page == 'projects'">
-                    <article v-for="project,id in projects" @click="viewProject(id)">
+                    <article v-for="project,id in projects" @click="viewProject(id)" :project-id="id">
                         <h3>{{project.title}}</h3>
                         <p>{{project.description}}</p>
                         <div class="keywords">
