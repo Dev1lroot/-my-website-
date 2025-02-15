@@ -31,10 +31,20 @@ var app = Vue.createApp({
                     if(this.lang.toLowerCase() == lang.code.toLowerCase())
                     {
                         lang.flag = '/assets/flags/' + lang.code.split('-')[1].toLowerCase() + '.svg';
+                        lang.style = {
+                            backgroundImage: 'url(' + lang.flag + ')'
+                        }
                         return lang;
                     }
                 }
-                return { name: "Unknown", code: this.lang, flag: '/assets/flags/gb.svg' };
+                return { 
+                    name: "Unknown", 
+                    code: this.lang, 
+                    flag: '/assets/flags/gb.svg', 
+                    style: {
+                        backgroundImage: 'url(/assets/flags/gb.svg)'
+                    }
+                };
             },
             lang: "en-GB",
             locale: {
