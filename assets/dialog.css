@@ -67,3 +67,12 @@ dialog .close{
 dialog .description{
     color: #FFF;
 }
+.project-buttons{
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+.project-buttons > *{
+    width: 100%;
+    text-align: center;
+}

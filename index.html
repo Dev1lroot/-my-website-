@@ -83,8 +83,11 @@
             <div class="description">
                 {{ projects[project.id].description }}
             </div>
-            <div v-if="projects[project.id].hasOwnProperty('link')">
-                <a :href="projects[project.id].link" class="button-simple">Visit Project Page</a>
+            <div v-if="projects[project.id].hasOwnProperty('links')" class="project-buttons">
+                <a v-for="link in projects[project.id].links" :href="link.target" class="button-simple" target="_blank">
+                    <i v-if="link.hasOwnProperty('icon')" :class="link.icon"></i>
+                    {{link.title}}
+                </a>
             </div>
         </dialog>
         <dialog v-if="dialogs.includes('message_sent')">
