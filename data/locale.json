@@ -1,6 +1,38 @@
 {
     "btn_download_cv": {
         "en-GB": "Download CV",
-        "ru-RU": "Скачать Резюме"
+        "ru-RU": "Скачать Резюме",
+        "fr-FR": "Télécharger CV",
+        "de-DE": "Herunterladen"
+    },
+    "btn_main": {
+        "en-GB": "Home",
+        "ru-RU": "Главная",
+        "fr-FR": "Accueil",
+        "de-DE": "Startseite"
+    },
+    "btn_activity": {
+        "en-GB": "Activity",
+        "ru-RU": "Активность",
+        "fr-FR": "Activité",
+        "de-DE": "Aktivität"
+    },
+    "btn_bio": {
+        "en-GB": "Bio",
+        "ru-RU": "Биография",
+        "fr-FR": "Bio",
+        "de-DE": "Biografie"
+    },
+    "btn_projects": {
+        "en-GB": "Projects",
+        "ru-RU": "Проекты",
+        "fr-FR": "Projets",
+        "de-DE": "Projekte"
+    },
+    "btn_contact_me": {
+        "en-GB": "Contact Me",
+        "ru-RU": "Связаться",
+        "fr-FR": "Me contacter",
+        "de-DE": "Kontaktieren"
     }
 }

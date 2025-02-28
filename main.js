@@ -117,11 +117,11 @@ var app = Vue.createApp({
                 }
             },
             navigation: [
-                { active: true, path: "",           icon: "fa-solid fa-house",          displayName: "Main" },
-                { active: true, path: "activity",   icon: "fa-solid fa-person-running", displayName: "Activity" },
-                { active: true, path: "bio",        icon: "fa-solid fa-book-skull",     displayName: "Bio" },
-                { active: true, path: "projects",   icon: "fa-solid fa-code-branch",    displayName: "Projects" },
-                { active: true, path: "contact_me", icon: "fa-solid fa-envelope",       displayName: "Contact Me" }
+                { active: true, path: "",           icon: "fa-solid fa-house",          displayName: "Main",       lang: "btn_main" },
+                { active: true, path: "activity",   icon: "fa-solid fa-person-running", displayName: "Activity",   lang: "btn_activity" },
+                { active: true, path: "bio",        icon: "fa-solid fa-book-skull",     displayName: "Bio",        lang: "btn_bio" },
+                { active: true, path: "projects",   icon: "fa-solid fa-code-branch",    displayName: "Projects",   lang: "btn_projects" },
+                { active: true, path: "contact_me", icon: "fa-solid fa-envelope",       displayName: "Contact Me", lang: "btn_contact_me" }
             ],
             window: {
                 innerWidth: 0,
@@ -147,6 +147,10 @@ var app = Vue.createApp({
                 { code: "ko-KR", name: "한국어" },
                 { code: "ja-JP", name: "日本語" }
             ],
+            profile: {
+                loaded: false,
+                description: "",
+            },
             contact: {
                 form: {
                     subject: "",
@@ -162,6 +166,19 @@ var app = Vue.createApp({
         }
     },
     methods: {
+        loadProfile: function(language)
+        {
+            fetch(`/data/${language}/profile.json`).then(response => response.json().then(data => {
+                for(let key in data)
+                {
+                    this.profile[key] = data[key];
+                }
+                console.log("Profile Loaded: ",this.profile);
+                this.profile.loaded = true;
+            })).catch(e => {
+                this.loadProfile("en-GB");
+            });
+        },
         initSending: function()
         {
             this.openDialog("confirm_message");
@@ -369,9 +386,51 @@ var app = Vue.createApp({
         adaptivity: function()
         {
             this.window.innerWidth = window.innerWidth;
+        },
+        getLocale()
+        {
+            fetch("/data/locale.json").then(response => response.json().then(data => {
+                this.locale = data;
+            }));
+        },
+        getLocaleString(key)
+        {
+            if(this.locale.hasOwnProperty(key))
+            {
+                if(this.locale[key].hasOwnProperty(this.lang))
+                {
+                    return this.locale[key][this.lang];
+                }
+                else if (this.locale[key].hasOwnProperty("en-GB"))
+                {
+                    return this.locale[key]["en-GB"];
+                }
+            }
+            return `{{${key}}}`;
+        },
+        setLanguage()
+        {
+            let languageCode = "fr";
+            if(window.location.href.split("/").length >= 3)
+            {
+                if(window.location.href.split("/")[3].length > 0)
+                {
+                    languageCode = window.location.href.split("/")[3];
+                }
+            }
+            console.log(languageCode);
+
+            for(let lang of this.languages)
+            {
+                if(lang.code.split("-")[0] == languageCode)
+                {
+                    this.lang = lang.code;
+                }
+            }
         }
     },
     mounted() {
+        this.getLocale();
         this.getDiagram();
         this.getProjects();
         setInterval(() => {
@@ -381,6 +440,8 @@ var app = Vue.createApp({
         }, 1000);
         window.addEventListener('resize', this.adaptivity());
         this.adaptivity();
+        this.setLanguage();
+        this.loadProfile(this.lang);
     }
 });
 app.mount("main");
