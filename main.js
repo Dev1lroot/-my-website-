@@ -1,6 +1,7 @@
 var app = Vue.createApp({
     data() {
         return {
+            loading: 0,
             diagram: [],
             getDiagram: function() {
                 fetch("/data/events.json").then(response => response.json().then(data => {
@@ -175,6 +176,7 @@ var app = Vue.createApp({
                 }
                 console.log("Profile Loaded: ",this.profile);
                 this.profile.loaded = true;
+                this.loading += 1;
             })).catch(e => {
                 this.loadProfile("en-GB");
             });
@@ -391,6 +393,7 @@ var app = Vue.createApp({
         {
             fetch("/data/locale.json").then(response => response.json().then(data => {
                 this.locale = data;
+                this.loading +=1;
             }));
         },
         getLocaleString(key)
@@ -410,7 +413,7 @@ var app = Vue.createApp({
         },
         setLanguage()
         {
-            let languageCode = "fr";
+            let languageCode = "en";
             if(window.location.href.split("/").length >= 3)
             {
                 if(window.location.href.split("/")[3].length > 0)
@@ -427,6 +430,8 @@ var app = Vue.createApp({
                     this.lang = lang.code;
                 }
             }
+
+            this.loading += 1;
         }
     },
     mounted() {
@@ -442,6 +447,7 @@ var app = Vue.createApp({
         this.adaptivity();
         this.setLanguage();
         this.loadProfile(this.lang);
+        console.log(this.loading);
     }
 });
 app.mount("main");

@@ -118,13 +118,16 @@
             </div>            
         </dialog>
         <div class="blocker" v-if="dialogs.length > 0"></div>
-        <section class="menu" :style="{ filter: (dialogs.length > 0) ? 'blur(10px)' : 'unset'}">
+        <section v-if="2 > loading" class="loading">
+            Content is loading...
+        </section>
+        <section v-if="loading > 2" class="menu" :style="{ filter: (dialogs.length > 0) ? 'blur(10px)' : 'unset'}">
             <nav>
                 <a href="/downloads/cv.pdf" download=""><i class="fa-solid fa-download"></i><span>{{getLocaleString('btn_download_cv')}}</span></a>
                 <a v-for="menuItem in navigation" :class="(page == menuItem.path) ? 'active' : ''" @click="page = menuItem.path"><i :class="menuItem.icon"></i><span>{{getLocaleString(menuItem.lang)}}</span></a>
             </nav>
         </section>
-        <section class="page" id="page-wrapper" :style="{ filter: (dialogs.length > 0) ? 'blur(10px)' : 'unset'}">
+        <section v-if="loading > 2" class="page" id="page-wrapper" :style="{ filter: (dialogs.length > 0) ? 'blur(10px)' : 'unset'}">
             <div class="header">
                 <h1 v-if="window.innerWidth > 768">David von Eichendorf</h1>
                 <h1 v-else="">David</h1>
