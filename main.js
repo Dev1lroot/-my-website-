@@ -174,7 +174,6 @@ var app = Vue.createApp({
                 for(let key in data)
                 {
                     this.profile[key] = data[key];
-                    if(key == "bio") this.profile[key].reverse();
                 }
                 console.log("Profile Loaded: ",this.profile);
                 this.profile.loaded = true;

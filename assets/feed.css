@@ -12,6 +12,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    margin-top: 10px;
 }
 .feed article .keywords a{
     display: block;
@@ -20,4 +21,7 @@
     line-height: 32px;
     padding: 0px 12px;
     border-radius: 16px;
+}
+.feed article h2{
+    margin-bottom: 10px;
 }

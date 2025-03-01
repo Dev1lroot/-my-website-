@@ -3,36 +3,108 @@
         "en-GB": "Download CV",
         "ru-RU": "Моё Резюме",
         "fr-FR": "Télécharger CV",
-        "de-DE": "Herunterladen"
+        "de-DE": "Herunterladen",
+        "uk-UA": "Завантажити CV",
+        "zh-CN": "下载简历",
+        "es-ES": "Descargar CV"
     },
     "btn_main": {
         "en-GB": "Home",
         "ru-RU": "Главная",
         "fr-FR": "Accueil",
-        "de-DE": "Startseite"
+        "de-DE": "Startseite",
+        "uk-UA": "Головна",
+        "zh-CN": "首页",
+        "es-ES": "Inicio"
     },
     "btn_activity": {
         "en-GB": "Activity",
         "ru-RU": "Активность",
         "fr-FR": "Activité",
-        "de-DE": "Aktivität"
+        "de-DE": "Aktivität",
+        "uk-UA": "Активність",
+        "zh-CN": "活动",
+        "es-ES": "Actividad"
     },
     "btn_bio": {
         "en-GB": "Bio",
         "ru-RU": "Биография",
         "fr-FR": "Bio",
-        "de-DE": "Biografie"
+        "de-DE": "Biografie",
+        "uk-UA": "Біографія",
+        "zh-CN": "简介",
+        "es-ES": "Biografía"
     },
     "btn_projects": {
         "en-GB": "Projects",
         "ru-RU": "Проекты",
         "fr-FR": "Projets",
-        "de-DE": "Projekte"
+        "de-DE": "Projekte",
+        "uk-UA": "Проекти",
+        "zh-CN": "项目",
+        "es-ES": "Proyectos"
     },
     "btn_contact_me": {
         "en-GB": "Contact Me",
         "ru-RU": "Связаться",
         "fr-FR": "Me contacter",
-        "de-DE": "Kontaktieren"
+        "de-DE": "Kontaktieren",
+        "uk-UA": "Зв'язатися",
+        "zh-CN": "联系我",
+        "es-ES": "Contáctame"
+    },
+    "btn_send": {
+        "en-GB": "Send",
+        "ru-RU": "Отправить",
+        "uk-UA": "Відправити",
+        "zh-CN": "发送",
+        "es-ES": "Enviar",
+        "fr-FR": "Envoyer",
+        "de-DE": "Senden"
+    },
+    "btn_open_ganth_diagram": {
+        "en-GB": "Open Ganth Diagram",
+        "ru-RU": "Открыть Диаграмму Ганта",
+        "uk-UA": "Відкрити діаграму Ганта",
+        "zh-CN": "打开甘特图",
+        "es-ES": "Abrir diagrama de Gantt",
+        "fr-FR": "Ouvrir le diagramme de Gantt",
+        "de-DE": "Gantt-Diagramm öffnen"
+    },
+    "txt_message_sent": {
+        "en-GB": "Message Sent!",
+        "ru-RU": "Сообщение отправлено!",
+        "uk-UA": "Повідомлення надіслано!",
+        "zh-CN": "信息已发送！",
+        "es-ES": "¡Mensaje enviado!",
+        "fr-FR": "Message envoyé !",
+        "de-DE": "Nachricht gesendet!"
+    },
+    "txt_my_life": {
+        "en-GB": "My life:",
+        "ru-RU": "Моя жизнь:",
+        "uk-UA": "Моє життя:",
+        "zh-CN": "我的生活：",
+        "es-ES": "Mi vida:",
+        "fr-FR": "Ma vie:",
+        "de-DE": "Mein Leben:"
+    },
+    "txt_confirm_submission": {
+        "en-GB": "Confirm Submission",
+        "ru-RU": "Подтвердите отправку",
+        "uk-UA": "Підтвердіть відправку",
+        "zh-CN": "确认提交",
+        "es-ES": "Confirmar envío",
+        "fr-FR": "Confirmer l'envoi",
+        "de-DE": "Absenden bestätigen"
+    },
+    "txt_playtime": {
+        "en-GB": "Playtime",
+        "ru-RU": "Прошло времени",
+        "uk-UA": "Час гри",
+        "zh-CN": "游戏时间",
+        "es-ES": "Tiempo de juego",
+        "fr-FR": "Temps de jeu",
+        "de-DE": "Spielzeit"
     }
 }

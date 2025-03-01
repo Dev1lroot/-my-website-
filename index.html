@@ -49,7 +49,7 @@
     <main>
         <dialog v-if="dialogs.includes('ganth-diagram')" style="max-width: 900px;">
             <div class="header">
-                <h2>My life's chart</h2>
+                <h2>{{getLocaleString('txt_my_life')}}</h2>
                 <button class="close" @click="closeDialog('ganth-diagram')"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="ganth-diagram-container" id="ganth-diagram-container">
@@ -92,7 +92,7 @@
         </dialog>
         <dialog v-if="dialogs.includes('message_sent')">
             <div class="header">
-                <h2>Message Sent</h2>
+                <h2>{{getLocaleString('txt_message_sent')}}</h2>
                 <button class="close" @click="closeDialog('languages')"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div id="send-me-message-rc">
@@ -101,7 +101,7 @@
         </dialog>
         <dialog v-if="dialogs.includes('confirm_message')">
             <div class="header">
-                <h2>Confirm Submission</h2>
+                <h2>{{ getLocaleString('txt_confirm_submission') }}</h2>
                 <button class="close" @click="closeDialog('languages')"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div id="send-me-message-rc">
@@ -116,7 +116,7 @@
             <div class="languages">
                 <a v-for="language in languages" :alt="language.name" :href="'https://dev1lroot.com/'+language.code.split('-')[0]+'/'">
                     <i :style="'background-image: url(/assets/flags/'+language.code.split('-')[1].toLowerCase()+'.svg);'"></i>
-                    <span>{{language.name}}</span>
+                    <span>{{ language.name }}</span>
                 </a>
             </div>            
         </dialog>
@@ -126,7 +126,7 @@
         </section>
         <section v-if="loading > 2" class="menu" :style="{ filter: (dialogs.length > 0) ? 'blur(10px)' : 'unset'}">
             <nav>
-                <a href="/downloads/cv.pdf" download=""><i class="fa-solid fa-download"></i><span>{{getLocaleString('btn_download_cv')}}</span></a>
+                <a href="/downloads/cv.pdf" download=""><i class="fa-solid fa-download"></i><span>{{ getLocaleString('btn_download_cv') }}</span></a>
                 <a v-for="menuItem in navigation" :class="(page == menuItem.path) ? 'active' : ''" @click="page = menuItem.path"><i :class="menuItem.icon"></i><span>{{getLocaleString(menuItem.lang)}}</span></a>
             </nav>
         </section>
@@ -159,13 +159,13 @@
             <div class="content">
                 <div class="activity" v-if="page == 'activity'">
                     <div class="block" @click="updateDavy()">
-                        Playtime: {{ convertTimeToStr(my.life.spent) }}
+                        {{ getLocaleString('txt_playtime') }}: {{ convertTimeToStr(my.life.spent) }}
                         <div class="progress">
                             <div v-for="event in my.life.events" 
                                  :title="event.title" 
                                  :style="{backgroundColor: event.color, width: (calculatePercentage(event) * (my.life.percent*0.01)) + '%'}"></div>
                         </div>
-                        <button @click="dialogs.push('ganth-diagram')" class="button-simple" style="margin-top: 10px;">Open Ganth Diagram</button>
+                        <button @click="dialogs.push('ganth-diagram')" class="button-simple" style="margin-top: 10px;">{{ getLocaleString('btn_open_ganth_diagram') }}</button>
                     </div>
                 </div>
                 <div class="feed" v-if="page == 'bio'">
@@ -175,11 +175,9 @@
                     </article>
                 </div>
                 <div class="feed" v-if="page == ''">
-                    <article>
-                        Example post 1
-                    </article>
-                    <article>
-                        Example post 2
+                    <article v-for="post in profile.posts">
+                        <p>{{post.content}}</p>
+                        <p><b>{{new Date(post.date).toLocaleDateString()}}</b></p>
                     </article>
                 </div>
                 <div class="feed" v-if="page == 'projects'">
@@ -195,7 +193,7 @@
                     <input v-model="contact.form.subject" type="text" placeholder="Subject">
                     <input v-model="contact.form.email" type="text" placeholder="Email address">
                     <textarea v-model="contact.form.message" placeholder="Your message starts here.."></textarea>
-                    <button @click="initSending()">Send</button>
+                    <button @click="initSending()">{{getLocaleString('btn_send')}}</button>
                 </div>
             </div>
         </section>
