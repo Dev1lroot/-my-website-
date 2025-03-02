@@ -3,6 +3,7 @@ var app = Vue.createApp({
         return {
             loading: 0,
             diagram: [],
+            diagram_scale: 20000,
             getDiagram: function() {
                 fetch("/data/events.json").then(response => response.json().then(data => {
                     for(let group in data)
@@ -214,57 +215,66 @@ var app = Vue.createApp({
         
             if (canvas)
             {
-                //container.style.maxWidth = this.pageWidth + "px";
+                try{
+                    //container.style.maxWidth = this.pageWidth + "px";
 
-                canvas.width  = 20000; //canvas.getBoundingClientRect().width;
-                canvas.height = this.diagram.length*48; //canvas.getBoundingClientRect().height;
+                    canvas.width  = Number(this.diagram_scale); //canvas.getBoundingClientRect().width;
+                    canvas.height = this.diagram.length*48; //canvas.getBoundingClientRect().height;
 
-                // Define fixed canvas width and height
-                const canvasWidth = canvas.width; // Fixed width
-                const canvasHeight = canvas.height; // Fixed height
-        
-                let range = { min: Number.MAX_VALUE, max: Number.MIN_VALUE };
-        
-                // Determine the overall min and max time range
-                for (let row of this.diagram) {
-                    for (let entry of row.entries) {
-                        if (range.min > entry.times.from) range.min = entry.times.from;
-                        if (range.max < entry.times.to) range.max = entry.times.to;
+                    // Define fixed canvas width and height
+                    const canvasWidth  = canvas.width; // Fixed width
+                    const canvasHeight = canvas.height; // Fixed height
+            
+                    let range = { min: Number.MAX_VALUE, max: Number.MIN_VALUE };
+            
+                    // Determine the overall min and max time range
+                    for (let row of this.diagram) {
+                        for (let entry of row.entries) {
+                            if (range.min > entry.times.from) range.min = entry.times.from;
+                            if (range.max < entry.times.to) range.max = entry.times.to;
+                        }
+                    }
+            
+                    var ctx = canvas.getContext("2d");
+
+                    if(ctx)
+                    {
+
+                        // Calculate scaling factor for time range to fit within the fixed canvas width
+                        const timeRange = range.max - range.min;
+                        const scaleX = canvasWidth / timeRange; // Pixels per millisecond
+                
+                        // Set row height and spacing
+                        const rowHeight = canvas.height / this.diagram.length;
+                
+                        // Draw the diagram
+                        for (let rowIndex in this.diagram) {
+                            const row = this.diagram[rowIndex];
+                            const rowY = rowIndex * rowHeight; // Y position for each row
+                
+                            // Draw each entry within the current row
+                            for (let entryIndex in row.entries) {
+                                const entry = row.entries[entryIndex];
+                
+                                // Calculate the start position and width of the rectangle (scaled)
+                                const xStart = (entry.times.from - range.min) * scaleX;
+                                const entryWidth = (entry.times.to - entry.times.from) * scaleX;
+                
+                                // Set the fill color for the task
+                                ctx.fillStyle = entry.color;
+                
+                                // Draw the rectangle for the task
+                                ctx.fillRect(xStart, rowY, entryWidth, rowHeight); // Draw the task
+                
+                                // Optionally, draw the task name in the center of the rectangle
+                                ctx.fillStyle = '#FFF';
+                                ctx.fillText(entry.title, xStart + 16, rowY + rowHeight / 2); // Padding for text
+                            }
+                        }
                     }
                 }
-        
-                const ctx = canvas.getContext("2d");
-
-                // Calculate scaling factor for time range to fit within the fixed canvas width
-                const timeRange = range.max - range.min;
-                const scaleX = canvasWidth / timeRange; // Pixels per millisecond
-        
-                // Set row height and spacing
-                const rowHeight = canvas.height / this.diagram.length;
-        
-                // Draw the diagram
-                for (let rowIndex in this.diagram) {
-                    const row = this.diagram[rowIndex];
-                    const rowY = rowIndex * rowHeight; // Y position for each row
-        
-                    // Draw each entry within the current row
-                    for (let entryIndex in row.entries) {
-                        const entry = row.entries[entryIndex];
-        
-                        // Calculate the start position and width of the rectangle (scaled)
-                        const xStart = (entry.times.from - range.min) * scaleX;
-                        const entryWidth = (entry.times.to - entry.times.from) * scaleX;
-        
-                        // Set the fill color for the task
-                        ctx.fillStyle = entry.color;
-        
-                        // Draw the rectangle for the task
-                        ctx.fillRect(xStart, rowY, entryWidth, rowHeight); // Draw the task
-        
-                        // Optionally, draw the task name in the center of the rectangle
-                        ctx.fillStyle = '#FFF';
-                        ctx.fillText(entry.title, xStart + 16, rowY + rowHeight / 2); // Padding for text
-                    }
+                catch(e){
+                    console.log(e);
                 }
             }
         },
