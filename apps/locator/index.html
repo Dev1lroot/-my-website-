@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.min.js"></script>
+    <script type="text/javascript" src="leaflet.js"></script>
+    <script type="text/javascript" src="main.js" defer></script>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="leaflet.css">
+</head>
+<body>
+    <main>
+        <section class="main">
+            <div :style="{ display: (page == 'map') ? 'block' : 'hidden' }">
+                <div id="map" class="map"></div>
+            </div>
+            <div :style="{ display: (page == 'markers') ? 'block' : 'hidden' }">
+                <a v-for="marker in markers">{{marker.title}}</a>
+                <a>Create new marker</a>
+            </div>
+        </section>
+        <section class="navigation">
+            <nav>
+                <a @click="page = 'map'">Map</a>
+                <a @click="page = 'markers'">Markers</a>
+            </nav>
+        </section>
+    </main>
+</body>
+</html>
