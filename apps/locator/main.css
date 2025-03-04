@@ -6,3 +6,11 @@ body{
     width: 100vw;
     height: calc(100vh - 32px);
 }
+nav{
+    display: flex;
+    width: 100%;
+}
+nav a{
+    display: block;
+    width: 100%;
+}

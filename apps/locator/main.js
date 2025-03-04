@@ -5,7 +5,8 @@ var app = new Vue({
         position: {
             lat: 0,
             lng: 0,
-        }
+        },
+        markers: []
     },
     mounted() {
         if (this.page === "map") {
@@ -21,8 +22,15 @@ var app = new Vue({
             }).addTo(map);
             
             let userMarker = L.marker([0, 0], {
-                rotationAngle: 0 // Initial rotation for compass
+                icon: L.icon({
+                    iconUrl: 'images/position.png',
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 16],
+                    popupAnchor: [0, -32]
+                })
             }).addTo(map);
+
+            //userMarker.setRotationAngle(20);
 
             function updatePosition(position) {
                 let lat = position.coords.latitude;
@@ -56,8 +64,8 @@ var app = new Vue({
 // if ("geolocation" in navigator) {
 //     navigator.geolocation.getCurrentPosition(
 //         (position) => {
-//             app.position = position.coords.latitude;
-//             app.position = position.coords.longitude;
+//             app.position.lat = position.coords.latitude;
+//             app.position.lng = position.coords.longitude;
 //         },
 //         (error) => {
 //             console.error("Error getting location:", error.message);
