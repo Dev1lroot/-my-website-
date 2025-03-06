@@ -19,6 +19,22 @@ var app = Vue.createApp({
                     this.diagram = data;
                 }))
             },
+            setPage(page)
+            {
+                let l = this.getCurrentLanguage().code;
+                this.page = page;
+                history.pushState(null, "", `/${l}/${this.page}/`);
+            },
+            getPage()
+            {
+                if(window.location.href.split("/").length >= 4)
+                {
+                    if(window.location.href.split("/")[4].length > 0)
+                    {
+                        this.setPage(window.location.href.split("/")[4]);
+                    }
+                }
+            },
             getProjects: function()
             {
                 fetch("/data/projects.json").then(response => response.json().then(data => {
@@ -459,6 +475,7 @@ var app = Vue.createApp({
         this.setLanguage();
         this.loadProfile(this.lang);
         console.log(this.loading);
+        this.getPage();
     }
 });
 app.mount("main");
