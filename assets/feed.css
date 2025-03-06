@@ -28,3 +28,14 @@
 .post-date{
     margin-top: 10px;
 }
+.feed article a{
+    text-decoration: underline;
+    color: #FFF !important;
+    cursor: pointer;
+}
+.feed article li{
+    margin-left: 24px;
+}
+.feed article ul{
+    margin: 10px 0px;
+}
