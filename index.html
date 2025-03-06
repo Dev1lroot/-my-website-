@@ -171,7 +171,7 @@
                 <div class="feed" v-if="page == 'bio'">
                     <article v-for="event in profile.bio">
                         <h2>{{event.title}}</h2>
-                        <p>{{event.content}}</p>
+                        <p v-html="event.content"></p>
                     </article>
                 </div>
                 <div class="feed" v-if="page == ''">
