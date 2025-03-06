@@ -19,22 +19,6 @@ var app = Vue.createApp({
                     this.diagram = data;
                 }))
             },
-            setPage(page)
-            {
-                let l = this.getCurrentLanguage().code;
-                this.page = page;
-                history.pushState(null, "", `/${l}/${this.page}/`);
-            },
-            getPage()
-            {
-                if(window.location.href.split("/").length >= 4)
-                {
-                    if(window.location.href.split("/")[4].length > 0)
-                    {
-                        this.setPage(window.location.href.split("/")[4]);
-                    }
-                }
-            },
             getProjects: function()
             {
                 fetch("/data/projects.json").then(response => response.json().then(data => {
@@ -185,6 +169,23 @@ var app = Vue.createApp({
         }
     },
     methods: {
+        setPage: function(page = '')
+        {
+            console.log("switching page to: ",page);
+            let l = this.lang.code.split('-')[0].toLowerCase();
+            this.page = page;
+            history.pushState(null, "", `/${l}/${this.page}/`);
+        },
+        getPage: function()
+        {
+            if(window.location.href.split("/").length >= 4)
+            {
+                if(window.location.href.split("/")[4].length > 0)
+                {
+                    this.setPage(window.location.href.split("/")[4]);
+                }
+            }
+        },
         loadProfile: function(language)
         {
             fetch(`/data/${language}/profile.json`).then(response => response.json().then(data => {
