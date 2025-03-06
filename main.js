@@ -172,7 +172,7 @@ var app = Vue.createApp({
         setPage: function(page = '')
         {
             console.log("switching page to: ",page);
-            let l = this.lang.code.split('-')[0].toLowerCase();
+            let l = this.lang.split('-')[0].toLowerCase();
             this.page = page;
             history.pushState(null, "", `/${l}/${this.page}/`);
         },
