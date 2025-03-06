@@ -35,6 +35,9 @@
 }
 .feed article li{
     margin-left: 24px;
+    line-height: 24px;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 .feed article ul{
     margin: 10px 0px;
