@@ -1,0 +1,37 @@
+<urlset xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    <url>
+        <loc>https://dev1lroot.com/</loc>
+        <lastmod>2025-03-06T10:57:31+00:00</lastmod>
+        <priority>1.00</priority>
+    </url>
+    <url>
+        <loc>https://dev1lroot.com/en/</loc>
+        <lastmod>2025-03-06T10:57:31+00:00</lastmod>
+        <priority>1.00</priority>
+    </url>
+    <url>
+        <loc>https://dev1lroot.com/fr/</loc>
+        <lastmod>2025-03-06T10:57:31+00:00</lastmod>
+        <priority>1.00</priority>
+    </url>
+    <url>
+        <loc>https://dev1lroot.com/es/</loc>
+        <lastmod>2025-03-06T10:57:31+00:00</lastmod>
+        <priority>1.00</priority>
+    </url>
+    <url>
+        <loc>https://dev1lroot.com/de/</loc>
+        <lastmod>2025-03-06T10:57:31+00:00</lastmod>
+        <priority>1.00</priority>
+    </url>
+    <url>
+        <loc>https://dev1lroot.com/ru/</loc>
+        <lastmod>2025-03-06T10:57:31+00:00</lastmod>
+        <priority>1.00</priority>
+    </url>
+    <url>
+        <loc>https://dev1lroot.com/downloads/cv.pdf</loc>
+        <lastmod>2025-03-06T10:57:31+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+</urlset>
