@@ -1,21 +1,401 @@
 {
-    "description": "ABDL 🌈 | Gay 🏳️‍🌈 | Développeur de logiciels ⚙️ | Réfugié en 🇫🇷 | Fondateur d'Adultbaby.ru | Créateur de SIZO-SIM | Né en 🇷🇺 | Soutien à l'Ukraine 🇺🇦",
+    "description": "ABDL 🌈 | Gay 🏳️‍🌈 | Programmeur ⚙️ | Réfugié en 🇫🇷 | Fondateur d'Adultbaby.ru | Créateur de SIZO-SIM | Né en 🇷🇺 | Soutien à l'Ukraine 🇺🇦",
     "bio": [
         {
-            "title": "Version Courte",
-            "content": "Né le 25 avril 1999 en Russie, à Saint-Pétersbourg, dans une famille d'origine ukrainienne.<br><br>À 13 ans, a commencé à programmer.<br><br>À 21 ans, est passé de freelance à employé à plein temps dans une entreprise informatique locale.<br><br>À 22 ans, a fondé une communauté queer à Tioumen.<br><br>À 23 ans, a été réprimé par la Russie pour avoir publiquement exprimé une position pro-ukrainienne et critiqué les actions militaires russes en Ukraine. Est sorti de prison après 3 mois. La persécution de l'État a continué, a quitté le pays en 2022 et a vécu en exil en Arménie et en Géorgie.<br><br>À 25 ans, a émigré en France en tant que réfugié. La vie continue."
+            "anchor":"",
+            "title":"Brève Histoire",
+            "content": "Je suis né le 25 avril 1999 en Russie, dans la ville de Saint-Pétersbourg, au sein d'une famille d'origine ukrainienne. À partir de l'âge de 6 ans, je me suis passionné pour la radioélectronique, et à 13 ans, j'ai commencé à apprendre la programmation et à gagner de l'argent en freelance. À 21 ans, j'ai été embauché comme employé à temps plein dans une entreprise informatique locale, où je travaillais au développement et à la maintenance de projets web. À 22 ans, j'ai fondé une communauté ABDL à Tioumen, créant un espace sécurisé pour les personnes partageant les mêmes intérêts.<br><br>Ma stack de développement principale comprend : HTML, CSS, JS, PHP, MySQL. Néanmoins, tout au long de ma vie, j'ai exploré différentes technologies (Ionic, Electron, Tauri), langages de programmation (Python, Nim, C, Java, Rust) et frameworks (Django, Laravel). En dehors de la programmation, je me suis intéressé à la création de langues artificielles parlées, aux méthodes de transmission et de chiffrement des données, à la modélisation et à l'impression 3D, au design graphique et à l'animation.<br><br>Avec le début de l'invasion à grande échelle de l'Ukraine, je me suis opposé à la guerre, aux crimes de guerre ainsi qu'à la politique menée par les autorités russes. Pour cela, à l'âge de 23 ans, j'ai été réprimé, torturé et emprisonné. J'ai été condamné à 6 mois de colonie-pénitentiaire, mais j'ai été libéré après trois mois passés en détention provisoire, tout en restant sous pression de l'État.<br><br>En novembre 2022, après une perquisition, la confiscation de tout mon matériel et des menaces de la part des agents du FSB, j'ai été contraint de quitter la Russie et de partir en exil. J'ai d'abord vécu six mois en Arménie, puis un an en Géorgie en cherchant des options pour une émigration permanente. Par la suite, j'ai obtenu un visa humanitaire pour la France et m'y suis envolé, où, après six mois, j'ai obtenu le statut de réfugié et je réside actuellement.<br><br>Malgré toutes mes compétences techniques et mes qualités personnelles, telles que la résilience et la détermination, qui m'ont aidé à surmonter ce parcours difficile et à trouver sécurité et stabilité, je souffre de TSPT et de phobie sociale, et je préfère le format de communication textuel."
         },
         {
-            "title": "Naissance",
-            "content": "Je suis né le 25 avril 1999 dans la ville russe de Saint-Pétersbourg. Un an plus tard, mon frère est né. J'avais une famille complète, bien que pas la plus harmonieuse. Mes parents se disputaient très souvent."
+            "anchor": "",
+            "title": "Version complète",
+            "content": "Pour faciliter la navigation, j’ai décidé de tout organiser sous forme de roadmap avec une liste imbriquée contenant des ancres vers les parties pertinentes de mon autobiographie complète, pour ceux qui s’y intéressent vraiment et trouvent la version courte insuffisante.<ul> <li>Enfance <ul> <li><a href=#birth>Naissance</a> <li><a href=#first-memories>Premiers souvenirs</a> <li><a href=#kindergarten>Jardin d'enfants</a> <li><a href=#first-grade>Première année</a> <li><a href=#discord>Discorde</a> <li><a href=#grandparents>Grand-mère et Grand-père</a> <li><a href=#natasha>Natasha</a> <li><a href=#stepfather>Beau-père</a> <li><a href=#to-grandma>Chez grand-mère au village</a> <li><a href=#stepfathers-dacha>Datcha du beau-père</a> <li><a href=#bullying>Harcèlement</a> <li><a href=#domestic-violence>Violence domestique</a> <li><a href=#teacher-sociologist>Pédagogue Sociologue</a> <li><a href=#forgotten-children>Enfants oubliés</a> <li><a href=#police>Police</a> <li><a href=#back-to-natasha>Retour chez Natasha</a> <li><a href=#hello-andrey>Salut Andrey</a> <li><a href=#2-rubles>Avez-vous 2 roubles?</a> <li><a href=#sect>Secte</a> <li><a href=#natasha-forever>Natasha pour toujours</a> <li><a href=#poisoning>Empoisonnement</a> <li><a href=#hospital>Hôpital</a> <li><a href=#shame>Honte</a> </ul> <li>Le Village <ul> <li><a href=#prodigal-father>Père prodigue</a> <li><a href=#summer-friends>Amis d'été</a> <li><a href=#clubs>Clubs</a> <li><a href=#abandoned-friend>Ami abandonné</a> <li><a href=#film-studio>Studio de cinéma</a> <li><a href=#distant-lands>Terres lointaines</a> <li><a href=#rape>Viol</a> <li><a href=#fears>Peur</a> <li><a href=#dumpster-pc>Ordinateur trouvé aux ordures</a> <li><a href=#isolation>Isolement</a> <li><a href=#self-development>Développement personnel</a> <li><a href=#whats-happening-to-my-body>Que se passe-t-il avec mon corps?</a> <li><a href=#dark-thoughts>Pensées sombres</a> <li><a href=#withdrawal>Retrait</a> <li><a href=#bullying-returns>Retour du harcèlement</a> <li><a href=#truancy>Absentéisme</a> <li><a href=#summer-camp>Camp d'été</a> <li><a href=#anger>Colère</a> <li><a href=#nanny>Je suis devenu nounou</a> <li><a href=#sailor>Marin</a> <li><a href=#running-away>Fugue</a> <li><a href=#graduation>Fin des études secondaires</a> </ul> <li>Vie Adulte <ul> <li><a href=#hopelessness>Désespoir</a> <li><a href=#neet-life>Vie de NEET</a> <li><a href=#sugar-daddy-sweden>Sugar Daddy de Suède</a> <li><a href=#stable-job>Emploi stable</a> <li><a href=#office-life>Vie de bureau</a> <li><a href=#moving-to-tyumen>Déménagement à Tioumen</a> <li><a href=#first-betrayal>Première trahison</a> <li><a href=#community-foundation>Fondation de la communauté</a> <li><a href=#depression>Dépression</a> <li><a href=#liza>Liza</a> <li><a href=#war-and-separation>Guerre et séparation</a> <li><a href=#visit>Visite</a> <li><a href=#torture>Torture</a> <li><a href=#central-prison>Prison Centrale</a> <li><a href=#trial>Procès</a> <li><a href=#freedom>Liberté</a> <li><a href=#nowhere-to-run>Nulle part où fuir</a> <li><a href=#to-liza>Chez Liza</a> <li><a href=#name-change>Changement de nom</a> <li><a href=#raid>Raid</a> <li><a href=#fsb>FSB</a> </ul> <li>Exil <ul> <li><a href=#yerevan-escape>Fuite à Erevan</a> <li><a href=#dilijan-shelter>Refuge de Dilijan</a> <li><a href=#life-in-yerevan>Vie à Erevan</a> <li><a href=#reunion-with-liza>Retrouvailles avec Liza</a> <li><a href=#batumi-hometown>Batoumi natal</a> <li><a href=#dusty-tbilisi>Tbilissi poussiéreux</a> <li><a href=#visas>Visas</a> </ul> <li>Renaissance <ul> <li><a href=#paris-homeless>SDF à Paris</a> <li><a href=#breton-alcoholic>Alcoolique breton</a> <li><a href=#refugee-status>Statut de réfugié</a> <li><a href=#emotional-instability>Instabilité émotionnelle</a> </ul> </ul>"
         },
         {
-            "title": "Mes premiers souvenirs",
-            "content": "Les souvenirs d’enfance ressemblent toujours à des images très vives mais floues, remplissant l’esprit de fragments difficiles à assembler en un récit cohérent, mais je vais essayer.<br><br>Au début, je me souviens d’une journée ensoleillée, de champs de maïs, d’un bus abandonné dans un champ, à l’intérieur duquel s’étaient installées des abeilles. Puis vint le soir, le son de la radio, un grand croissant de lune légèrement jaunâtre dans le ciel. Les étoiles étaient si brillantes et nettes quand je les regardais dans mon enfance.<br><br>Je me souviens que quelqu’un a mis le feu à une botte de foin et que des gens dansaient autour d’elle la nuit. Je ne savais pas, et je ne sais toujours pas, ce que c’était, mais cela est resté dans ma mémoire.<br><br>Je me souviens d’une grande maison à deux étages. Le seul détail dont je me souviens était une fenêtre en losange dans le grenier. Tout cela se passait dans un petit village en Ukraine. D’après ce que ma tante m’a raconté, c’était un village nommé Lisna Tarnovytsia.<br><br>Je me souviens d’une soirée où mes parents festoyaient et semblaient heureux. Était-ce leur mariage ou autre chose ? Je ne le sais pas, mais ils avaient voyagé si loin. Quand la fête toucha à sa fin, tout le monde devait aller dormir, mais pour une raison inconnue, on ne m’a pas emmené dans cette grande maison. J’étais encore un enfant, pas plus de 2 ou 3 ans. Peut-être que la séparation avec ma mère a gravé cet épisode dans ma mémoire, car le cerveau a tendance à se souvenir plus fortement des meilleurs et des pires moments.<br><br>On m’a conduit dans une petite cabane en bois, et là, une vieille femme inconnue m’a couché dans un lit.<br><br>Le matin, je me suis réveillé et j’ai réalisé que j’étais seul dans toute la cabane. Dehors, le brouillard recouvrait tout, et la rosée du matin perlait sur l’herbe. Je voulais sortir de la cabane et entrer dans la grande maison où la fête avait eu lieu la veille. Mais je n’ai pas pu ouvrir la serrure de la porte.<br><br>Pris de panique, je suis retourné vers la fenêtre et j’ai grimpé sur le rebord. Depuis là, la cabane me semblait encore plus sombre et effrayante, renforçant mon désir de m’en échapper. J’ai ouvert la fenêtre et j’ai essayé de descendre. Mes mains s’accrochaient au rebord, mais je ne sentais toujours pas le sol sous mes pieds. À un moment donné, mes forces m’ont abandonné, j’ai glissé, me suis éraflé sur un clou et suis tombé dans l’herbe.<br><br>Je ne sais pas à quel point j’étais petit pour que ma taille soit inférieure à la distance entre le sol et le rebord de la fenêtre d’une maison d’un étage. Mais je me souviens que j’étais trempé par la rosée du matin. Et en courant vers la grande maison… j’ai découvert que la porte était fermée. Comme tout enfant, j’ai commencé à appeler ma mère par la fenêtre.<br><br>C’est là que mon tout premier souvenir d’enfance s’arrête."
+            "anchor": "birth",
+            "title": "Рождение",
+            "content": "Je suis né le 25 avril 1999 à Saint-Pétersbourg. Dans une famille d'origine ukrainienne, nous vivions sur l'avenue Prosvetcheniya. À ce moment-là, j'avais encore une famille complète, bien que ce fût une famille pleine de disputes et de désaccords, et un an plus tard, mon frère est né."
         },
         {
-            "title": "",
-            "content": ""
+            "anchor": "first-memories",
+            "title": "Les premiers souvenirs",
+            "content": "Les premiers souvenirs de mon enfance dans ma tête ressemblent à des éclats de mémoire vifs mais très flous. Il est difficile de les rassembler en une histoire complète, mais je vais essayer.<br><br>Lorsque j'avais 2-3 ans, mes parents sont allés en Ukraine pour voir des parents éloignés, ils m'ont emmené avec eux. C'était un petit village près de Nadvirna, quelque part dans la région d'Ivano-Frankivsk.<br><br>La première chose dont je me souviens, c'est une journée ensoleillée, des champs de maïs, des poules picorant le maïs, des cochons et d'autres animaux. Je me souviens comment dans les champs, j'ai trouvé un bus abandonné, complètement envahi par l'herbe et où des abeilles s'étaient installées.<br><br>Je me souviens d'une grande maison en face d'une petite chaumière, je me souviens qu'en haut de la maison, il y avait une fenêtre de grenier en forme de losange, et dans le grenier, il y avait un masque effrayant pour moi à l'époque, du film "Scream".<br><br>Je me souviens d'un soir, d'un croissant de lune légèrement jaunâtre dans le ciel, des étoiles vives et claires que je pouvais encore voir de mes propres yeux. Je me souviens d'un tas de foin allumé, de la chaleur qu'il dégageait et des gens dansant autour de lui dans la nuit, ne comprenant toujours pas ce que c'était.<br><br>Je me souviens d'une fête chez mes parents, dans cette grande maison, mais quand tout le monde est allé se coucher, ils ne m'ont pas emmené avec eux, peut-être qu'il n'y avait pas de place pour moi là-bas. À la place, ma mère m'a confié à une vieille femme qui m'était inconnue. Comme tout enfant, j'ai résisté et eu peur, mais finalement, je suis allé avec elle, et elle m'a couché dans une petite chaumière en face de la maison.<br><br>En me réveillant tôt le matin, je n'ai trouvé personne, j'étais tout seul dans la chaumière qui me paraissait sinistre. Je voulais sortir, mais je ne pouvais pas ouvrir la serrure de la porte. Alors, je suis monté sur le rebord de la fenêtre, j'ai ouvert la fenêtre et j'ai essayé de descendre. Je me tenais déjà par les mains au rebord, mais je ne sentais toujours pas le sol. Puis mes mains ont lâché, je suis tombé et me suis coupé sur un clou. Je suis tombé dans l'herbe humide du matin, et autour de moi, il y avait du brouillard. La maison où avait eu lieu la fête était complètement fermée et les fenêtres étaient sans lumière. Comme tout enfant, j'ai commencé à appeler ma maman."
+        },
+        {
+            "anchor": "kindergarten",
+            "title": "La maternelle",
+            "content":"Je me souviens de peu de choses de mon temps à la maternelle, je me rappelle seulement que j'étais assez asocial et que je préférais dessiner plutôt que de jouer activement.<br><br>Je me souviens de la sieste et des bancs froids et étranges qui remplaçaient les lits, sans bords et très étroits, sur lesquels il était très facile de glisser et de tomber par terre.<br><br>Je me souviens aussi de la nourriture à la maternelle, elle était parfois dégoûtante et parfois incroyablement délicieuse. Par exemple, j'adorais la casserole de fromage blanc, mais je détestais et je déteste encore tous les types de bouillies. Une fois, on a même essayé de me nourrir de bouillie de force, mais finalement cela a déclenché un réflexe de vomissement et personne n'a plus jamais essayé de le faire."
+        },
+        {
+            "anchor": "first-grade",
+            "title": "La première classe",
+            "content":"Quand je suis allé en première, je pensais que l'école était quelque chose d'intéressant et d'incroyable, du moins c'est ainsi que cet endroit était décrit dans les dessins animés de mon enfance et par les gens qui m'entouraient. Mon entrée à l'école a été accompagnée de visites guidées et d'autres activités intéressantes, et sous les fanfares, je pensais que ce serait amusant, mais tout s'est avéré différent. Même si mon école était spéciale, c'était l'école n°83 de Saint-Pétersbourg, sur l'avenue Prosvetcheniya, elle offrait une étude approfondie de l'anglais et du japonais, avait sa propre section de judo, son code vestimentaire et des tests d'entrée.<br><br>Malgré tous ces équipements, j'ai vite réalisé que l'école était un endroit routinier et ennuyeux, où, dans le meilleur des cas, mes mains étaient engourdies par les volumes d'écriture. Et dans le pire des cas, je m'ennuyais tellement et j'étais si triste que je rêvais de revenir en arrière dans le temps."
+        },
+        {
+            "anchor": "discord",
+            "title": "Le conflit",
+            "content":"Mon père ne travaillait presque jamais, et il traitait ses responsabilités domestiques avec le même mépris. C'est pourquoi ma mère l'a chassé de la maison presque dès que je suis allé en première. Elle espérait que, comme nous vivions dans un appartement communal, on pourrait nous laisser seuls. À son grand regret, cela ne s'est pas passé ainsi."
+        },
+        {
+            "anchor": "grandparents",
+            "title": "Les grands-parents",
+            "content":"Mes grands-parents paternels, cependant, ne cessaient d'aider ma famille, ils m'emmenaient avec eux le week-end.<br><br>Mon grand-père était le beau-père de mon père, donc il n'était en réalité personne pour moi, mais c'est pourtant lui qui passait plus de temps avec moi pendant mon enfance que n'importe qui d'autre. Lui, et non mon père, était à mes côtés quand j'apprenais à jouer au football ou à faire du vélo, j'aimais passer du temps avec lui.<br><br>Il travaillait comme électricien, et je jouais souvent avec son équipement, en pointant un multimètre sur différents objets, en jouant avec des aimants, des ampoules colorées et d'autres choses intéressantes. C'est probablement ce qui a éveillé en moi l'intérêt initial pour les sciences.<br><br>Ma grand-mère, quant à elle, était cuisinière et originaire d'Odessa. Elle et mon grand-père vivaient en union libre. C'est avec elle que j'apprenais le plus souvent à jouer aux échecs et aux cartes. Elle préparait de très bons repas pour moi, tandis qu'à la maison, nous manquions presque toujours de nourriture. Elle organisait mes anniversaires et les fêtes de Noël, tandis que mes parents irresponsables faisaient des choses incompréhensibles."
+        },
+        {
+            "anchor": "natasha",
+            "title": "Natasha",
+            "content":"Tant que ma mère travaillait à son \"travail\", elle essayait de déléguer mon éducation à différentes personnes, et en fin de compte, c'est ma tante, la sœur cadette de ma mère, Natasha, qui m'élevait.<br><br>La maternelle ne m'a pas appris à lire, et en fait, c'est avec Natasha que j'ai appris à lire, en lisant syllabe par syllabe, ce qui était très difficile. En même temps, grâce aux dessins animés et aux émissions éducatives à la télévision, je connaissais déjà l'alphabet latin, mais je continuais d'apprendre le russe.<br><br>Et bien que Natasha faisait tout ce qu'elle pouvait, financièrement, nous étions au plus bas, et nous nous nourrissions essentiellement de pâtes, mangeant des pommes et du sucre sans rien d'autre.
+"
+        },
+        {
+            "anchor": "stepfather",
+            "title": "Beau-père",
+            "content":"Un jour, ma mère nous a présentés à son nouveau copain, celui qu'elle avait rencontré à son \"travail\". Au début, cet homme a essayé de paraître bon et raisonnable pour gagner ma confiance, puis ma mère a décidé de le proclamer mon beau-père et nous avons déménagé chez lui.<br><br>Le déménagement a apporté de nombreux changements, c'était un quartier très éloigné, au point que j'ai dû changer d'école.<br><br>Ce beau-père s'est avéré être un tyran, pratiquant un hyper-contrôle. Il a transformé ma vie en un camp de travail ou une armée. J'avais un emploi du temps très strict, il n'y avait pas de temps pour les loisirs, le seul moment de loisir que je pouvais avoir était le sommeil. Tout mon temps libre était occupé par diverses tâches. Premièrement, je devais m'occuper de ses animaux - un chat et un perroquet, c'est-à-dire nettoyer la cage et la litière, et les nourrir. Deuxièmement, je devais faire le ménage à la maison et laver la vaisselle. Troisièmement, je devais m'occuper de mes devoirs scolaires. Et si j'arrivais à tout accomplir pendant la journée, ma journée ne se terminait pas par un moment de détente, mais par une activité supplémentaire, c'est-à-dire qu'on me forçait à lire de la littérature ennuyeuse, et pour être sûr que je lisais bien, à la fin, je devais résumer le contenu du livre et répondre à des questions sur les détails, ce qui empêchait de lire le livre rapidement."
+        },
+        {
+            "anchor": "to-grandma",
+            "title": "Chez grand-mère à la campagne",
+            "content":"Heureusement, l'été, on m'a envoyé chez ma grand-mère. Malheureusement, elle s'était disputée avec mon grand-père, et ils avaient divisé leur appartement en ville. Ma grand-mère a acheté un appartement à la campagne.<br><br>En apparence, la campagne, que pourrait-il mal se passer... apparemment, tout. Ma grand-mère a commencé à boire et à décharger sa colère, et je me suis retrouvé essentiellement livré à moi-même. La plupart du temps, je traînais dans la cour et essayais de me faire des amis avec les locaux, mais c'était très difficile, et ceux avec qui j'arrivais à me lier étaient issus de familles marginalisées, ce qui n'était pas agréable. Ma grand-mère ne me permettait pas de m'éloigner trop dans le village, mais je m'ennuyais dans la cour, alors je partais souvent plus loin."
+        },
+        {
+            "anchor": "stepfathers-dacha",
+            "title": "La datcha chez mon beau-père",
+            "content":"Pendant une autre période estivale, je ne suis pas allé chez ma grand-mère, car à cause de l'alcoolisme et de la solitude, elle est décédée, l'air frais de la campagne n'ayant manifestement pas été bénéfique pour elle.<br><br>Au lieu de ma grand-mère, je suis allé avec ma mère à la datcha de mon beau-père, où vivaient également ses parents, qui étaient relativement des gens raisonnables et bienveillants.<br><br>Cependant, à la datcha, mon travail était aussi exploité, je n'ai pas eu un seul jour de repos, à la place, je labourais le jardin."
+        },
+        {
+            "anchor": "bullying",
+            "title": "Harcèlement",
+            "content":"Dans ma nouvelle école, j'étais un étranger, mon nom et mes manières étaient étranges pour mes nouveaux camarades de classe et ils se moquaient de moi. En effet, je venais d'une école plus prestigieuse, et eux étaient des voyous.<br><br>Ils me faisaient souvent tomber mes affaires scolaires de la table pour m'énerver, vidaient le contenu de mon sac à dos. Heureusement, cela n'a pas duré éternellement et dès qu'un autre nouvel élève est arrivé dans la classe, ils se sont tournés vers lui."
+        },
+        {
+            "anchor": "domestic-violence",
+            "title": "Violence domestique",
+            "content":"Dans le contexte de ma vie avec mon beau-père, j'ai été élevé dans une stricte paradigme de masculinité, il m'était interdit de montrer de la faiblesse, d'exprimer mes émotions, de pleurer ou de me plaindre, car ce n'était pas un comportement masculin.<br><br>À la maison, j'ai souvent été victime de violence domestique, elle était utilisée comme une mesure éducative, on me battait pour de mauvaises notes à l'école, sans jamais me récompenser pour de bonnes, on ne m'a jamais aidé à faire mes devoirs et je suis resté dessus jusqu'à tard dans la nuit, on m'interdisait de me coucher tant qu'ils n'étaient pas faits correctement, et je ne comprenais pas toujours comment les faire correctement.<br><br>Le plus souvent, la violence se manifestait sous forme de coups de fouet, de rares battes parfois sur le visage, une fois, on m'a obligé à rester toute la nuit à genoux dans des pois, les pois étaient utilisés comme un moyen de rendre les genoux douloureux. C'était déjà une charge insupportable, j'avais environ 7-8 ans et, comme tous les enfants, j'avais peur de l'obscurité.<br><br>Un jour, je n'avais pas de devoirs à faire, et mon beau-père ne m'a pas cru, il n'a pas appelé l'enseignant pour vérifier, au lieu de cela, il m'a chassé de la maison en me disant : "Sans devoirs, ne reviens pas !", je me suis retrouvé dehors en hiver, mon cerveau d'enfant ne savait pas comment résoudre ce problème, je suis allé chez le seul camarade de classe que je connaissais pour lui demander les devoirs, et il s'est avéré qu'ils ne m'avaient pas été donnés.<br><br>Malheureusement, le camarade de classe ne voulait pas venir avec moi pour prouver qu'il n'y avait pas de devoirs, et je ne pouvais pas revenir sans devoirs, mon cerveau autistique m'a suggéré de tricher - j'ai inventé des devoirs et je les ai écrits dans mon carnet, je suis retourné à la maison et j'ai été victime de violence pour ne pas avoir écrit les devoirs. Ensuite, on m'a forcé à faire les devoirs que je m'étais inventés."
+        },
+        {
+            "anchor": "teacher-sociologist",
+            "title": "Pédagogue Sociologue",
+            "content":"À l'école, la professeure, en vérifiant les cahiers, a découvert des devoirs qu'elle ne m'avait jamais donnés. Elle m'a fait venir chez elle, a barré l'exercice et s'apprêtait à me mettre une mauvaise note pour cela. J'ai compris que pour avoir tenté de résoudre un problème, je souffrirais deux fois, un sentiment lourd d'injustice et l'attente de la punition ont provoqué des larmes en moi et j'ai commencé à pleurer là-bas. En conséquence, on m'a emmené chez le psychologue scolaire.<br><br>Chez le psychologue, je ne disais rien et je dessinais de temps en temps, cela me calmait, car personne ne me mettait la pression. Plusieurs fois, j'ai eu des émotions intenses qui me ramenaient encore et encore dans ce cabinet où je trouvais du réconfort.<br><br>Mais un jour, au lieu du psychologue, on m'a emmené dans le cabinet d'un travailleur social, cela s'est produit la veille du moment où l'une des traces de coups était un bleu sur mon visage, l'école a commencé à considérer cela comme de la violence domestique.<br>Le travailleur social était une femme sinistre qui, par manipulation et chantage, m'incitait à témoigner contre mes parents. Je savais que dans mon pays, les enfants dans les foyers vivent bien plus mal que moi dans ma famille et je n'avais pas trahi ma famille, je supportais la violence domestique simplement pour survivre à cette étape de ma vie. Le travailleur social ne me laissait pas partir et me gardait enfermé jusqu'à ce que mon beau-père vienne me chercher.<br><br>Après une brève conversation entre mon beau-père et le travailleur social, il m'a silencieusement emmené à la maison, où j'ai été traité de traître à la famille, et mon beau-père m'a dit : \"Je ne toucherai plus jamais ce sac de merde et ton doigt.\" Ce qui sonnait à la fois comme une garantie de sécurité et comme une remarque dégradante."
+        },
+        {
+            "anchor": "forgotten-children",
+            "title": "Enfants oubliés",
+            "content":"Un jour, mon frère et moi avons été laissés à la garderie après l'école, c'était un événement où les enfants faisaient leurs devoirs sous la supervision d'un éducateur, c'était bien mieux que chez nous, surtout que maintenant j'étais sous surveillance et il ne pouvait plus y avoir de violence domestique envers moi. Cependant, les parents devaient venir chercher les enfants de la garderie, mais un jour fatidique, ni mon frère ni moi n'avons été récupérés.<br><br>On ne nous permettait pas de rentrer chez nous à pied, les parents ne répondaient pas aux appels du directeur, l'école fermait, et nous devions être placés quelque part. Le directeur a donc pris la décision de nous confier à la responsable de la garderie, du moins jusqu'à ce que nos parents se manifestent.<br><br>Nous avons donc pris nos affaires et sommes allés chez elle. Elle avait beaucoup d'enfants et elle était une femme gentille. J'étais très mal à l'aise d'y être, car elle montrait de l'attention que je considérais comme inacceptable et inaccessible, et il me semblait aussi qu'en suivant les adultes, je trahissais à nouveau ma famille.<br><br>Finalement... nos parents sont arrivés à l'école déjà fermée pour la nuit, le gardien a appelé le directeur, qui a appelé la responsable de la garderie, et elle nous a ramenés à nos parents. Bien sûr, la réaction était évidente, ma mère s'exprimait de manière grossière comme si on nous avait enlevés."
+        },
+        {
+            "anchor": "police",
+            "title": "Police",
+            "content":"Un jour, pendant que j'étais à un cours de dessin après l'école, mon frère est venu au club et m'a dit que notre mère était arrivée à l'école ivre. J'ai essayé de l'ignorer et de rester au club pour ne pas me retrouver au centre de l'attention et de ne pas être encore une fois responsable de tout.<br><br>Ensuite, mon frère est revenu avec le directeur et nous sommes allés dans son bureau. Là, notre mère frappait à la porte du bureau, et le travailleur social appelait la police.<br><br>Après un certain temps, la police est arrivée et a arrêté ma mère, puis ils nous ont mis dans une voiture de police et nous ont emmenés au poste. Nous étions là, écoutant les cris et les hurlements des criminels, des drogués et des alcooliques, en attendant que quelqu'un vienne nous récupérer. Heureusement, c'était encore Natasha."
+        },
+        {
+            "anchor": "back-to-natasha",
+            "title": "Назад к Наташе",
+            "content":""
+        },
+        {
+            "anchor": "hello-andrey",
+            "title": "Привет Андрей",
+            "content":""
+        },
+        {
+            "anchor": "2-rubles",
+            "title": "У вас не найдется 2 рубля?",
+            "content":""
+        },
+        {
+            "anchor": "sect",
+            "title": "Секта",
+            "content":""
+        },
+        {
+            "anchor": "natasha-forever",
+            "title": "Наташа Навсегда",
+            "content":""
+        },
+        {
+            "anchor": "poisoning",
+            "title": "Отравление",
+            "content":""
+        },
+        {
+            "anchor": "hospital",
+            "title": "Больница",
+            "content":""
+        },
+        {
+            "anchor": "shame",
+            "title": "Стыд",
+            "content":""
+        },
+        {
+            "anchor": "prodigal-father",
+            "title": "Блудный Отец",
+            "content":""
+        },
+        {
+            "anchor": "summer-friends",
+            "title": "Летние Друзья",
+            "content":""
+        },
+        {
+            "anchor": "clubs",
+            "title": "Кружки",
+            "content":""
+        },
+        {
+            "anchor": "abandoned-friend",
+            "title": "Брошенный Друг",
+            "content":""
+        },
+        {
+            "anchor": "film-studio",
+            "title": "Киностудия",
+            "content":""
+        },
+        {
+            "anchor": "distant-lands",
+            "title": "Далекие Края",
+            "content":""
+        },
+        {
+            "anchor": "rape",
+            "title": "Изнасилование",
+            "content":""
+        },
+        {
+            "anchor": "fears",
+            "title": "Страхи",
+            "content":""
+        },
+        {
+            "anchor": "dumpster-pc",
+            "title": "Компьютер из помойки",
+            "content":""
+        },
+        {
+            "anchor": "isolation",
+            "title": "Изоляция",
+            "content":""
+        },
+        {
+            "anchor": "self-development",
+            "title": "Саморазвитие",
+            "content":""
+        },
+        {
+            "anchor": "whats-happening-to-my-body",
+            "title": "Что с моим телом",
+            "content":""
+        },
+        {
+            "anchor": "dark-thoughts",
+            "title": "Скверные мысли",
+            "content":""
+        },
+        {
+            "anchor": "withdrawal",
+            "title": "Замкнутость",
+            "content":""
+        },
+        {
+            "anchor": "bullying-returns",
+            "title": "Возвращение Буллинга",
+            "content":""
+        },
+        {
+            "anchor": "truancy",
+            "title": "Прогулы",
+            "content":""
+        },
+        {
+            "anchor": "summer-camp",
+            "title": "Летний Лагерь",
+            "content":""
+        },
+        {
+            "anchor": "anger",
+            "title": "Злоба",
+            "content":""
+        },
+        {
+            "anchor": "nanny",
+            "title": "Я стал няней",
+            "content":""
+        },
+        {
+            "anchor": "sailor",
+            "title": "Мореход",
+            "content":""
+        },
+        {
+            "anchor": "running-away",
+            "title": "Побег из дома",
+            "content":""
+        },
+        {
+            "anchor": "graduation",
+            "title": "Окончание Школы",
+            "content":""
+        },
+        {
+            "anchor": "hopelessness",
+            "title": "Безысходность",
+            "content":""
+        },
+        {
+            "anchor": "neet-life",
+            "title": "Жизнь NEET",
+            "content":""
+        },
+        {
+            "anchor": "sugar-daddy-sweden",
+            "title": "Папик из Швеции",
+            "content":""
+        },
+        {
+            "anchor": "stable-job",
+            "title": "Стабильная Работа",
+            "content":""
+        },
+        {
+            "anchor": "office-life",
+            "title": "Жизнь в Офисе",
+            "content":""
+        },
+        {
+            "anchor": "moving-to-tyumen",
+            "title": "Переезд в Тюмень",
+            "content":""
+        },
+        {
+            "anchor": "first-betrayal",
+            "title": "Первое предательство",
+            "content":""
+        },
+        {
+            "anchor": "community-foundation",
+            "title": "Основание сообщества",
+            "content":""
+        },
+        {
+            "anchor": "depression",
+            "title": "Депрессия",
+            "content":""
+        },
+        {
+            "anchor": "liza",
+            "title": "Лиза",
+            "content":""
+        },
+        {
+            "anchor": "war-and-separation",
+            "title": "Война и Расставание",
+            "content":""
+        },
+        {
+            "anchor": "visit",
+            "title": "Визит",
+            "content":""
+        },
+        {
+            "anchor": "torture",
+            "title": "Пытки",
+            "content":""
+        },
+        {
+            "anchor": "central-prison",
+            "title": "Тюрьма Центральная",
+            "content":""
+        },
+        {
+            "anchor": "trial",
+            "title": "Судилище",
+            "content":""
+        },
+        {
+            "anchor": "freedom",
+            "title": "Свобода",
+            "content":""
+        },
+        {
+            "anchor": "nowhere-to-run",
+            "title": "Бежать Некуда",
+            "content":""
+        },
+        {
+            "anchor": "to-liza",
+            "title": "К Лизе",
+            "content":""
+        },
+        {
+            "anchor": "name-change",
+            "title": "Перемена Имени",
+            "content":""
+        },
+        {
+            "anchor": "raid",
+            "title": "Облава",
+            "content":""
+        },
+        {
+            "anchor": "fsb",
+            "title": "ФСБ",
+            "content":""
+        },
+        {
+            "anchor": "yerevan-escape",
+            "title": "Ереванский Побег",
+            "content":""
+        },
+        {
+            "anchor": "dilijan-shelter",
+            "title": "Дилиджанский Шелтер",
+            "content":""
+        },
+        {
+            "anchor": "life-in-yerevan",
+            "title": "Жизнь в Ереване",
+            "content":""
+        },
+        {
+            "anchor": "reunion-with-liza",
+            "title": "Воссоединение с Лизой",
+            "content":""
+        },
+        {
+            "anchor": "batumi-hometown",
+            "title": "Родной Батуми",
+            "content":""
+        },
+        {
+            "anchor": "dusty-tbilisi",
+            "title": "Пыльный Тбилиси",
+            "content":""
+        },
+        {
+            "anchor": "visas",
+            "title": "Визы",
+            "content":""
+        },
+        {
+            "anchor": "paris-homeless",
+            "title": "Парижский Бомж",
+            "content":""
+        },
+        {
+            "anchor": "breton-alcoholic",
+            "title": "Бретонский Алкаш",
+            "content":""
+        },
+        {
+            "anchor": "refugee-status",
+            "title": "Статус Беженца",
+            "content":""
+        },
+        {
+            "anchor": "emotional-instability",
+            "title": "Эмоциональная Нестабильность",
+            "content":""
         }
     ],
     "posts": [
