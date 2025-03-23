@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Political Space Test</title>
+    <script type="text/javascript" src="vue.min.js"></script>
+    <script type="text/javascript" src="main.js" defer></script>
+    <link rel="stylesheet" href="main.css" type="text/css">
+</head>
+<body>
+    <main>
+        <section class="question" v-for="(row,id) in questions" v-if="id == question">
+            <div class="question">
+                {{ questions[id][0] }}
+            </div>
+            <div class="answer-buttons">
+                <button @click="answer(questions[id],1)">Согласен</button>
+                <button @click="answer(questions[id],0.5)">Скорее Согласен</button>
+                <button @click="answer(questions[id],-0.5)">Скорее Несогласен</button>
+                <button @click="answer(questions[id],-1)">Несогласен</button>
+            </div>
+        </section>
+        <section>
+            Левацкость: {{ vectors.commie }} <br>
+            Либераховость: {{ vectors.liberte }} <br>
+            Эгалитаризм: {{ vectors.egalite }}
+        </section>
+    </main>
+</body>
+</html>

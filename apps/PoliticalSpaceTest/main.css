@@ -1,0 +1,24 @@
+.answer-buttons{
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-template-rows: repeat(2);
+    gap: 10px;
+}
+
+.answer-buttons button{
+    padding: 10px;
+    background-color: #EEE;
+    border-radius: 8px;
+    color: #000;
+    border: 0px;
+}
+
+main{
+    max-width: 800px;
+    width: calc(100vw - 32px) !important;
+    margin: 0 auto !important;
+}
+.question{
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
