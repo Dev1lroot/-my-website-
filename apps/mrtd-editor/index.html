@@ -26,6 +26,20 @@
 </head>
 <body>
 	<div id="main">
+		<dialog id="signature-dialog">
+			<button @click="dialog.onClose()" class="close"><i class="fa-solid fa-times"></i></button>
+			<div class="container">
+				<div style="padding: 10px 0px;">Draw your signature</div>
+				<div class="inline-buttons">
+					<button @click="clearSignature()">Clear</button>
+				</div>
+				<canvas id="signature" class="signature-canvas" style="width: 100%; height: auto;" width="600" height="200"></canvas>
+				<div class="inline-buttons">
+					<button @click="dialog.onConfirm()">Confirm</button>
+					<button @click="dialog.onClose()"  >Cancel</button>
+				</div>
+			</div>
+		</dialog>
 		<dialog id="dialog">
 			<button @click="dialog.onClose()" class="close"><i class="fa-solid fa-times"></i></button>
 			<div class="container">
@@ -188,131 +202,171 @@
 				</div>
 				<div class="settings" v-if="settings == 'design'">
 					<dropdown v-bind:title="'Mode'">
-						<div class="param">
-							<label>Display Mode:</label>
-							<select v-model="style.personalization" @change="style.personalization = Number(style.personalization)">
-								<option value="1">Personalized</option>
-								<option value="0">Template</option>
-							</select>
-						</div>
-						<div class="param">
-							<label>Light</label>
-							<select v-model="style.display">
-								<option>normal</option>
-								<option>ir-10</option>
-								<option>ir-15</option>
-								<option>ir-20</option>
-							</select>
-						</div>
-						<div class="param" v-if="render == 'visa'">
-							<label>Visa Formfactor</label>
-							<select v-model="style.variant">
-								<option value="mrv-a">MRV-A</option>
-								<option value="mrv-b">MRV-B</option>
-							</select>
-						</div>
-						<div class="param" v-if="render == 'id-card' || render == 'military-id'">
-							<label>Card Formfactor</label>
-							<select v-model="style.variant">
-								<option value="cr79">CR79</option>
-								<option value="cr80">CR80</option>
-								<option value="cr100">CR100</option>
-							</select>
-						</div>
-					</dropdown>
-					<dropdown v-bind:title="'VIS Labels'">
-						<div class="param">
-							<label>Labels Color</label>
-							<input type="color" v-model="style.labels.color">
-						</div>
-						<div class="param">
-							<label>Font Size</label>
-							<input type="range" min="1" max="12" step="0.1" v-model="style.labels.fontSize">
-						</div>
-						<div class="param">
-							<label>Font Family</label>
-							<select v-model="style.labels.fontFamily">
-								<option>Arial</option>
-								<option>Frutiger</option>
-								<option v-for="f in fonts">{{f}}</option>
-							</select>
-						</div>
-						<div class="param">
-							<label>Style</label>
-							<select v-model="style.vis.class">
-								<option value="horizontal">Horizontal Wrap</option>
-								<option value="vertical">Vertical Wrap</option>
-								<option value="nolabel">No Labels</option>
-							</select>
+						<div class="group">
+							<label>Display Mode</label>
+							<div class="param">
+								<label>Display Mode:</label>
+								<select v-model="style.personalization" @change="style.personalization = Number(style.personalization)">
+									<option value="1">Personalized</option>
+									<option value="0">Template</option>
+								</select>
+							</div>
+							<div class="param">
+								<label>Light</label>
+								<select v-model="style.display">
+									<option>normal</option>
+									<option>ir-10</option>
+									<option>ir-15</option>
+									<option>ir-20</option>
+								</select>
+							</div>
+							<div class="param" v-if="render == 'visa'">
+								<label>Visa Formfactor</label>
+								<select v-model="style.variant">
+									<option value="mrv-a">MRV-A</option>
+									<option value="mrv-b">MRV-B</option>
+								</select>
+							</div>
+							<div class="param" v-if="render == 'id-card' || render == 'military-id'">
+								<label>Card Formfactor</label>
+								<select v-model="style.variant">
+									<option value="cr79">CR79</option>
+									<option value="cr80">CR80</option>
+									<option value="cr100">CR100</option>
+								</select>
+							</div>
 						</div>
 					</dropdown>
-					<dropdown v-bind:title="'VIS Properties'">
-						<div class="param">
-							<label>Font Family</label>
-							<select v-model="style.params.fontFamily">
-								<option v-for="f in fonts">{{f}}</option>
-							</select>
+					<dropdown v-bind:title="'VIS Area'">
+						<div class="group">
+							<label>VIS Labels</label>
+							<div class="param">
+								<label>Labels Color</label>
+								<input type="color" v-model="style.labels.color">
+							</div>
+							<div class="param">
+								<label>Font Size</label>
+								<input type="range" min="1" max="12" step="0.1" v-model="style.labels.fontSize">
+							</div>
+							<div class="param">
+								<label>Font Family</label>
+								<select v-model="style.labels.fontFamily">
+									<option>Arial</option>
+									<option>Frutiger</option>
+									<option v-for="f in fonts">{{f}}</option>
+								</select>
+							</div>
+							<div class="param">
+								<label>Style</label>
+								<select v-model="style.vis.class">
+									<option value="horizontal">Horizontal Wrap</option>
+									<option value="vertical">Vertical Wrap</option>
+									<option value="nolabel">No Labels</option>
+								</select>
+							</div>
 						</div>
-						<div class="param">
-							<label>Font Letter Spacing ({{style.params.letterSpacing}})</label>
-							<input type="range" min="0" max="10" step="0.5" v-model="style.params.letterSpacing">
-						</div>
-						<div class="param" style="display: none;">
-							<label>Font Size</label>
-							<input type="range" min="13" max="17" step="1" v-model="style.params.fontSize">
+						<div class="group">
+							<label>VIS Values</label>
+							<div class="param">
+								<label>Font Family</label>
+								<select v-model="style.params.fontFamily">
+									<option v-for="f in fonts">{{f}}</option>
+								</select>
+							</div>
+							<div class="param">
+								<label>Font Letter Spacing ({{style.params.letterSpacing}})</label>
+								<input type="range" min="0" max="10" step="0.5" v-model="style.params.letterSpacing">
+							</div>
+							<div class="param" style="display: none;">
+								<label>Font Size</label>
+								<input type="range" min="13" max="17" step="1" v-model="style.params.fontSize">
+							</div>
 						</div>
 					</dropdown>
 					<dropdown v-bind:title="'Perforation'" v-if="render == 'passport'">
-						<div class="param">
-							<label>Perforation position</label>
-							<select v-model="style.perforation.position">
-								<option>left</option>
-								<option>right</option>
-							</select>
-						</div>
-						<div class="param">
-							<label>Perforation area height</label>
-							<input type="range" min="10" max="30" step="0.1" v-model="style.perforation.height">
-						</div>
-						<div class="param">
-							<label>Perforation size (mm)</label>
-							<input type="range" min="7" max="9" step="0.1" v-model="style.perforation.fontSize">
+						<div class="group">
+							<label>Perforation</label>
+							<div class="param">
+								<label>Perforation position</label>
+								<select v-model="style.perforation.position">
+									<option>left</option>
+									<option>right</option>
+								</select>
+							</div>
+							<div class="param">
+								<label>Perforation area height</label>
+								<input type="range" min="10" max="30" step="0.1" v-model="style.perforation.height">
+							</div>
+							<div class="param">
+								<label>Perforation size (mm)</label>
+								<input type="range" min="7" max="9" step="0.1" v-model="style.perforation.fontSize">
+							</div>
 						</div>
 					</dropdown>
 				</div>
 				<div class="settings" v-if="settings == 'layers'">
 					<dropdown v-bind:title="'Layer Settings'" v-if="background[selected_layer] != undefined">
 						<div class="group">
-							Color Correction
+							<label>Color Correction</label>
+							<div class="two-column">
+								<div class="param">
+									<label>Opacity:</label>
+									<input type="number" v-model="background[selected_layer].opacity" step="0.1">
+								</div>
+								<div class="param">
+									<label>Hue:</label>
+									<input type="number" v-model="background[selected_layer].hue"  step="1">
+								</div>
+							</div>
+							<div class="two-column">
+								<div class="param">
+									<label>Brightness:</label>
+									<input type="number" v-model="background[selected_layer].brightness"  step="0.1">
+								</div>
+								<div class="param">
+									<label>Contrast:</label>
+									<input type="number" v-model="background[selected_layer].contrast"  step="0.1">
+								</div>
+							</div>
+							<div class="param">
+								<label>Blur:</label>
+								<input type="number" v-model="background[selected_layer].blur"  step="1">
+							</div>
 						</div>
-						<div class="param">
-							<label>Opacity:</label>
-							<input type="number" v-model="background[selected_layer].opacity" step="0.1">
+						<div class="group">
+							<label>Size & Position</label>
+							<div class="param">
+								<label>Size:</label>
+								<select v-model="background[selected_layer].backgroundSize">
+									<option value="contain">Contain</option>
+									<option value="cover">Cover</option>
+									<option value="100px">Defined</option>
+								</select>
+							</div>
+							<div class="param" v-if="!['cover','contain'].includes(background[selected_layer].backgroundSize)">
+								<input type="text" v-model="background[selected_layer].backgroundSize"></input>
+							</div>
+							<div class="param">
+								<label>Repeat:</label>
+								<select v-model="background[selected_layer].backgroundRepeat">
+									<option value="no-repeat">No Repeat</option>
+									<option value="repeat-x">Horizontal</option>
+									<option value="repeat-y">Vertical</option>
+									<option value="repeat">Both</option>
+								</select>
+							</div>
 						</div>
-						<div class="param">
-							<label>Hue:</label>
-							<input type="number" v-model="background[selected_layer].hue"  step="1">
-						</div>
-						<div class="param">
-							<label>Brightness:</label>
-							<input type="number" v-model="background[selected_layer].brightness"  step="0.1">
-						</div>
-						<div class="param">
-							<label>Contrast:</label>
-							<input type="number" v-model="background[selected_layer].contrast"  step="0.1">
-						</div>
-						<div class="param">
-							<label>Blur:</label>
-							<input type="number" v-model="background[selected_layer].blur"  step="1">
-						</div>
-						<div class="param">
-							<label>Page bound:</label>
-							<button v-if="background[selected_layer].pageBound" @click="background[selected_layer].pageBound = !background[selected_layer].pageBound">Unbind</button>
-							<button v-if="!background[selected_layer].pageBound" @click="background[selected_layer].pageBound = !background[selected_layer].pageBound">Bind</button>
-						</div>
-						<div class="param" v-if="background[selected_layer].pageBound">
-							<label>Page number:</label>
-							<input type="number" v-model="background[selected_layer].pageNumber">
+						<div class="group">
+							<label>Pagination</label>
+							<div class="param">
+								<label>Page bound:</label>
+								<button v-if="background[selected_layer].pageBound" @click="background[selected_layer].pageBound = !background[selected_layer].pageBound">Unbind</button>
+								<button v-if="!background[selected_layer].pageBound" @click="background[selected_layer].pageBound = !background[selected_layer].pageBound">Bind</button>
+							</div>
+							<div class="param" v-if="background[selected_layer].pageBound">
+								<label>Page number:</label>
+								<input type="number" v-model="background[selected_layer].pageNumber">
+							</div>
 						</div>
 					</dropdown>
 					<dropdown v-bind:title="'Layers'" v-bind:container_class="'layers-wrapper'">
@@ -337,34 +391,40 @@
 					<a class="param" v-for="f in fields" @click="properties(f)">{{f.param}}</a>
 				</div>
 				<div class="settings" v-if="settings == 'properties' && selected.param != undefined">
-					<div class="param">
-						<label>Title:</label>
-						<input type="text" v-model="selected.title">
-					</div>
-					<div class="param">
-						<label>Value:</label>
-						<div v-if="Array.isArray(selected.setup)" class="value">
-							<select v-model="selected.value">
-								<option v-for="o in selected.setup">{{o}}</option>
+					<div class="group">
+						<label>Field Properties</label>
+						<div class="param">
+							<label>Title:</label>
+							<input type="text" v-model="selected.title">
+						</div>
+						<div class="param">
+							<label>Value:</label>
+							<div v-if="Array.isArray(selected.setup)" class="value">
+								<select v-model="selected.value">
+									<option v-for="o in selected.setup">{{o}}</option>
+								</select>
+							</div>
+							<div v-else-if="selected.setup == 'signature'">
+								<button @click="createSignature()">Draw Signature</button>
+							</div>
+							<div v-else>
+								<input :type="selected.setup" v-model="selected.value" class="value">
+							</div>
+						</div>
+						<div class="param">
+							<label>Width:<sup>mm</sup></label>
+							<input type="text" v-model="selected.width">
+						</div>
+						<div class="param" v-if="selected.setup == 'date'">
+							<label>Format:</label>
+							<select v-model="selected.format">
+								<option>YYYY-MM-DD</option>
+								<option>YYYY.MM.DD</option>
+								<option>YYYY MM DD</option>
+								<option>DD MMM YY</option>
+								<option>DD MMM /MMM YY</option>
 							</select>
 						</div>
-						<div v-else>
-							<input :type="selected.setup" v-model="selected.value" class="value">
-						</div>
-					</div>
-					<div class="param">
-						<label>Width:<sup>mm</sup></label>
-						<input type="text" v-model="selected.width">
-					</div>
-					<div class="param" v-if="selected.setup == 'date'">
-						<label>Format:</label>
-						<select v-model="selected.format">
-							<option>YYYY-MM-DD</option>
-							<option>YYYY.MM.DD</option>
-							<option>YYYY MM DD</option>
-							<option>DD MMM YY</option>
-							<option>DD MMM /MMM YY</option>
-						</select>
 					</div>
 				</div>
 			</aside>

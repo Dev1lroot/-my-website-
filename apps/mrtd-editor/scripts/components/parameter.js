@@ -3,7 +3,8 @@ Vue.component('parameter', {
     template: `
 	<div class="placeholder field" :class="'field-'+fieldClass" :style="primaryStyle" :title="param.title" @click="properties()">
         <label :style="labelStyle">{{param.title}}</label>
-        <p :style="valueStyle">{{param.value}}</p>
+        <img v-if="param.setup == 'signature' && param.value.length > 0" :src="param.value">
+        <p v-else :style="valueStyle">{{param.value}}</p>
     </div>`,
     methods: {
         properties(){

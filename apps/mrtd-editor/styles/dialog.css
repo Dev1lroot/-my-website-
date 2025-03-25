@@ -24,3 +24,8 @@ dialog .close{
     width: 100%;
     gap: 20px;
 }
+.signature-canvas{
+    background-color: #FFF;
+    border-radius: 10px;
+    overflow: hidden;
+}

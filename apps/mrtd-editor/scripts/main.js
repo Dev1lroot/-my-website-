@@ -70,16 +70,90 @@ var root = new Vue({
 			}.bind(this)
 
 			this.dialog = params;
-			document.getElementById("dialog").showModal();
+
+			let element = (this.dialog.hasOwnProperty("element")) ? this.dialog.element : "dialog";
+
+			document.getElementById(element).showModal();
 		},
-		closeModal(){
-			document.getElementById("dialog").close();
+		closeModal(element = 'dialog'){
+			document.getElementById(element).close();
 		},
 		dialog: {
 			type: "",
 			title: "",
 			onClose: function(){},
 			onConfirm: function(){},
+		},
+		clearSignature()
+		{
+			const canvas = document.getElementById("signature");
+			const ctx = canvas.getContext("2d");
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+		},
+		prepareSignature()
+		{
+			const canvas = document.getElementById("signature");
+			const ctx = canvas.getContext("2d");
+
+			let isDrawing = false;
+
+			// Set canvas properties for smooth drawing
+			ctx.lineWidth = 2;
+			ctx.lineCap = "round";
+			ctx.strokeStyle = "black";
+
+			// Start drawing when mouse is pressed
+			canvas.addEventListener("mousedown", (e) => {
+				isDrawing = true;
+				ctx.beginPath();
+				ctx.moveTo(e.offsetX, e.offsetY);
+			});
+
+			// Draw while mouse is moving
+			canvas.addEventListener("mousemove", (e) => {
+				if (isDrawing) {
+					ctx.lineTo(e.offsetX, e.offsetY);
+					ctx.stroke();
+				}
+			});
+
+			// Stop drawing when mouse is released
+			canvas.addEventListener("mouseup", () => {
+				isDrawing = false;
+			});
+
+			// Stop drawing if mouse leaves the canvas
+			canvas.addEventListener("mouseleave", () => {
+				isDrawing = false;
+			});
+
+			// Clear the canvas
+			function clearCanvas() {
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+			}
+		},
+		createSignature()
+		{
+			this.createDialog({
+				element: "signature-dialog",
+				type: "confirm",
+				title: "",
+				onConfirm: function()
+				{
+					document.getElementById("signature").toBlob((blob) => {
+						const url = URL.createObjectURL(blob);
+						this.setParam("signature", url);
+					}, "image/png");
+					this.closeModal("signature-dialog");
+				}
+				.bind(this),
+				onClose: function()
+				{
+					this.closeModal("signature-dialog");
+				}
+				.bind(this)
+			});
+			this.prepareSignature();
 		},
 		removeLayer(id)
 		{
@@ -107,6 +181,8 @@ var root = new Vue({
 				contrast: 1, // float 0 .. 1 .. 10
 				blur: 0, // px 0 .. 255
 				hue: 0, // deg -180 .. 0 .. 180
+				backgroundRepeat: "no-repeat",
+				backgroundSize: "cover",
 			}].concat(this.background);
 		},
 		background: [
@@ -178,6 +254,16 @@ var root = new Vue({
 			}
 			return rm;
 		},
+		setParam(param, value)
+		{
+			for(let f in this.fields)
+			{
+				if(this.fields[f].param == param)
+				{
+					this.fields[f].value = value;
+				}
+			}
+		},
 		prepareLayout(type)
 		{
 			// Default settings for all the documents
@@ -202,6 +288,7 @@ var root = new Vue({
 						["date_of_expiry","signature"]
 					]
 				];
+				this.setParam("type","P");
 			}
 			if(type == "visa")
 			{
@@ -216,6 +303,7 @@ var root = new Vue({
 					]
 				];
 				this.style.variant = 'mrv-b';
+				this.setParam("type","V");
 			}
 			if(type == "id-card")
 			{
@@ -234,6 +322,7 @@ var root = new Vue({
 					]
 				];
 				this.style.variant = 'cr80';
+				this.setParam("type","ID");
 			}
 			if(type == "military-id")
 			{
@@ -526,7 +615,7 @@ var root = new Vue({
 			},
 			{
 				title:`Date of Issue`,
-				value:`2022-11-27`,
+				value: new Date().toISOString().split('T')[0],
 				param:`date_of_issue`,
 				width: 43,
 				setup:`date`,
@@ -539,7 +628,7 @@ var root = new Vue({
 				value:``,
 				param:`signature`,
 				width: 43,
-				setup:`image`,
+				setup:`signature`,
 				shown: true,
 				mandatory: true,
 			},
@@ -554,7 +643,7 @@ var root = new Vue({
 			},
 			{
 				title:`Date of Expiry`,
-				value:`2032-11-27`,
+				value:new Date(new Date().setFullYear(new Date().getFullYear() + 10)).toISOString().split('T')[0],
 				param:`date_of_expiry`,
 				width: 43,
 				setup:`date`,
