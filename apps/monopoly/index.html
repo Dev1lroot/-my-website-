@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script type="module" src="webgl.js" defer></script>
+    
+    <script type="text/javascript" src="libraries/Package.js" ></script>
+    <script type="text/javascript" src="libraries/vue.js"     ></script>
+
+    <script type="module" src="components/card.js"></script>
+    <script type="module" src="components/item.js"></script>
+    <script type="module" src="components/add-item.js"></script>
+    <!-- <script type="text/javascript" src="main.js" defer></script> -->
+    
+    <link   href="main.css" rel="stylesheet">
+</head>
+<body>
+    <main id="game" style="display: none;">
+        <section class="modals" v-if="modal.name.length > 0">
+            <div v-if="modal.name == 'trade' && modal.data.destination.length > 0" class="anim-intact notification" style="height: 400px; width: 600px;">
+                <a class="close" @click="modal.data.destination = ''">x</a>
+                <add-item 
+                    name="exchange" 
+                    :player="getPlayer(modal.data[modal.data.destination].uuid)" 
+                    :destination="modal.data.destination"
+                ></add-item>
+            </div>
+            <div v-if="modal.name == 'trade' && modal.data.destination.length == 0" class="anim-intact notification" style="height: auto; width: 600px;">
+                <a class="close" @click="modal.name = ''">x</a>
+                <label>Товары игрока {{getPlayer(modal.data.a.uuid).name}}:</label>
+                <div class="items">
+                    <a class="item" v-if="modal.data.status == 'EDITING'" @click="modal.data.destination = 'a'">Добавить</a>
+                    <item v-for="(item,item_id) in modal.data.a.rows" :item="item">
+                        <a v-if="modal.data.status == 'EDITING'" class="close" @click="modal.data.a.rows.splice(item_id)">x</a>
+                    </item>
+                </div>
+                <center>В обмен на</center>
+                <label>Товары игрока {{getPlayer(modal.data.b.uuid).name}}:</label>
+                <div class="items">
+                    <a class="item" v-if="modal.data.status == 'EDITING'" @click="modal.data.destination = 'b'">Добавить</a>
+                    <item v-for="(item,item_id) in modal.data.b.rows" :item="item">
+                        <a v-if="modal.data.status == 'EDITING'" class="close" @click="modal.data.b.rows.splice(item_id)">x</a>
+                    </item>
+                </div>
+                <div v-if="modal.data.status == 'EDITING'">
+                    <button @click="client.request('request_trade',modal.data); modal.name = '';">Предложить Торговлю</button>
+                </div>
+                <div v-if="modal.data.status == 'CREATED'">
+                    <button @click="client.request('confirm_trade',{ uuid: modal.data.uuid }); modal.name = '';">Принять</button>
+                    <button @click="client.request('decline_trade',{ uuid: modal.data.uuid }); modal.name = '';">Отклонить</button>
+                </div>
+            </div>
+            <div v-if="modal.name == 'prompt'" class="anim-intact notification">
+                <a class="close" @click="modal.name = ''">x</a>
+                <div v-if="modal.data.type == 'trade'">
+                    Вам предлагают торговлю, принять?<br><br>
+                    <button @click="openTrade(modal.data.trade)">Посмотреть Предложение</button> <button @click="modal.name = ''">Отмена</button>
+                </div>
+            </div>
+            <div v-if="modal.name == 'player'" class="anim-intact notification" style="height: auto;">
+                <label>Никнейм Игрока:</label><br>
+                <input type="text" v-model="modal.data.name"><br><br>
+                <label>Цвет Игрока и Фишки:</label><br>
+                <input type="color" v-model="modal.data.color"><br><br>
+                <label>Модель Фишки:</label><br>
+                <select v-model="modal.data.model">
+                    <option value="fishka">Фишка</option>
+                    <option value="pig">Свинка</option>
+                </select><br><br>
+                <button @click="updatePlayer()">Применить</button><button @click="modal.name = ''">Закрыть</button>
+            </div>
+            <div v-if="modal.name == 'dices'" style="background-color: transparent;">
+                <div class="spinner"></div>
+                <div class="dices">
+                    <div class="dice" v-for="dice in modal.data" :style="'background-image: url(assets/images/dice-'+dice+'.png)'"></div>
+                </div>
+            </div>
+            <div v-if="modal.name == 'alert'" class="anim-intact notification">
+                <a class="close" @click="modal.name = ''">x</a>
+                <center v-if="typeof modal.data.head != 'undefined' && modal.data.head.length > 0" style="font-size: 64px;margin: 10px 0px;">{{ modal.data.head }}</center>
+                <center>{{ modal.data.text }}</center>
+                <div class="expiry"></div>
+            </div>
+        </section>
+        <section class="game" v-if="players.length > 0">
+            <div class="turns">
+                <a v-if="getPlayer(player.uuid).jailed > 0">
+                    <img src="assets/images/handcuffs.png" class="make-turn">
+                </a>
+                <a v-else-if="player.uuid != turn.uuid || lock">
+                    Ожидание хода Игрока
+                    <h3>{{getPlayer(turn.uuid).name}}</h3>
+                </a>
+                <a v-else-if="getPlayer(player.uuid).balance >= 0" @click="sounds.dices.play(); client.request('turn')" class="make-turn">
+                    <img src="assets/images/dices.png">
+                </a>
+                <a v-else="">
+                    Вы не можете ходить пока у вас задолженность
+                </a>
+                <div v-if="getPlayer(player.uuid).buffs.length > 0" class="buffs">
+                    <div class="buff" v-for="buff in getPlayer(player.uuid).buffs" v-if="buff.turns > 0">
+                        {{ buff.title }}
+                        Осталось ходов: {{ buff.turns }}
+                    </div>
+                </div>
+                <button @click="cards[1].level = 3">Сделать 3 домика на карточке</button>
+            </div>
+            <div class="players">
+                <table>
+                    <tbody>
+                        <tr v-for="p in players" :style="{ color: p.color }">
+                            <td>
+                                <b v-if="turn.uuid == p.uuid">●</b>
+                            </td>
+                            <td>
+                                <b v-if="p.uuid == player.uuid">{{p.name}}</b>
+                                <p v-else>{{p.name}} -</p>
+                            </td>
+                            <td>
+                                $ {{p.balance}}
+                            </td>
+                            <td>
+                                <button v-if="p.uuid != player.uuid" @click="prepareTrade(p.uuid)">Торговля</button>
+                                <button v-if="p.uuid == player.uuid" @click="prepareUpdate()">Редактировать</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="properties">
+                <div class="actionbar">
+                    <div class="cards current_card">
+                        <card 
+                            v-for="(c,id) in cards" 
+                            v-if="getPlayer(player.uuid).turn % 40 == id"
+                            :card="c" 
+                            :player="getPlayer(player.uuid)"
+                            :card_id="id"
+                        ></card>
+                    </div>
+                    <div class="cards owned_cards">
+                        <card 
+                            v-for="(c,id) in cards" 
+                            v-if="player.uuid == c.owner && getPlayer(player.uuid).turn % 40 != id" 
+                            :card="c" 
+                            :player="getPlayer(player.uuid)"
+                            :card_id="id"
+                        ></card>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
